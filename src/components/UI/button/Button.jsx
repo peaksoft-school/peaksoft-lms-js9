@@ -6,17 +6,20 @@ const BUTTON_VARIANTS = {
       default: '#C91E1E',
       active: '#E13A3A',
       hover: '#B62727',
+      disabled: '#c6c5cb ',
    },
    contained: {
       default: '#3772FF',
       active: '#6190FF',
       hover: '#1D60FF',
+      disabled: '#c6c5cb',
    },
    outlined: {
       default: '#fff',
       active: '#6190FF 30 %',
       hover: '#1D60FF 10 %',
       color: '#3772FF',
+      disabled: '#fff',
    },
 }
 
@@ -26,6 +29,7 @@ const getStylesByVariant = (variant = 'contained') => {
       default: defaultBgColor,
       hover,
       active,
+      disabled,
       ...restStyles
    } = BUTTON_VARIANTS[variant] || {}
    return {
@@ -37,17 +41,21 @@ const getStylesByVariant = (variant = 'contained') => {
       '&:active': {
          backgroundColor: active,
       },
+      '&:disabled': {
+         backgroundColor: disabled,
+         border: '1px solid #c6c5cb',
+      },
       ...restStyles,
    }
 }
 
-export const MyButton = ({ variant, children, onClick, ...props }) => {
+export const Buttons = ({ disabled, variant, children, onClick, ...props }) => {
    return (
       <StyledButton
          variant={variant}
+         disabled={disabled}
          {...props}
          onClick={onClick}
-         classes={{ disabled: 'custom_disabled' }}
       >
          {children}
       </StyledButton>
@@ -62,11 +70,5 @@ const StyledButton = styled(Button)(({ variant }) => {
    return {
       ...commonStyles,
       ...stylesByVariant,
-      '&.custom_disabled': {
-         backgroundColor: '#1C1B1F 12 %',
-         cursor: 'not-allowed',
-         color: '#1C1B1F',
-         border: 'none',
-      },
    }
 })
