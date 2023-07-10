@@ -5,7 +5,7 @@ import { ReactComponent as AddToButtonIcon } from './addToButtonIcon.svg'
 import { ReactComponent as AppointIcon } from './appointZakIcon.svg'
 import { ReactComponent as BoldTextIcon } from './boldTextIcon.svg'
 import { ReactComponent as CalendarIcon } from './calendarIcon.svg'
-import { ReactComponent as CancellIcon } from './cancelIcon.svg'
+import { ReactComponent as CancelIcon } from './cancelIcon.svg'
 import { ReactComponent as CheckIsEmptyIcon } from './checkIsEmptyIcon.svg'
 import { ReactComponent as CheckMarkedIcon } from './checkMarkedIcon.svg'
 import { ReactComponent as CheckedFullBlackIcon } from './chequeFullBlackIcon.svg'
@@ -27,7 +27,7 @@ import { ReactComponent as GroupsIcon } from './groupsTwoIcon.svg'
 import { ReactComponent as ImportIcon } from './import.svg'
 import { ReactComponent as LazyLoadingIcon } from './lazyLoadingIcon.svg'
 import { ReactComponent as LinkIcon } from './linkIcon.svg'
-import { ReactComponent as listNumberedIcon } from './listNumberedOlIcon.svg'
+import { ReactComponent as ListNumberedIcon } from './listNumberedOlIcon.svg'
 import { ReactComponent as OpenEyePassIcon } from './openEyePassIcon.svg'
 import { ReactComponent as PhotoIcon } from './photoIcon.svg'
 import { ReactComponent as PresentationIcon } from './presentationIcon.svg'
@@ -40,4 +40,50 @@ import { ReactComponent as StudentsIcon } from './studentsIcon.svg'
 import { ReactComponent as SuccessfulBlackIcon } from './successfulBlackIcon.svg'
 import { ReactComponent as TeachersBlueIcon } from './teachersBlueIcon.svg'
 import { ReactComponent as TeachersIcon } from './teachersIcon.svg'
-import { ReactComponent as videoTutorialIcon } from './videoTutorialLesIcon.svg'
+import { ReactComponent as VideoTutorialIcon } from './videoTutorialLesIcon.svg'
+
+export {
+   AddDownIcon,
+   AddMoreIcon,
+   AddTextIcon,
+   AddToButtonIcon,
+   AppointIcon,
+   BoldTextIcon,
+   CalendarIcon,
+   CancelIcon,
+   CheckIsEmptyIcon,
+   CheckMarkedIcon,
+   CheckedFullBlackIcon,
+   ClosedEyePassIcon,
+   CodeTagIcon,
+   CoursesBlueIcon,
+   CoursesIcon,
+   ItalicsIcon,
+   DeleteIcon,
+   DropDownIcon,
+   DuplicateIcon,
+   EditIcon,
+   ElipsListIcon,
+   ErrorBlackIcon,
+   JobOrFileIcon,
+   FontSizesIcon,
+   GroupsBlueIcon,
+   GroupsIcon,
+   ImportIcon,
+   LazyLoadingIcon,
+   LinkIcon,
+   ListNumberedIcon,
+   OpenEyePassIcon,
+   PhotoIcon,
+   PresentationIcon,
+   RadioEmptyIcon,
+   RadioMarkedIcon,
+   StrikeoutTextIcon,
+   StudentIcon,
+   StudentsBlueIcon,
+   StudentsIcon,
+   SuccessfulBlackIcon,
+   TeachersBlueIcon,
+   TeachersIcon,
+   VideoTutorialIcon,
+}
