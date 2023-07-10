@@ -1,6 +1,12 @@
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
 
-export const MyRadio = ({ value, labelOne, labelTwo }) => {
+export const MyRadio = ({ value, label, onChange }) => {
+   const handleChange = (event) => {
+      if (onChange) {
+         onChange(event.target.value)
+      }
+   }
+
    return (
       <div>
          <FormControl>
@@ -8,16 +14,12 @@ export const MyRadio = ({ value, labelOne, labelTwo }) => {
                aria-labelledby="demo-radio-buttons-group-label"
                defaultValue={value}
                name="radio-buttons-group"
+               onChange={handleChange}
             >
                <FormControlLabel
-                  value="one"
+                  value={value}
                   control={<Radio />}
-                  label={labelOne}
-               />
-               <FormControlLabel
-                  value="two"
-                  control={<Radio />}
-                  label={labelTwo}
+                  label={label}
                />
             </RadioGroup>
          </FormControl>
