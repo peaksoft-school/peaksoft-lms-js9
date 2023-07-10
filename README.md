@@ -57,10 +57,6 @@ This folder contains reusable stateless and stateful components. It has followin
 
      This folder containes common presentational components(eg. Button, Input, etc.)
 
-#### |---`src/components/Company/Form/CreateCompanyForm.jsx`
-
-     Inside `src/components` we may have also other domain specific components like `src/components/Post/PostCard.jsx`
-
 #### `src/containers`
 
 Each page includes many small components. This folder is similar to src/components, but it contains our large components which is literally our app pages.
