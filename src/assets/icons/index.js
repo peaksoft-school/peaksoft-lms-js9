@@ -41,6 +41,7 @@ import { ReactComponent as SuccessfulBlackIcon } from './successfulBlackIcon.svg
 import { ReactComponent as TeachersBlueIcon } from './teachersBlueIcon.svg'
 import { ReactComponent as TeachersIcon } from './teachersIcon.svg'
 import { ReactComponent as VideoTutorialIcon } from './videoTutorialLesIcon.svg'
+import { ReactComponent as MeatBallIcon } from './frameCardIcon.svg'
 
 export {
    AddDownIcon,
@@ -86,4 +87,5 @@ export {
    TeachersBlueIcon,
    TeachersIcon,
    VideoTutorialIcon,
+   MeatBallIcon,
 }
