@@ -1,9 +1,7 @@
-import { Sidebar } from './components/sidebar/Sidebar'
-
 function App() {
    return (
       <div>
-         <Sidebar roles="admin" />
+         <h1>Peaksoft lms js9</h1>
       </div>
    )
 }
