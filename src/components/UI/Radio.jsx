@@ -1,28 +1,15 @@
-import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
+import React from 'react'
 
-export const MyRadio = ({ value, label, onChange }) => {
-   const handleChange = (event) => {
-      if (onChange) {
-         onChange(event.target.value)
-      }
-   }
-
+export const Radio = ({ checked, onChange, label, value }) => {
    return (
-      <div>
-         <FormControl>
-            <RadioGroup
-               aria-labelledby="demo-radio-buttons-group-label"
-               defaultValue={value}
-               name="radio-buttons-group"
-               onChange={handleChange}
-            >
-               <FormControlLabel
-                  value={value}
-                  control={<Radio />}
-                  label={label}
-               />
-            </RadioGroup>
-         </FormControl>
-      </div>
+      <label>
+         <input
+            type="radio"
+            value={value}
+            checked={checked}
+            onChange={onChange}
+         />
+         {label}
+      </label>
    )
 }
