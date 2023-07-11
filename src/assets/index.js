@@ -1,4 +1,4 @@
-export { ReactComponent as GroupIcon } from './icons/Property 1=Группы.svg'
-export { ReactComponent as CoursesIcon } from './icons/Без заливки.svg'
-export { ReactComponent as TeachersIcon } from './icons/Без заливки2.svg'
-export { ReactComponent as StudentsIcon } from './icons/Без заливки3.svg'
+export { ReactComponent as GroupIcon } from './icons/groupIcon.svg'
+export { ReactComponent as CoursesIcon } from './icons/coursesIcon.svg'
+export { ReactComponent as TeachersIcon } from './icons/teachersIcon.svg'
+export { ReactComponent as StudentsIcon } from './icons/studentsIcon.svg'

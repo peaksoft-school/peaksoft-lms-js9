@@ -12,10 +12,6 @@
       "@testing-library/user-event": "^13.5.0",
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
-<<<<<<< HEAD
-      "react-router": "^6.14.1",
-=======
->>>>>>> c8125c8310c2586eb044b7c221baf6a387ea4494
       "react-router-dom": "^6.14.1",
       "react-scripts": "5.0.1",
       "web-vitals": "^2.1.4"
