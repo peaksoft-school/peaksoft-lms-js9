@@ -2,14 +2,14 @@ import { styled } from '@mui/material'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-export const MyTabs = ({ labelOne, labelTwo, ...rest }) => {
+export const Tabs = ({ labelOne, labelTwo, toOne, toTwo }) => {
    return (
-      <Container rest={rest}>
-         <NavLink to="/materials" className="activee">
+      <Container>
+         <NavLink to={toOne} className="activee">
             <h2>{labelOne}</h2>
             <p />
          </NavLink>
-         <NavLink to="/students" className="activee">
+         <NavLink to={toTwo} className="activee">
             <h2>{labelTwo}</h2>
             <p />
          </NavLink>
