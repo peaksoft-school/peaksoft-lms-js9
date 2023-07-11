@@ -20,7 +20,6 @@ const Container = styled('div')`
    display: flex;
    justify-content: center;
    width: 71.25rem;
-   height: 54.6875rem;
    flex-shrink: 0;
    h2 {
       font-family: Open Sans;
