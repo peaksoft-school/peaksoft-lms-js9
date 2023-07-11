@@ -4,41 +4,37 @@ import MenuList from '@mui/material/MenuList'
 import MenuItem from '@mui/material/MenuItem'
 import ListItemText from '@mui/material/ListItemText'
 import { styled } from '@mui/material'
-import { DeleteIcon, EditIcon, MeatCardIcon } from '../../assets/icons'
+import { MeatBallIcon } from '../../assets/icons'
 
-export default function MeatBall() {
-   const [open, setOpen] = React.useState(false)
-   const handleClick = () => {
-      setOpen(!open)
+export default function MeatBall({ menuItems, handleClick, open, onClick }) {
+   const titleHandler = (event) => {
+      onClick(event)
    }
    return (
       <div>
          {open ? (
-            <Paper sx={{ width: '10.25rem', height: '6rem' }}>
+            <Paper sx={{ width: '10.30rem', height: 'auto' }}>
                <MenuList>
-                  <MenuItem>
-                     <EditIcon
-                        style={{ width: '1.115rem', marginRight: '0.60rem' }}
-                     />
-                     <ListItemTexts>Редактировать</ListItemTexts>
-                  </MenuItem>
-                  <MenuItem>
-                     <DeleteIcon
-                        style={{ width: '1.115rem', marginRight: '0.60rem' }}
-                     />
-                     <ListItemTexts>Удалить</ListItemTexts>
-                  </MenuItem>
+                  {menuItems.map((item) => (
+                     <MenuItem key={item.id}>
+                        <img src={item.img} alt="not found" />
+                        <LisItemTexts onClick={() => titleHandler(item.title)}>
+                           {item.title}
+                        </LisItemTexts>
+                     </MenuItem>
+                  ))}
                </MenuList>
             </Paper>
          ) : (
             <button type="button" onClick={handleClick}>
-               <MeatCardIcon />
+               <MeatBallIcon />
             </button>
          )}
       </div>
    )
 }
-const ListItemTexts = styled(ListItemText)(() => ({
+
+const LisItemTexts = styled(ListItemText)(() => ({
    fontFamily: 'Open Sans',
    fontSize: '0.875rem',
    fontWeight: 400,
