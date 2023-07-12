@@ -1,33 +1,44 @@
-import React from 'react'
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import ListItemText from '@mui/material/ListItemText'
+import Select from '@mui/material/Select'
+import Checkbox from '@mui/material/Checkbox'
 import styled from '@emotion/styled'
 
-const ReusableSelect = ({ label, options, value, onChange }) => {
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
+const MenuProps = {
+   PaperProps: {
+      style: {
+         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+         width: 250,
+      },
+   },
+}
+
+const MultiSelect = ({ array, value, onChange, ...rest }) => {
    return (
-      <FormControl fullWidth>
-         <InputLabel>{label}</InputLabel>
-         <StyledSelect value={value} onChange={onChange}>
-            {options.map((option) => (
-               <StyledMenuItem key={option.value} value={option.value}>
-                  {option.label}
-               </StyledMenuItem>
+      <FormControl sx={{ m: 1 }}>
+         <Select
+            value={value}
+            onChange={onChange}
+            renderValue={(selected) => selected}
+            MenuProps={MenuProps}
+            {...rest}
+         >
+            {array.map((item) => (
+               <MenuItem key={item.id} value={item.fullName}>
+                  <StyledListItem primary={item.fullName} />
+                  <Checkbox checked={value.indexOf(item.fullName) > -1} />
+               </MenuItem>
             ))}
-         </StyledSelect>
+         </Select>
       </FormControl>
    )
 }
-export default ReusableSelect
-
-const StyledSelect = styled(Select)(() => ({
-   borderRadius: '10px',
-}))
-
-const StyledMenuItem = styled(MenuItem)(() => ({
-   boxSizing: 'border-box',
-   left: '0.5px',
-   border: '1px solid #ececec',
-   ':focus': {
-      backgroundColor: 'rgba(26, 35, 126, 0.07)',
-      color: '#3772FF',
+const StyledListItem = styled(ListItemText)(() => ({
+   '&:hover': {
+      color: '#1A237E',
    },
 }))
+export default MultiSelect
