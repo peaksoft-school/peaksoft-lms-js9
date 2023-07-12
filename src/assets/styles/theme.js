@@ -12,6 +12,7 @@ export const theme = createTheme({
          light: '#D4D4D4',
          pink: '#FA2B56',
          green: '#36AC0C',
+         border: '#BFC4CE',
       },
       error: {
          main: '#C91E1E',
