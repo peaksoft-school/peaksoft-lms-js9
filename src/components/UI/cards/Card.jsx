@@ -1,34 +1,29 @@
 import * as React from 'react'
-import Card from '@mui/material/Card'
+import { Card as Cards, styled } from '@mui/material'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material'
-import { cardsGroup } from '../../../utils/constants/cardsGroup'
 
-export const Cards = () => {
+export const Card = ({ el, alt }) => {
    return (
       <ContainerCard>
-         {cardsGroup.map((el) => (
-            <>
-               <ContainerImg image={el.img} />
-               <ContainerContent>
-                  <ContainerHeader>
-                     <p>{el.title}</p> <span>{el.date}</span>
-                  </ContainerHeader>
-                  <div>{el.description}</div>
-                  <ContainerFooter>
-                     <img src={el.icon} alt={el.alt} />
-                  </ContainerFooter>
-               </ContainerContent>
-            </>
-         ))}
+         <ContainerImg image={el.img} />
+         <ContainerContent>
+            <ContainerHeader>
+               <p>{el.title}</p> <span>{el.date}</span>
+            </ContainerHeader>
+            <div>{el.description}</div>
+            <ContainerFooter>
+               <img src={el.icon} alt={alt} />
+            </ContainerFooter>
+         </ContainerContent>
       </ContainerCard>
    )
 }
-const ContainerCard = styled(Card)(() => ({
-   width: '16.875rem',
+
+const ContainerCard = styled(Cards)(() => ({
+   width: '17.6vw',
    minHeight: '19.4375rem',
    flexShrink: 0,
    borderRadius: '0.625rem',
@@ -37,7 +32,7 @@ const ContainerCard = styled(Card)(() => ({
 }))
 
 const ContainerImg = styled(CardMedia)(() => ({
-   width: '16.875rem',
+   width: '17.6vw',
    height: '10.6875rem',
    flexShrink: 0,
    borderRadius: '0.625rem 0.625rem 0rem 0rem',

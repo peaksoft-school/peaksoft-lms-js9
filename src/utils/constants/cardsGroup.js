@@ -8,6 +8,5 @@ export const cardsGroup = [
       description:
          ' Lizards are a widespread group of eiufbef o fbqeobf qebfoqeb squamate reptiles, with over 6,000 species, ranging',
       icon: VectorIcon,
-      alt: 'photo',
    },
 ]
