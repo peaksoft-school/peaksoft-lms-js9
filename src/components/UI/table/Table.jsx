@@ -46,7 +46,9 @@ const Table = ({ columns, data }) => {
                   <StyledTableRow key={row.id}>
                      {columns.map((column) => (
                         <StyledTableCellForData key={column.id}>
-                           {row[column.id]}
+                           {column.id === 'actions'
+                              ? row.actions
+                              : row[column.id]}
                         </StyledTableCellForData>
                      ))}
                   </StyledTableRow>
