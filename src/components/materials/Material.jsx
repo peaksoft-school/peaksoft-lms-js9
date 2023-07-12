@@ -6,7 +6,6 @@ import {
    LessonVideo,
    Task,
    Test,
-   Link as LinkMaterial,
    Presentation,
    LogoLesson,
    DeleteRedIcon,
@@ -59,7 +58,7 @@ export const Material = () => {
                      <h2>{el.task}</h2>
                   </NavLink>
                   <NavLink to="/sd" activeClassName="active">
-                     <LinkMaterial />
+                     {/* <LinkMaterial /> */}
                      <h2>{el.link}</h2>
                   </NavLink>
                   <NavLink to="/sdv" activeClassName="active">
