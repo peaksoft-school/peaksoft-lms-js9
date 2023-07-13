@@ -1,11 +1,18 @@
 import * as React from 'react'
-import { styled, alpha } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import { MeatBallIcon } from '../../assets/icons'
+import { DeleteIcon, EditIcon, MeatBallIcon } from '../../assets/icons'
 
-export default function MeatBall({ menuItems, onClick }) {
+const data = [
+   { title: 'Редактировать', img: <EditIcon />, id: 1 },
+   { title: 'Удалить', img: <DeleteIcon />, id: 2 },
+]
+
+export default function MeatBall({ menuItems: parentMenuItems = [], onClick }) {
+   const menuItems = parentMenuItems.concat(data)
+
    const [anchorEl, setAnchorEl] = React.useState(null)
    const open = Boolean(anchorEl)
    const handleClick = (event) => {
@@ -38,15 +45,19 @@ export default function MeatBall({ menuItems, onClick }) {
             onClose={handleClose}
          >
             {menuItems.map((item) => (
-               <MenuItem key={item.id} onClick={() => onClick(item.id)}>
-                  <img src={item.img} alt="not found" />
+               <StyledMenuItem
+                  key={item.id}
+                  onClick={() => onClick(item.title)}
+               >
+                  <div>{item.img}</div>
                   {item.title}
-               </MenuItem>
+               </StyledMenuItem>
             ))}
          </StyledMenu>
       </div>
    )
 }
+
 const StyledMenu = styled((props) => (
    <Menu
       elevation={0}
@@ -74,18 +85,18 @@ const StyledMenu = styled((props) => (
       '& .MuiMenu-list': {
          padding: '4px 0',
       },
-      '& .MuiMenuItem-root': {
-         '& .MuiSvgIcon-root': {
-            fontSize: 18,
-            color: theme.palette.text.secondary,
-            marginRight: theme.spacing(1.5),
-         },
-         '&:active': {
-            backgroundColor: alpha(
-               theme.palette.primary.main,
-               theme.palette.action.selectedOpacity
-            ),
-         },
+   },
+}))
+
+const StyledMenuItem = styled(MenuItem)(() => ({
+   display: 'flex',
+   gap: '7px',
+   '&:hover': {
+      color: '#1F6ED4',
+   },
+   ':hover div': {
+      path: {
+         fill: '#1F6ED4',
       },
    },
 }))
