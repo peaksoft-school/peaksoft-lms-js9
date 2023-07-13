@@ -44,13 +44,16 @@ const Table = ({ columns, data }) => {
             <TableBody>
                {data.map((row) => (
                   <StyledTableRow key={row.id}>
-                     {columns.map((column) => (
-                        <StyledTableCellForData key={column.id}>
-                           {column.id === 'actions'
-                              ? row.actions
-                              : row[column.id]}
-                        </StyledTableCellForData>
-                     ))}
+                     {columns?.map((column) => {
+                        if (column.render) {
+                           return column.render(row)
+                        }
+                        return (
+                           <StyledTableCellForData key={column.id}>
+                              {row[column.id]}
+                           </StyledTableCellForData>
+                        )
+                     })}
                   </StyledTableRow>
                ))}
             </TableBody>
