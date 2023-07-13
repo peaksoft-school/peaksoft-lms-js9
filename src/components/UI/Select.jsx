@@ -27,7 +27,7 @@ const MultiSelect = ({ array, value, onChange, ...rest }) => {
             {...rest}
          >
             {array.map((item) => (
-               <MenuItem key={item.id} value={item.fullName}>
+               <MenuItem key={item.id} value={item.fullName || item.id}>
                   <StyledListItem primary={item.fullName} />
                   <Checkbox checked={value.indexOf(item.fullName) > -1} />
                </MenuItem>
