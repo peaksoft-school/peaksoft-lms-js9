@@ -4,15 +4,15 @@ import { NavLink } from 'react-router-dom'
 import { materialsLesson } from '../../utils/constants/MaterialsArray'
 import { Button } from '../UI/button/Button'
 import {
-   LessonVideo,
-   Task,
-   Test,
-   Presentation,
-   LinkMaterial,
-   LogoLesson,
+   LessonVideoIcon,
+   TaskIcon,
+   TestIcon,
+   PresentationIcon,
+   LogoLessonIcon,
    DeleteRedIcon,
    EditGreenIcon,
-} from '../../assets'
+   LinkIcon,
+} from '../../assets/icons'
 import { reusableRoutesLesson } from '../../utils/constants/routes'
 
 export const Material = ({
@@ -35,7 +35,7 @@ export const Material = ({
             <div key={el.id} className="container">
                <div className="containerHeader">
                   <div>
-                     <LogoLesson />
+                     <LogoLessonIcon />
                      <h1>{el.lesson}</h1>
                   </div>
                   <div className="containerDeleteIconButton">
@@ -128,7 +128,7 @@ export const Material = ({
                      className="nav-link"
                   >
                      <div className="containerTitleIcon">
-                        <LessonVideo />
+                        <LessonVideoIcon />
                         <h2>{el.lessonVideo}</h2>
                      </div>
                      <div className="buttons">
@@ -154,7 +154,7 @@ export const Material = ({
                      className="nav-link"
                   >
                      <div className="containerTitleIcon">
-                        <Presentation />
+                        <PresentationIcon />
                         <h2>{el.presentation}</h2>
                      </div>
                      <div className="buttons">
@@ -180,7 +180,7 @@ export const Material = ({
                      className="nav-link"
                   >
                      <div className="containerTitleIcon">
-                        <Task />
+                        <TaskIcon />
                         <h2>{el.task}</h2>
                      </div>
                      <div className="buttons">
@@ -206,7 +206,7 @@ export const Material = ({
                      className="nav-link"
                   >
                      <div className="containerTitleIcon">
-                        <LinkMaterial />
+                        <LinkIcon />
                         <h2>{el.link}</h2>
                      </div>
                      <div className="buttons">
@@ -232,7 +232,7 @@ export const Material = ({
                      className="nav-link"
                   >
                      <div className="containerTitleIcon">
-                        <Test />
+                        <TestIcon />
                         <h2>{el.test}</h2>
                      </div>
                      <div className="buttons">
@@ -264,30 +264,31 @@ const Container = styled('div')(({ theme }) => ({
    flexWrap: 'wrap',
    '.container': {
       backgroundColor: theme.palette.primary.light,
-      margin: '20px',
-      width: '560px',
-      height: '315px',
-      borderRadius: '10px',
+      margin: '1.25rem',
+      width: '29vw',
+      height: '33.7vh',
+      borderRadius: '0.5rem',
+      overflow: 'hidden',
       '.containerHeader': {
          display: 'flex',
          alignItems: 'center',
          justifyContent: 'space-between',
-         height: '80px',
+         height: '8.5vh',
          borderBottom: `1px solid ${theme.palette.secondary.border}`,
-         padding: '20px',
+         padding: '1.25rem',
          '& div': {
             display: 'flex',
             alignItems: 'center',
-            gap: '17px',
+            gap: '1.06rem',
             '& h1': {
-               fontSize: '18px',
+               fontSize: '1.125rem',
                fontWeight: '600',
             },
          },
          '.containerDeleteIconButton': {
             display: 'flex',
             alignItems: 'center',
-            gap: '30px',
+            gap: '1.88rem',
 
             '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
                {
@@ -297,48 +298,32 @@ const Container = styled('div')(({ theme }) => ({
             '.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
                {
                   border: '1px solid #EBEBEB',
-                  width: '93px',
+                  width: '4vw',
                },
-            '& select': {
-               padding: '10px 16px 10px 24px',
-               justifyContent: 'center',
-               alignItems: 'center',
-               gap: '8px',
-               borderRadius: '8px',
-               width: '144px',
-               height: '44px',
-               '& option': {
-                  width: '147px',
-                  height: '43px',
-                  backgroundColor: 'red',
-                  margin: '20px',
-               },
-            },
          },
       },
       '.containerItem': {
          display: 'flex',
          flexDirection: 'column',
          '& a': {
-            padding: '0 20px',
+            padding: '0 1.25rem',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: '46px',
+            height: '5vh',
             '&:hover': {
                backgroundColor: 'rgba(26, 35, 126, 0.07)',
             },
             '.containerTitleIcon': {
                display: 'flex',
                alignItems: 'center',
-               gap: '25px',
+               gap: '1.56rem',
             },
             '& svg': {
-               width: '24px',
-               height: '24px',
+               height: '2.5vh',
             },
             '& h2': {
-               fontSize: '16px',
+               fontSize: '1rem',
                fontWeight: '600',
                color: '#000',
             },
@@ -352,7 +337,7 @@ const Container = styled('div')(({ theme }) => ({
          '.buttons': {
             display: 'flex',
             alignItems: 'center',
-            gap: '15px',
+            gap: '0.94rem',
          },
       },
    },
@@ -360,13 +345,13 @@ const Container = styled('div')(({ theme }) => ({
 
 const StyledButton = styled(Button)(({ theme }) => ({
    backgroundColor: 'rgba(255, 255, 255, 0)',
-   height: '36px',
+   height: '2.25rem',
    color: '#292929',
-   fontSize: '16px',
+   fontSize: '1rem',
    fontWeight: '400',
-   padding: '6px 10px',
+   padding: '0.38rem 0.63rem',
    display: 'flex',
-   gap: '4px',
+   gap: '0.25rem',
    '&:hover': {
       backgroundColor: theme.palette.secondary.light,
    },
