@@ -1,4 +1,4 @@
-export const reusableRoutes = [
+export const reusableRoutesRoles = [
    {
       admin: {
          home: '/',
@@ -18,3 +18,10 @@ export const reusableRoutes = [
       },
    },
 ]
+export const reusableRoutesLesson = {
+   videolesson: '/videolesson',
+   presentation: '/presentation',
+   task: '/task',
+   link: '/link',
+   test: '/test',
+}

@@ -13,6 +13,7 @@ export const theme = createTheme({
          pink: '#FA2B56',
          green: '#36AC0C',
          border: '#BFC4CE',
+         borderSelect: '#EBEBEB',
       },
       error: {
          main: '#C91E1E',

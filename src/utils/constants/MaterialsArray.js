@@ -1,6 +1,7 @@
 export const materialsLesson = [
    {
       id: 1,
+      lesson: 'Lesson-1',
       lessonVideo: 'Видеоурок',
       presentation: 'Презентация',
       task: 'Задания',
@@ -9,6 +10,7 @@ export const materialsLesson = [
    },
    {
       id: 2,
+      lesson: 'Lesson-2',
       lessonVideo: 'Видеоурок',
       presentation: 'Презентация',
       task: 'Задания',
@@ -17,6 +19,7 @@ export const materialsLesson = [
    },
    {
       id: 3,
+      lesson: 'Lesson-3',
       lessonVideo: 'Видеоурок',
       presentation: 'Презентация',
       task: 'Задания',
@@ -25,6 +28,7 @@ export const materialsLesson = [
    },
    {
       id: 4,
+      lesson: 'Lesson-4',
       lessonVideo: 'Видеоурок',
       presentation: 'Презентация',
       task: 'Задания',

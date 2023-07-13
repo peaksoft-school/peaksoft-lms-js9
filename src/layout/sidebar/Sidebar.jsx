@@ -2,16 +2,16 @@ import React from 'react'
 import { styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import logo from '../../assets/image/logoPeksoft.png'
+import { reusableRoutesRoles } from '../../utils/constants/routes'
 import {
-   GroupIcon,
+   GroupsIcon,
    CoursesIcon,
    TeachersIcon,
    StudentsIcon,
-} from '../../assets'
-import { reusableRoutes } from '../../utils/constants/routes'
+} from '../../assets/icons/index'
 
 export const Sidebar = ({ roles }) => {
-   const routes = reusableRoutes.find((route) => route[roles])
+   const routes = reusableRoutesRoles.find((route) => route[roles])
    const { home, courses, teachers, students } = routes[roles]
    return (
       <Container>
@@ -20,7 +20,7 @@ export const Sidebar = ({ roles }) => {
             {roles === 'admin' && (
                <>
                   <NavLinkStyled to={home} activeClassName="active">
-                     <GroupIcon />
+                     <GroupsIcon />
                      <h2>Группы</h2>
                   </NavLinkStyled>
                   <NavLinkStyled to={courses} activeClassName="active">

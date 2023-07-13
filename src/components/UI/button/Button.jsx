@@ -1,4 +1,4 @@
-import { Button, styled } from '@mui/material'
+import { Button as ButtonMUI, styled } from '@mui/material'
 import React from 'react'
 
 const BUTTON_VARIANTS = {
@@ -49,7 +49,7 @@ const getStylesByVariant = (variant = 'contained') => {
    }
 }
 
-export const Buttons = ({ disabled, variant, children, onClick, ...props }) => {
+export const Button = ({ disabled, variant, children, onClick, ...props }) => {
    return (
       <StyledButton
          variant={variant}
@@ -61,7 +61,7 @@ export const Buttons = ({ disabled, variant, children, onClick, ...props }) => {
       </StyledButton>
    )
 }
-const StyledButton = styled(Button)(({ variant }) => {
+const StyledButton = styled(ButtonMUI)(({ variant }) => {
    const commonStyles = {
       borderRadius: '8px',
       padding: '10px 24px',
