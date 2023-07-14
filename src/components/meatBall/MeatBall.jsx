@@ -19,18 +19,11 @@ const data = [
 ]
 
 export default function MeatBall({ menuItems, onClick }) {
-   const [openText, setOpen] = React.useState(false)
    const [anchorEl, setAnchorEl] = React.useState(null)
    const open = Boolean(anchorEl)
 
    const handleClick = (event) => {
       setAnchorEl(event.currentTarget)
-      if (menuItems.length > 0) {
-         setOpen(true)
-         console.log(openText)
-      } else {
-         setOpen(false)
-      }
    }
 
    const handleClose = () => {
