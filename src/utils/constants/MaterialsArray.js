@@ -36,3 +36,25 @@ export const materialsLesson = [
       test: 'Тест',
    },
 ]
+export const menuItem = [
+   {
+      value: 'videolesson',
+      title: 'Видеоурок',
+   },
+   {
+      value: 'presentation',
+      title: 'Прентация',
+   },
+   {
+      value: 'task',
+      title: 'Задание',
+   },
+   {
+      value: 'link',
+      title: 'Ссылка',
+   },
+   {
+      value: 'test',
+      title: 'Тест',
+   },
+]
