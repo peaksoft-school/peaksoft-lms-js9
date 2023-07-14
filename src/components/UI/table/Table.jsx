@@ -23,6 +23,8 @@ const StyledTableRow = styled(TableRow)`
 `
 const StyledTableCell = styled(TableCell)`
    padding: 10px 8px 10px 20px;
+   font-weight: 900;
+   color: black;
 `
 const StyledTableCellForData = styled(TableCell)`
    padding: 8px 8px 8px 20px;
