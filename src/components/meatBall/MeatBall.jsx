@@ -1,30 +1,25 @@
 import * as React from 'react'
 import { styled } from '@mui/material/styles'
-import Button from '@mui/material/Button'
+import { IconButton } from '@mui/material'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import { DeleteIcon, EditIcon, MeatBallIcon } from '../../assets/icons'
-
-const data = [
-   { title: 'Редактировать', img: <EditIcon />, id: 1 },
-   { title: 'Удалить', img: <DeleteIcon />, id: 2 },
-]
+import { MeatBallIcon } from '../../assets/icons'
 
 export default function MeatBall({ menuItems: parentMenuItems = [], onClick }) {
-   const menuItems = parentMenuItems.concat(data)
-
    const [anchorEl, setAnchorEl] = React.useState(null)
    const open = Boolean(anchorEl)
+
    const handleClick = (event) => {
       setAnchorEl(event.currentTarget)
    }
+
    const handleClose = () => {
       setAnchorEl(null)
    }
 
    return (
       <div>
-         <Button
+         <IconButton
             id="demo-customized-button"
             aria-controls={open ? 'demo-customized-menu' : undefined}
             aria-haspopup="true"
@@ -34,7 +29,7 @@ export default function MeatBall({ menuItems: parentMenuItems = [], onClick }) {
             onClick={handleClick}
          >
             <MeatBallIcon />
-         </Button>
+         </IconButton>
          <StyledMenu
             id="demo-customized-menu"
             MenuListProps={{
@@ -44,7 +39,7 @@ export default function MeatBall({ menuItems: parentMenuItems = [], onClick }) {
             open={open}
             onClose={handleClose}
          >
-            {menuItems.map((item) => (
+            {parentMenuItems.map((item) => (
                <StyledMenuItem
                   key={item.id}
                   onClick={() => onClick(item.title)}
