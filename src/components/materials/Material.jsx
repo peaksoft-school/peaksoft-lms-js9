@@ -21,6 +21,33 @@ export const Material = ({
    clickDeleteAll,
    el,
 }) => {
+   const navLink = [
+      {
+         route: reusableRoutesLesson.videolesson,
+         icon: <LessonVideoIcon />,
+         title: el.lessonVideo,
+      },
+      {
+         route: reusableRoutesLesson.presentation,
+         icon: <PresentationIcon />,
+         title: el.presentation,
+      },
+      {
+         route: reusableRoutesLesson.task,
+         icon: <TaskIcon />,
+         title: el.task,
+      },
+      {
+         route: reusableRoutesLesson.link,
+         icon: <LinkIcon />,
+         title: el.link,
+      },
+      {
+         route: reusableRoutesLesson.test,
+         icon: <TestIcon />,
+         title: el.test,
+      },
+   ]
    const [selectedValues, setSelectedValues] = useState({})
 
    const handleChange = (id, value) => {
@@ -76,136 +103,34 @@ export const Material = ({
             </div>
          </div>
          <div className="containerItem">
-            <NavLink
-               to={reusableRoutesLesson.videolesson}
-               activeClassName="active"
-               className="nav-link"
-            >
-               <div className="containerTitleIcon">
-                  <LessonVideoIcon />
-                  <h2>{el.lessonVideo}</h2>
-               </div>
-               <div className="buttons">
-                  <StyledButton
-                     className="button"
-                     onClick={() => clickEditHandler(el.id)}
-                  >
-                     <EditGreenIcon />
-                     Редактировать
-                  </StyledButton>
-                  <StyledButton
-                     className="button"
-                     onClick={() => clickDeleteHandler(el.id)}
-                  >
-                     <DeleteRedIcon />
-                     Удалить
-                  </StyledButton>
-               </div>
-            </NavLink>
-            <NavLink
-               to={reusableRoutesLesson.presentation}
-               activeClassName="active"
-               className="nav-link"
-            >
-               <div className="containerTitleIcon">
-                  <PresentationIcon />
-                  <h2>{el.presentation}</h2>
-               </div>
-               <div className="buttons">
-                  <StyledButton
-                     className="button"
-                     onClick={() => clickEditHandler(el.id)}
-                  >
-                     <EditGreenIcon />
-                     Редактировать
-                  </StyledButton>
-                  <StyledButton
-                     className="button"
-                     onClick={() => clickDeleteHandler(el.id)}
-                  >
-                     <DeleteRedIcon />
-                     Удалить
-                  </StyledButton>
-               </div>
-            </NavLink>
-            <NavLink
-               to={reusableRoutesLesson.task}
-               activeClassName="active"
-               className="nav-link"
-            >
-               <div className="containerTitleIcon">
-                  <TaskIcon />
-                  <h2>{el.task}</h2>
-               </div>
-               <div className="buttons">
-                  <StyledButton
-                     className="button"
-                     onClick={() => clickEditHandler(el.id)}
-                  >
-                     <EditGreenIcon />
-                     Редактировать
-                  </StyledButton>
-                  <StyledButton
-                     className="button"
-                     onClick={() => clickDeleteHandler(el.id)}
-                  >
-                     <DeleteRedIcon />
-                     Удалить
-                  </StyledButton>
-               </div>
-            </NavLink>
-            <NavLink
-               to={reusableRoutesLesson.link}
-               activeClassName="active"
-               className="nav-link"
-            >
-               <div className="containerTitleIcon">
-                  <LinkIcon />
-                  <h2>{el.link}</h2>
-               </div>
-               <div className="buttons">
-                  <StyledButton
-                     className="button"
-                     onClick={() => clickEditHandler(el.id)}
-                  >
-                     <EditGreenIcon />
-                     Редактировать
-                  </StyledButton>
-                  <StyledButton
-                     className="button"
-                     onClick={() => clickDeleteHandler(el.id)}
-                  >
-                     <DeleteRedIcon />
-                     Удалить
-                  </StyledButton>
-               </div>
-            </NavLink>
-            <NavLink
-               to={reusableRoutesLesson.test}
-               activeClassName="active"
-               className="nav-link"
-            >
-               <div className="containerTitleIcon">
-                  <TestIcon />
-                  <h2>{el.test}</h2>
-               </div>
-               <div className="buttons">
-                  <StyledButton
-                     className="button"
-                     onClick={() => clickEditHandler(el.id)}
-                  >
-                     <EditGreenIcon />
-                     Редактировать
-                  </StyledButton>
-                  <StyledButton
-                     className="button"
-                     onClick={() => clickDeleteHandler(el.id)}
-                  >
-                     <DeleteRedIcon />
-                     Удалить
-                  </StyledButton>
-               </div>
-            </NavLink>
+            {navLink.map((item) => (
+               <NavLink
+                  to={item.route}
+                  activeClassName="active"
+                  className="nav-link"
+               >
+                  <div className="containerTitleIcon">
+                     {item.icon}
+                     <h2>{item.title}</h2>
+                  </div>
+                  <div className="buttons">
+                     <StyledButton
+                        className="button"
+                        onClick={() => clickEditHandler(el.id)}
+                     >
+                        <EditGreenIcon />
+                        Редактировать
+                     </StyledButton>
+                     <StyledButton
+                        className="button"
+                        onClick={() => clickDeleteHandler(el.id)}
+                     >
+                        <DeleteRedIcon />
+                        Удалить
+                     </StyledButton>
+                  </div>
+               </NavLink>
+            ))}
          </div>
       </Container>
    )
