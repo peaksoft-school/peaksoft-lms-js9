@@ -3,14 +3,34 @@ import { styled } from '@mui/material/styles'
 import { IconButton } from '@mui/material'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import { MeatBallIcon } from '../../assets/icons'
+import { DeleteIcon, EditIcon, MeatBallIcon } from '../../assets/icons'
 
-export default function MeatBall({ menuItems: parentMenuItems = [], onClick }) {
+const data = [
+   {
+      id: 1,
+      title: 'EditIcon',
+      img: <EditIcon />,
+   },
+   {
+      id: 2,
+      title: 'DeleteIcon',
+      img: <DeleteIcon />,
+   },
+]
+
+export default function MeatBall({ menuItems, onClick }) {
+   const [openText, setOpen] = React.useState(false)
    const [anchorEl, setAnchorEl] = React.useState(null)
    const open = Boolean(anchorEl)
 
    const handleClick = (event) => {
       setAnchorEl(event.currentTarget)
+      if (menuItems.length > 0) {
+         setOpen(true)
+         console.log(openText)
+      } else {
+         setOpen(false)
+      }
    }
 
    const handleClose = () => {
@@ -39,7 +59,7 @@ export default function MeatBall({ menuItems: parentMenuItems = [], onClick }) {
             open={open}
             onClose={handleClose}
          >
-            {parentMenuItems.map((item) => (
+            {(menuItems.length ? menuItems : data).map((item) => (
                <StyledMenuItem
                   key={item.id}
                   onClick={() => onClick(item.title)}
