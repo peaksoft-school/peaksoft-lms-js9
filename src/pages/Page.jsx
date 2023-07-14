@@ -1,27 +1,17 @@
 import { styled } from '@mui/material'
 import React from 'react'
-import Peacsoft from '../assets/icons/PEAKSOFT.svg'
-import Logo from '../assets/icons/XMLID_1207_.svg'
-import Circle from '../assets/icons/Circle.svg'
+import PageLogo from '../assets/icons/pageLogo.svg'
 
 export const Page = ({ children, title }) => {
    return (
       <Container>
          <ContainerPageOne>
-            <ContainerCircle>
-               <img src={Circle} alt="efw" />
-            </ContainerCircle>
-            <ContainerTitle>
-               <img src={Peacsoft} alt="efw" />
-            </ContainerTitle>
             <ContainerLogo>
-               <img src={Logo} alt="efw" />
+               <img src={PageLogo} alt="efw" />
             </ContainerLogo>
          </ContainerPageOne>
          <ContainePageTwo>
-            <ContainerTitles>
-               <h3>{title}</h3>
-            </ContainerTitles>
+            <ContainerTitles>{title}</ContainerTitles>
             <div>{children}</div>
          </ContainePageTwo>
       </Container>
@@ -34,7 +24,7 @@ const Container = styled('div')(() => ({
    display: 'flex',
 }))
 const ContainerPageOne = styled('div')(() => ({
-   width: '40%',
+   width: '45%',
    height: '100%',
    background: 'var(--button, #3772FF)',
    display: 'flex',
@@ -43,21 +33,9 @@ const ContainerPageOne = styled('div')(() => ({
    alignItems: 'center',
    gap: '5.63rem',
 }))
-const ContainerLogo = styled('div')(() => ({
-   width: '16.42938rem',
-   height: '19.6875rem',
-}))
-const ContainerTitle = styled('div')(() => ({
-   width: '14.5895rem',
-   height: '2.04081rem',
-}))
-const ContainerCircle = styled('div')(() => ({
-   position: 'absolute',
-   top: 132,
-   left: 435,
-}))
+const ContainerLogo = styled('div')(() => ({}))
 const ContainePageTwo = styled('div')(() => ({
-   width: '60%',
+   width: '55%',
    height: '100%',
 }))
 const ContainerTitles = styled('div')(() => ({
