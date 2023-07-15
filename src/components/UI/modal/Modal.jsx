@@ -7,9 +7,11 @@ export const Modal = ({ minHeight, title, children, open, handleClose }) => {
       <div>
          <ModalUi open={open} onClose={handleClose}>
             <StyledModal minHeight={minHeight}>
-               <Header>
-                  <p>{title}</p>
-               </Header>
+               {title && (
+                  <Header>
+                     <p>{title}</p>
+                  </Header>
+               )}
                <Content>{children}</Content>
             </StyledModal>
          </ModalUi>

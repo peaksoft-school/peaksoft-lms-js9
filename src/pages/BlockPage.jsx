@@ -1,23 +1,29 @@
 import React from 'react'
 import { styled } from '@mui/material'
 import BlockIcon from '../assets/icons/blockIcon.svg'
+import { Modal } from '../components/UI/modal/Modal'
 
-export const BlockPage = () => {
+export const BlockPage = ({ open, handleClose }) => {
    return (
-      <Container>
-         <img src={BlockIcon} alt="blockPhoto" />
-         <h2>Вам закрыли доступ</h2>
-         <p>Вам закрыли доступ к системе,внесите оплату для продолжения !</p>
-      </Container>
+      <Modal open={open} handleClose={handleClose}>
+         <Container>
+            <img src={BlockIcon} alt="blockPhoto" />
+            <div>
+               <h2>Вам закрыли доступ</h2>
+            </div>
+            <p>Вам закрыли доступ к системе,внесите оплату для продолжения !</p>
+         </Container>
+      </Modal>
    )
 }
 const Container = styled('div')(() => ({
-   width: '100%',
-   height: '100vh',
+   width: '26.3125rem',
+   height: '23.5625rem',
    display: 'flex',
    flexDirection: 'column',
    justifyContent: 'center',
    alignItems: 'center',
+   marginLeft: '2rem',
    h2: {
       color: '#000',
       textAlign: 'center',
