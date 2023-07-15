@@ -26,7 +26,6 @@ import { ReactComponent as GroupsBlueIcon } from './groupsBlueIcon.svg'
 import { ReactComponent as GroupsIcon } from './groupsTwoIcon.svg'
 import { ReactComponent as ImportIcon } from './import.svg'
 import { ReactComponent as LazyLoadingIcon } from './lazyLoadingIcon.svg'
-import { ReactComponent as LinkIcon } from './linkIcon.svg'
 import { ReactComponent as ListNumberedIcon } from './listNumberedOlIcon.svg'
 import { ReactComponent as OpenEyePassIcon } from './openEyePassIcon.svg'
 import { ReactComponent as PhotoIcon } from './photoIcon.svg'
@@ -42,8 +41,22 @@ import { ReactComponent as TeachersBlueIcon } from './teachersBlueIcon.svg'
 import { ReactComponent as TeachersIcon } from './teachersIcon.svg'
 import { ReactComponent as VideoTutorialIcon } from './videoTutorialLesIcon.svg'
 import { ReactComponent as MeatBallIcon } from './frameCardIcon.svg'
+import { ReactComponent as LessonVideoIcon } from './videolessonicon.svg'
+import { ReactComponent as TaskIcon } from './taskicon.svg'
+import { ReactComponent as LinkIcon } from './linkicon.svg'
+import { ReactComponent as TestIcon } from './testicon.svg'
+import { ReactComponent as LogoLessonIcon } from './logolessonicon.svg'
+import { ReactComponent as DeleteRedIcon } from './deleteredicon.svg'
+import { ReactComponent as EditGreenIcon } from './editgreenicon.svg'
 
 export {
+   LessonVideoIcon,
+   TaskIcon,
+   LinkIcon,
+   TestIcon,
+   LogoLessonIcon,
+   DeleteRedIcon,
+   EditGreenIcon,
    AddDownIcon,
    AddMoreIcon,
    AddTextIcon,
@@ -72,7 +85,6 @@ export {
    GroupsIcon,
    ImportIcon,
    LazyLoadingIcon,
-   LinkIcon,
    ListNumberedIcon,
    OpenEyePassIcon,
    PhotoIcon,

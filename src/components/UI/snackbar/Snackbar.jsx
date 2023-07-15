@@ -1,6 +1,6 @@
 import React from 'react'
 import { toast, Toaster } from 'react-hot-toast'
-import { BiSolidErrorCircle } from 'react-icons/bi' // Import the desired error icon
+import { BiSolidErrorCircle } from 'react-icons/bi'
 import { HiCheckCircle } from 'react-icons/hi'
 import { styled } from 'styled-components'
 
