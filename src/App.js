@@ -1,7 +1,9 @@
+import { HeaderDashboard } from './components/HeaderDashboard'
+
 function App() {
    return (
       <div>
-         <h1>Peaksoft-lms-js9</h1>
+         <HeaderDashboard />
       </div>
    )
 }
