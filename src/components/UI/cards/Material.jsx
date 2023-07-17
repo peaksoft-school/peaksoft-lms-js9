@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { FormControl, MenuItem, Select, styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { menuItem } from '../../utils/constants/MaterialsArray'
-import { Button } from '../UI/button/Button'
-import { reusableRoutesLesson } from '../../utils/constants/routes'
+import { menuItem } from '../../../utils/constants/MaterialsArray'
+import { Button } from '../button/Button'
+import { reusableRoutesLesson } from '../../../utils/constants/routes'
 import {
    LessonVideoIcon,
    TaskIcon,
@@ -13,7 +13,7 @@ import {
    DeleteRedIcon,
    EditGreenIcon,
    LinkIcon,
-} from '../../assets/icons'
+} from '../../../assets/icons'
 
 export const Material = ({
    clickEditHandler,
