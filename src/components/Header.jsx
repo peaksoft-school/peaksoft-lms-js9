@@ -100,8 +100,8 @@ const Container = styled(Box)`
 `
 
 const TabsStyle = styled(Tabs)`
-   margin-top: 27px;
    color: red;
+   margin-top: 27px;
 `
 const ButtonContainer = styled(Box)(() => ({
    display: 'flex',
