@@ -16,11 +16,13 @@ export const Tabs = ({ labelOne, labelTwo, toOne, toTwo }) => {
       </Container>
    )
 }
+
 const Container = styled('div')`
    display: flex;
    justify-content: center;
    width: 71.25rem;
    flex-shrink: 0;
+
    h2 {
       font-family: Open Sans;
       font-size: 1rem;

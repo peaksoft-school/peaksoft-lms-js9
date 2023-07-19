@@ -1,21 +1,17 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import { Modal as ModalUi, styled } from '@mui/material'
 
-export const Modal = ({ minHeight, title, children }) => {
-   const [open, setOpen] = React.useState(false)
-   const handleOpen = () => setOpen(true)
-   const handleClose = () => setOpen(false)
-
+export const Modal = ({ minHeight, title, children, open, handleClose }) => {
    return (
       <div>
-         <Button onClick={handleOpen}>Open modal</Button>
          <ModalUi open={open} onClose={handleClose}>
             <StyledModal minHeight={minHeight}>
-               <Header>
-                  <p>{title}</p>
-               </Header>
+               {title && (
+                  <Header>
+                     <p>{title}</p>
+                  </Header>
+               )}
                <Content>{children}</Content>
             </StyledModal>
          </ModalUi>
@@ -45,7 +41,7 @@ const StyledModal = styled(Box)(() => ({
    top: '50%',
    left: '50%',
    transform: 'translate(-50%, -50%)',
-   width: '33.8125rem',
+   width: '35.5vw',
    backgroundColor: '#fff',
    border: 'none',
    minHeight: '13.1875rem',
