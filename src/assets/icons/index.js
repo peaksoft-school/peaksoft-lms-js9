@@ -48,6 +48,8 @@ import { ReactComponent as TestIcon } from './testicon.svg'
 import { ReactComponent as LogoLessonIcon } from './logolessonicon.svg'
 import { ReactComponent as DeleteRedIcon } from './deleteredicon.svg'
 import { ReactComponent as EditGreenIcon } from './editgreenicon.svg'
+import { ReactComponent as ProfileIcon } from './profile.svg'
+import { ReactComponent as ExitIcon } from './exit.svg'
 
 export {
    LessonVideoIcon,
@@ -100,4 +102,6 @@ export {
    TeachersIcon,
    VideoTutorialIcon,
    MeatBallIcon,
+   ProfileIcon,
+   ExitIcon,
 }
