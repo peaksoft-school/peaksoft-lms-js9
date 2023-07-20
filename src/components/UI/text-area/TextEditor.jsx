@@ -237,13 +237,16 @@ const ListContainer = styled('div')`
    padding: 10px;
 
    ul {
-      list-style: disc;
-      margin-left: 20px;
+      li {
+         list-style: disc;
+         margin-left: 20px;
+      }
    }
-
    ol {
-      list-style: decimal;
-      margin-left: 20px;
+      li {
+         list-style: decimal;
+         margin-left: 20px;
+      }
    }
 `
 
