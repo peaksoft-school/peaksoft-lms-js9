@@ -3,26 +3,38 @@ import { createTheme } from '@mui/material'
 export const theme = createTheme({
    palette: {
       primary: {
-         main: '#EFF0F4',
-         light: '#ffffff',
-         blue: '#1F6ED4',
-      },
-      secondary: {
-         main: '#C91E1E',
-         light: '#D4D4D4',
-         pink: '#FA2B56',
-         green: '#36AC0C',
-         border: '#BFC4CE',
-         borderSelect: '#EBEBEB',
+         main: '#1F6ED4',
+         light: '#6190FF',
+         dark: '#1D60FF',
       },
       error: {
          main: '#C91E1E',
+         light: '#E13A3A',
+         dark: '#B62727',
+      },
+      secondary: {
+         main: '#D4D4D4',
+         light: 'rgba(26, 35, 126, 0.07)',
+         dark: '#b6b6b6',
       },
       success: {
          main: '#36AC0C',
+         light: '#5ce457',
+         dark: '#1b580f',
+      },
+      info: {
+         main: '#FA2B56',
+         light: 'rgba(235, 67, 102, 1)',
+         dark: 'rgba(239, 11, 59, 1)',
       },
    },
    typography: {
-      fontFamily: 'Open Sans',
+      allVariants: {
+         fontFamily: 'Open Sans',
+         textTransform: 'none',
+      },
+      button: {
+         textDecoration: 'none',
+      },
    },
 })

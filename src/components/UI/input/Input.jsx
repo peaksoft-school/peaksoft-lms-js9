@@ -3,10 +3,11 @@ import { TextField } from '@mui/material'
 import styled from '@emotion/styled'
 
 export const Input = forwardRef(
-   ({ placeholder, onChange, type, value, error, ...rest }, ref) => {
+   ({ placeholder, size, onChange, type, value, error, ...rest }, ref) => {
       return (
          <div>
             <TextInput
+               size={size}
                value={value}
                onChange={onChange}
                variant="outlined"
