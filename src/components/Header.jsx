@@ -1,65 +1,130 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
-import { Box } from '@mui/material'
+import { Box, Select } from '@mui/material'
 import { DropDownIcon, ExitIcon, ProfileIcon } from '../assets/icons'
 import { IconButtons } from './UI/button/IconButtons'
 import { Button } from './UI/button/Button'
 import { Tabs } from './UI/tabs/Tabs'
+import { ReactComponent as PlusIcon } from '../assets/icons/plusIcon.svg'
+import { ReactComponent as ExelExport } from '../assets/icons/exportExel.svg'
 
 export const Header = ({
    onClick,
-   titleButton,
-   errorColor,
    conditionButton,
-   titleTabs,
-   titleTabs2,
    titlePage,
+   courses,
+   buttonContent,
 }) => {
    const [state, setState] = useState(false)
+   const dropdownRef = useRef(null)
 
    const handleChange = () => {
       setState(!state)
    }
+
+   const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+         setState(false)
+      }
+   }
+
+   useEffect(() => {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => {
+         document.removeEventListener('mousedown', handleClickOutside)
+      }
+   }, [])
+
    return (
       <Container>
          <StyledBox>
-            <TabsStyle
-               labelOne={titleTabs}
-               labelTwo={titleTabs2}
-               toOne="/"
-               toTwo="s"
-            />
-            <IconButtons ttons>
+            {courses === 'Courses' && (
+               <TabsStyle
+                  labelOne="Учителя"
+                  labelTwo="Студенты"
+                  toOne="/"
+                  toTwo="s"
+               />
+            )}
+            <BoxLogOut ref={dropdownRef} onClick={handleChange}>
                <ProfileIcon />
-            </IconButtons>
-            <p>{titlePage}</p>
-            <IconButtons onClick={handleChange}>
+               <p>{titlePage}</p>
+               <DropDownIcon />
+            </BoxLogOut>
+            <IconButtons>
                {state && (
                   <StyledDropDown>
-                     <IconButtons>
-                        <ExitIcon style={{ marginLeft: '1.20rem' }} />
-                     </IconButtons>
+                     <ExitIcon style={{ marginLeft: '1.20rem' }} />
                      <span>Выйти</span>
                   </StyledDropDown>
                )}
-               <DropDownIcon />
             </IconButtons>
          </StyledBox>
-         {conditionButton ? (
-            <ButtonContainer>
+         <ButtonContainer>
+            {conditionButton === 'Students' ? (
+               <StudentsButtonDiv>
+                  <Select
+                     sx={{
+                        width: '15%',
+                        border: '1px solid',
+                        borderColor: '#3772FF',
+                     }}
+                  />
+                  <ImportExelButton>
+                     <Button
+                        style={{
+                           display: 'flex',
+                           background: '#fff',
+                           color: '#3772FF',
+                           textTransform: 'capitalize',
+                           gap: '8px',
+                           height: '40px',
+                           fontFamily: 'Open Sans',
+                           fontSize: '0.875rem',
+                           fontStyle: 'normal',
+                           fontWeight: 600,
+                           lineHeight: '1.25rem',
+                           letterSpacing: '0.0009rem',
+                           border: '1px solid',
+                        }}
+                        onClick={onClick}
+                     >
+                        <ExelExport />
+                        Импорт Exel
+                     </Button>
+                     <Button
+                        style={{
+                           display: 'flex',
+                           gap: '8px',
+                           textTransform: 'capitalize',
+                        }}
+                        onClick={onClick}
+                     >
+                        <PlusIcon />
+                        {buttonContent}
+                     </Button>
+                  </ImportExelButton>
+               </StudentsButtonDiv>
+            ) : (
                <Button
-                  style={errorColor ? { backgroundColor: 'red' } : null}
+                  style={{
+                     display: 'flex',
+                     gap: '8px',
+                     textTransform: 'capitalize',
+                  }}
                   onClick={onClick}
                >
-                  {titleButton}
+                  <PlusIcon />
+                  {buttonContent}
                </Button>
-            </ButtonContainer>
-         ) : null}
+            )}
+         </ButtonContainer>
       </Container>
    )
 }
 
 const StyledBox = styled(Box)(() => ({
+   width: '100%',
    display: 'flex',
    alignItems: 'center',
    gap: '5px',
@@ -94,6 +159,7 @@ const StyledDropDown = styled('h3')({
 })
 
 const Container = styled(Box)`
+   width: 100%;
    .css-js2pjb {
       margin-top: 27px;
    }
@@ -102,9 +168,29 @@ const Container = styled(Box)`
 const TabsStyle = styled(Tabs)`
    color: red;
    margin-top: 27px;
+   margin: 0 auto;
 `
 const ButtonContainer = styled(Box)(() => ({
+   width: '100%',
    display: 'flex',
    justifyContent: 'flex-end',
    marginTop: '1.5rem',
+}))
+
+const BoxLogOut = styled(Box)(() => ({
+   display: 'flex',
+   alignItems: 'center',
+   cursor: 'pointer',
+   gap: '0.875rem',
+}))
+
+const StudentsButtonDiv = styled('div')(() => ({
+   width: '100%',
+   height: '40px',
+   display: 'flex',
+   justifyContent: 'space-between',
+}))
+const ImportExelButton = styled('div')(() => ({
+   display: 'flex',
+   gap: '10px',
 }))
