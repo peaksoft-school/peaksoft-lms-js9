@@ -9,28 +9,9 @@ import {
    TableRow,
    Paper,
 } from '@mui/material'
+import { columns, data } from '../../../utils/constants/tableArray'
 
-const StyledTable = styled(MuiTable)`
-   min-width: 650px;
-`
-const StyledContainer = styled(TableContainer)`
-   width: 71.25rem;
-`
-const StyledTableRow = styled(TableRow)`
-   &:nth-child(even) {
-      background-color: #eceaea9f;
-   }
-`
-const StyledTableCell = styled(TableCell)`
-   padding: 10px 8px 10px 20px;
-   font-weight: 900;
-   color: black;
-`
-const StyledTableCellForData = styled(TableCell)`
-   padding: 8px 8px 8px 20px;
-`
-
-const Table = ({ columns, data }) => {
+const Table = () => {
    return (
       <StyledContainer component={Paper}>
          <StyledTable>
@@ -65,3 +46,22 @@ const Table = ({ columns, data }) => {
 }
 
 export default Table
+const StyledTable = styled(MuiTable)`
+   min-width: 650px;
+`
+const StyledContainer = styled(TableContainer)`
+   width: 100%;
+`
+const StyledTableRow = styled(TableRow)`
+   &:nth-child(even) {
+      background-color: #eceaea9f;
+   }
+`
+const StyledTableCell = styled(TableCell)`
+   padding: 10px 8px 10px 20px;
+   font-weight: 900;
+   color: black;
+`
+const StyledTableCellForData = styled(TableCell)`
+   padding: 8px 8px 8px 20px;
+`

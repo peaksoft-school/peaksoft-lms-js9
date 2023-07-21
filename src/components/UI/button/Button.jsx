@@ -17,9 +17,10 @@ const BUTTON_VARIANTS = {
    outlined: {
       default: '#fff',
       active: '#6190FF 30 %',
-      hover: '#1D60FF 10 %',
+      hover: 'rgba(29, 96, 255, 0.10)',
       color: '#3772FF',
       disabled: '#fff',
+      borderr: '1px solid #1D60FF',
    },
 }
 
@@ -30,6 +31,7 @@ const getStylesByVariant = (variant = 'contained') => {
       hover,
       active,
       disabled,
+      borderr,
       ...restStyles
    } = BUTTON_VARIANTS[variant] || {}
    return {
@@ -37,6 +39,7 @@ const getStylesByVariant = (variant = 'contained') => {
       backgroundColor: defaultBgColor,
       '&:hover': {
          backgroundColor: hover,
+         border: borderr,
       },
       '&:active': {
          backgroundColor: active,

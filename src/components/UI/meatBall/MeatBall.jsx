@@ -8,17 +8,16 @@ import { DeleteIcon, EditIcon, MeatBallIcon } from '../../../assets/icons'
 const data = [
    {
       id: 1,
-      title: 'EditIcon',
+      title: 'Редактировать',
       img: <EditIcon />,
    },
    {
       id: 2,
-      title: 'DeleteIcon',
+      title: 'Удалить',
       img: <DeleteIcon />,
    },
 ]
-
-export default function MeatBall({ menuItems, onClick }) {
+export default function MeatBall({ onClick, menuItems }) {
    const [anchorEl, setAnchorEl] = React.useState(null)
    const open = Boolean(anchorEl)
 
@@ -52,11 +51,8 @@ export default function MeatBall({ menuItems, onClick }) {
             open={open}
             onClose={handleClose}
          >
-            {(menuItems.length ? menuItems : data).map((item) => (
-               <StyledMenuItem
-                  key={item.id}
-                  onClick={() => onClick(item.title)}
-               >
+            {(menuItems.length > 1 ? menuItems : data).map((item) => (
+               <StyledMenuItem key={item.id} onClick={() => onClick(item.id)}>
                   <div>{item.img}</div>
                   {item.title}
                </StyledMenuItem>
@@ -82,7 +78,8 @@ const StyledMenu = styled((props) => (
 ))(({ theme }) => ({
    '& .MuiPaper-root': {
       borderRadius: 6,
-      marginTop: theme.spacing(1),
+      marginLeft: theme.spacing(-3.5),
+      marginTop: theme.spacing(-2),
       minWidth: 180,
       color:
          theme.palette.mode === 'light'

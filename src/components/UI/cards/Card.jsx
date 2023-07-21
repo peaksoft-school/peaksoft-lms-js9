@@ -1,43 +1,62 @@
 import * as React from 'react'
-import { Card as Cards, styled } from '@mui/material'
+import { styled } from '@mui/material'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
+import { Link } from 'react-router-dom'
+import MeatBall from '../meatBall/MeatBall'
 
-export const Card = ({ el, alt }) => {
+const menuItems = []
+
+export const Card = ({ el, onClick }) => {
+   const getMenuIdAndSetCardId = (menuID) => {
+      onClick({ menuId: menuID, cardId: el.id })
+   }
    return (
       <ContainerCard>
-         <ContainerImg image={el.img} />
-         <ContainerContent>
-            <ContainerHeader>
-               <p>{el.title}</p> <span>{el.date}</span>
-            </ContainerHeader>
-            <div>{el.description}</div>
-            <ContainerFooter>
-               <img src={el.icon} alt={alt} />
-            </ContainerFooter>
-         </ContainerContent>
+         <Link to={`${el.title}`}>
+            <ContainerImg>
+               <img src={el.img} alt="groupfoto" />
+            </ContainerImg>
+            <ContainerContent>
+               <ContainerHeader>
+                  <p>{el.title}</p> <span>{el.date}</span>
+               </ContainerHeader>
+               <ContainerDescriptionStyled>
+                  {el.description}
+               </ContainerDescriptionStyled>
+            </ContainerContent>
+         </Link>
+         <ContainerFooter>
+            <MeatBall onClick={getMenuIdAndSetCardId} menuItems={menuItems} />
+         </ContainerFooter>
       </ContainerCard>
    )
 }
 
-const ContainerCard = styled(Cards)(() => ({
-   width: '17.6vw',
-   minHeight: '19.4375rem',
+const ContainerCard = styled(Link)(() => ({
+   width: '270px',
+   height: '321px',
    flexShrink: 0,
    borderRadius: '0.625rem',
    border: '1px solid #D4D4D4',
    background: '#FFF',
+   margin: '20px 0',
 }))
+const ContainerDescriptionStyled = styled('div')`
+   height: 65px;
+   overflow: hidden;
+`
 
-const ContainerImg = styled(CardMedia)(() => ({
-   width: '17.6vw',
-   height: '10.6875rem',
-   flexShrink: 0,
-   borderRadius: '0.625rem 0.625rem 0rem 0rem',
-   background: 'url(<path-to-image>), lightgray 50% / cover no-repeat',
-}))
+const ContainerImg = styled('div')`
+   border-radius: 0.625rem 0.625rem 0rem 0rem;
+   display: flex;
+   justify-content: center;
+   overflow: hidden;
+   img {
+      height: 171px;
+   }
+`
 
 const ContainerContent = styled(CardContent)(() => ({
    paddingLeft: ' 1.12rem ',
@@ -79,6 +98,7 @@ const ContainerFooter = styled(CardActions)(() => ({
    '&.MuiCardActions-root': {
       display: 'flex',
       justifyContent: 'end',
-      paddingBottom: '0',
+      padding: '0',
+      margin: '-25px 5px',
    },
 }))

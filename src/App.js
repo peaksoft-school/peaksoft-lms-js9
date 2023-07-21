@@ -1,8 +1,11 @@
+import { GroupAdminPage } from './layout/admin/GroupAdminPage'
+
 function App() {
    return (
       <div>
-         <h1>Peaksoft lms js9</h1>
+         <GroupAdminPage />
       </div>
    )
 }
+
 export default App

@@ -34,12 +34,12 @@ export const UploadImage = ({ onImageUpload }) => {
    )
 }
 const Container = styled('div')`
-   width: 18vw;
+   width: 9vw;
    height: 15vh;
    border-radius: 0.9rem;
-   overflow: hidden;
    display: flex;
    justify-content: center;
+   overflow: hidden;
 `
 
 const Img = styled('img')`
