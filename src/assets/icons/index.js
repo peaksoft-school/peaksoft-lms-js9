@@ -48,8 +48,16 @@ import { ReactComponent as TestIcon } from './testicon.svg'
 import { ReactComponent as LogoLessonIcon } from './logolessonicon.svg'
 import { ReactComponent as DeleteRedIcon } from './deleteredicon.svg'
 import { ReactComponent as EditGreenIcon } from './editgreenicon.svg'
+import { ReactComponent as ErrorIconCheck } from './errorImg.svg'
+import { ReactComponent as SuccessIconRadio } from './successIconRadio.svg'
+import { ReactComponent as ErrorIconRadio } from './ErrorIconRadio.svg'
+import { ReactComponent as ErrorIconCheckbox } from './errorIconCheckbox.svg'
 
 export {
+   ErrorIconCheckbox,
+   ErrorIconRadio,
+   SuccessIconRadio,
+   ErrorIconCheck,
    LessonVideoIcon,
    TaskIcon,
    LinkIcon,
