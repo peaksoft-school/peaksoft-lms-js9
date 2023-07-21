@@ -52,6 +52,8 @@ import { ReactComponent as ErrorIconCheck } from './errorImg.svg'
 import { ReactComponent as SuccessIconRadio } from './successIconRadio.svg'
 import { ReactComponent as ErrorIconRadio } from './ErrorIconRadio.svg'
 import { ReactComponent as ErrorIconCheckbox } from './errorIconCheckbox.svg'
+import { ReactComponent as ProfileIcon } from './profile.svg'
+import { ReactComponent as ExitIcon } from './exit.svg'
 
 export {
    ErrorIconCheckbox,
@@ -108,4 +110,6 @@ export {
    TeachersIcon,
    VideoTutorialIcon,
    MeatBallIcon,
+   ProfileIcon,
+   ExitIcon,
 }
