@@ -1,9 +1,7 @@
-import { GroupAdminPage } from './layout/admin/GroupAdminPage'
-
 function App() {
    return (
       <div>
-         <GroupAdminPage />
+         <h1>Peaksoft-lms-js-9</h1>
       </div>
    )
 }

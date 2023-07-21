@@ -2,24 +2,16 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import { Modal as ModalUi, styled } from '@mui/material'
 
-export const Modal = ({
-   minHeight,
-   title,
-   children,
-   open,
-   handleClose,
-   header,
-   width,
-}) => {
+export const Modal = ({ minHeight, title, children, open, handleClose }) => {
    return (
       <div>
          <ModalUi open={open} onClose={handleClose}>
-            <StyledModal width={width} minHeight={minHeight}>
-               {header ? (
+            <StyledModal minHeight={minHeight}>
+               {title && (
                   <Header>
                      <p>{title}</p>
                   </Header>
-               ) : null}
+               )}
                <Content>{children}</Content>
             </StyledModal>
          </ModalUi>

@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material'
-import { Sidebar } from '../sidebar/Sidebar'
-import { AdminRoutes } from '../../routes/adminRoutes/AdminRoutes'
-import { ModalAddedNewGroup } from './groups/ModalAddedNewGroup'
+import { ModalAddedNewGroup } from './groups-modal/ModalAddedNewGroup'
+import { AdminRoutes } from '../../../routes/adminRoutes/AdminRoutes'
+import { Sidebar } from '../../sidebar/Sidebar'
 
 export const GroupAdminPage = () => {
    const [openModal, setOpenModal] = useState(false)
+   const [dataValue, setDataValue] = useState('')
 
    const openModalAddedNewGroupHandler = () => {
       setOpenModal((prev) => !prev)
@@ -26,6 +27,8 @@ export const GroupAdminPage = () => {
                handleClose={closeModalAddedNewGroupHandler}
                openModal={openModal}
                onSubmit={addedNewGroupHandler}
+               onDateChange={setDataValue}
+               value={dataValue}
             />
             <AdminRoutes
                openModal={openModalAddedNewGroupHandler}
@@ -41,5 +44,5 @@ const SidebarStyled = styled('div')`
 `
 const ContainerModalGroup = styled('div')`
    margin-left: 13%;
-   padding: 0 20px;
+   padding: 0 1.2rem;
 `

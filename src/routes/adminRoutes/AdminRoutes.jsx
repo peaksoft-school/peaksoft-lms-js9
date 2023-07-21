@@ -1,11 +1,11 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { reusableRoutesRoles } from '../../utils/constants/routes'
-import { Groups } from '../../layout/admin/groups/Groups'
+import { Groups } from '../../layout/admin/groups/groups-page/Groups'
 import { Courses } from '../../layout/admin/courses/Courses'
 import { Teachers } from '../../layout/admin/teachers/Teachers'
 import { Students } from '../../layout/admin/students/Students'
-import { GroupsTable } from '../../layout/admin/groups/GroupsTable'
+import { GroupsTable } from '../../layout/admin/groups/groups-page/GroupsTable'
 
 export const AdminRoutes = ({ roles, openModal }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])

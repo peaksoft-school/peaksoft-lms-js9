@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import { Modal } from '../../../components/UI/modal/Modal'
-import { Button } from '../../../components/UI/button/Button'
+import { Modal } from '../../../../components/UI/modal/Modal'
+import { Button } from '../../../../components/UI/button/Button'
 
 export const ModalDeleteGroup = ({ open, handleClose, deleteCardHandler }) => {
    return (
@@ -32,33 +32,35 @@ const ModalStyled = styled('div')`
    justify-content: center;
    align-items: center;
    flex-direction: column;
-   gap: 25px;
-   margin-top: 2px;
+   gap: 1.5625rem;
+   margin-top: 0.125rem;
    div {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      gap: 0.625rem;
    }
 `
+
 const ButtonCloseStyled = styled(Button)`
-   border-radius: 8px;
-   border: 1px solid var(--button, #3772ff);
+   border-radius: 0.5rem;
+   border: 0.0625rem solid var(--button, #3772ff);
    text-transform: capitalize;
-   width: 103px;
-   height: 40px;
+   width: 6.4375rem;
+   height: 2.5rem;
 `
+
 const ButtonDeleteStyled = styled(Button)`
-   border-radius: 8px;
-   /* border: 1px solid var(--button, #3772ff); */
+   border-radius: 0.5rem;
    text-transform: capitalize;
-   width: 103px;
-   height: 40px;
+   width: 6.4375rem;
+   height: 2.5rem;
 `
+
 const ParaghQuestionStyled = styled('p')`
-   width: 190px;
-   height: 44px;
+   width: 11.875rem;
+   height: 2.75rem;
    color: var(--black, #1f1c1c);
    text-align: center;
-   font-size: 16px;
+   font-size: 1rem;
    font-weight: 400;
 `

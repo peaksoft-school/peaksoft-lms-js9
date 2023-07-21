@@ -1,8 +1,8 @@
 import React from 'react'
 import { styled } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
-import Table from '../../../components/UI/table/Table'
-import { Dashboard } from '../../dashboardHeader/Dashboard'
+import Table from '../../../../components/UI/table/Table'
+import { Header } from '../../../../components/UI/header/Header'
 
 export const GroupsTable = () => {
    const params = useParams()
@@ -13,7 +13,7 @@ export const GroupsTable = () => {
    return (
       <>
          <div>
-            <Dashboard roles="Администратор" />
+            <Header titlePage="Администратор" />
          </div>
          <SpanStyled>
             <button type="button" onClick={navigateGoBackGroups}>
@@ -27,15 +27,15 @@ export const GroupsTable = () => {
 }
 
 const SpanStyled = styled('p')`
-   font-size: 14px;
-   margin-top: 44px;
-   margin-bottom: 24px;
+   font-size: 0.875rem;
+   margin-top: 2.75rem;
+   margin-bottom: 1.5rem;
    display: flex;
-   gap: 5px;
+   gap: 0.3125rem;
    align-items: center;
    button {
       border: none;
-      font-size: 14px;
+      font-size: 0.875rem;
       color: #747d74;
    }
 `

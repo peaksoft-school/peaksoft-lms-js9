@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material'
-import { cardsGroup } from '../../../utils/constants/cardsGroup'
-import { Card } from '../../../components/UI/cards/Card'
-import { Dashboard } from '../../dashboardHeader/Dashboard'
-import { ModalDeleteGroup } from './ModalDeleteGroup'
-import { ModalEditGroup } from './ModalEditGroup'
+import { cardsGroup } from '../../../../utils/constants/cardsGroup'
+import { Card } from '../../../../components/UI/cards/Card'
+import { ModalDeleteGroup } from '../groups-modal/ModalDeleteGroup'
+import { ModalEditGroup } from '../groups-modal/ModalEditGroup'
+import { Header } from '../../../../components/UI/header/Header'
 
 export const Groups = ({ openModal }) => {
    const [openModalDelete, setOpenModalDelete] = useState(false)
    const [openModalEdit, setOpenModalEdit] = useState(false)
+   const [dateEditModal, setDateEditModal] = useState('')
 
    const deleteCardHandler = (param) => {
       if (param.menuId === 1) {
@@ -25,11 +26,10 @@ export const Groups = ({ openModal }) => {
    }
    return (
       <>
-         <Dashboard
+         <Header
+            titlePage="Администратор"
+            buttonContent="Создать группу"
             onClick={openModal}
-            showButton
-            roles="Администратор"
-            titleButton="+ Создать группу"
          />
          <ContainerItem>
             {cardsGroup.map((el) => {
@@ -47,6 +47,8 @@ export const Groups = ({ openModal }) => {
                <ModalEditGroup
                   openModal={openModalEdit}
                   handleClose={closeModalEditHandler}
+                  onDateChange={setDateEditModal}
+                  value={dateEditModal}
                />
             )}
          </div>

@@ -35,16 +35,17 @@ export const Card = ({ el, onClick }) => {
 }
 
 const ContainerCard = styled(Link)(() => ({
-   width: '270px',
-   height: '321px',
+   width: '16.875rem',
+   height: '20.0625rem',
    flexShrink: 0,
    borderRadius: '0.625rem',
-   border: '1px solid #D4D4D4',
+   border: '0.0625rem solid #D4D4D4',
    background: '#FFF',
-   margin: '20px 0',
+   margin: '1.25rem 0',
 }))
+
 const ContainerDescriptionStyled = styled('div')`
-   height: 65px;
+   height: 4.0625rem;
    overflow: hidden;
 `
 

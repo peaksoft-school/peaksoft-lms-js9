@@ -1,11 +1,14 @@
 import React from 'react'
-import { Dashboard } from '../../dashboardHeader/Dashboard'
+import { Header } from '../../../components/UI/header/Header'
 
 export const Teachers = () => {
    return (
       <div>
          <div>
-            <Dashboard showButton titleButton="+ Создать учителя" />
+            <Header
+               titlePage="Администратор"
+               buttonContent="Добавить учителя"
+            />
          </div>
          <h1>Teachers </h1>
       </div>
