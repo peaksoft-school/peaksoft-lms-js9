@@ -1,11 +1,65 @@
 import React from 'react'
 import { Checkbox, Radio, styled } from '@mui/material'
-import { resultTest } from '../../utils/constants/testResult'
 import {
    ErrorIconCheckbox,
    ErrorIconRadio,
    SuccessIconRadio,
 } from '../../assets/icons'
+
+const resultTest = [
+   {
+      question: '1.Какого типа данных нет в Java?',
+      point: 1,
+      result: [
+         {
+            id: 1,
+            status: false,
+            answer: 'int',
+         },
+         {
+            id: 2,
+            status: false,
+            answer: 'float',
+         },
+         {
+            id: 3,
+            status: true,
+            answer: 'double',
+         },
+         {
+            id: 4,
+            status: false,
+            answer: 'bubble',
+         },
+      ],
+   },
+   {
+      question: '2.Какого типа данных нет в Java?',
+      point: 1,
+      result: [
+         {
+            id: 5,
+            status: true,
+            answer: 'int',
+         },
+         {
+            id: 6,
+            status: true,
+            answer: 'float',
+         },
+         {
+            id: 7,
+            status: false,
+            answer: 'double',
+         },
+         {
+            id: 8,
+            status: true,
+            answer: 'bubble',
+         },
+      ],
+   },
+]
 
 export const TestResult = ({ variant }) => {
    return (
@@ -15,7 +69,7 @@ export const TestResult = ({ variant }) => {
                <div>
                   <ContainerTitle>
                      <p>{el.question}</p>
-                     <p>{el.point} баллов из 1</p>
+                     <p>{el.point} баллов из 10</p>
                   </ContainerTitle>
                   <div>
                      {el.result.map((item) => (
@@ -56,9 +110,9 @@ const ContainerTitle = styled('div')`
    justify-content: space-between;
    align-items: center;
    padding-top: 1rem;
+   margin-bottom: 1rem;
    p {
-      color: var(--black, #292929);
-      font-size: 1.2rem;
+      font-size: 18px;
       font-weight: 600;
    }
 `
