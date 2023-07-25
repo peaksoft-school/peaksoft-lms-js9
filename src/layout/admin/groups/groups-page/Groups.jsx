@@ -3,26 +3,64 @@ import { styled } from '@mui/material'
 import { cardsGroup } from '../../../../utils/constants/cardsGroup'
 import { Card } from '../../../../components/UI/cards/Card'
 import { ModalDeleteGroup } from '../groups-modal/ModalDeleteGroup'
-import { ModalEditGroup } from '../groups-modal/ModalEditGroup'
+// import { ModalEditGroup } from '../groups-modal/ModalEditGroup'
 import { Header } from '../../../../components/UI/header/Header'
+import { ModalGroup } from '../groups-modal/ModalGroup'
+import { useToggle } from '../../../../utils/hooks/general'
 
 export const Groups = ({ openModal }) => {
-   const [openModalDelete, setOpenModalDelete] = useState(false)
-   const [openModalEdit, setOpenModalEdit] = useState(false)
+   const [todos, setTodos] = useState(cardsGroup)
+   const [getCardId, setCardId] = useState(null)
    const [dateEditModal, setDateEditModal] = useState('')
+   const [editTitle, setEditTitle] = useState('')
+   const [editDescription, setEditDescription] = useState('')
+   const { setActive: setActiveModal1, isActive: isActiveModal1 } = useToggle(
+      'modal1',
+      false
+   )
+   const { setActive: setActiveModal2, isActive: isActiveModal2 } = useToggle(
+      'modal2',
+      false
+   )
 
-   const deleteCardHandler = (param) => {
-      if (param.menuId === 1) {
-         setOpenModalEdit((prev) => !prev)
-      } else if (param.menuId === 2) {
-         setOpenModalDelete((prev) => !prev)
+   const editHandler = (data) => {
+      setActiveModal2(!isActiveModal2)
+      setEditTitle(data.title)
+      setEditDescription(data.description)
+   }
+   const deleteHandler = (cardId) => {
+      setActiveModal1(!isActiveModal1)
+      setCardId(cardId)
+   }
+
+   const openModalDeleteAndEditHandler = ({ menuId, cardId, data }) => {
+      if (menuId === 1) {
+         editHandler(data)
+      } else if (menuId === 2) {
+         deleteHandler(cardId)
       }
    }
+
    const closeModalDeleteHandler = () => {
-      setOpenModalDelete((prev) => !prev)
+      setActiveModal1('')
    }
    const closeModalEditHandler = () => {
-      setOpenModalEdit((prev) => !prev)
+      setActiveModal2('')
+   }
+   const deleteCardHandler = () => {
+      setTodos(todos.filter((el) => el.id !== getCardId))
+      closeModalDeleteHandler()
+   }
+
+   const editTitleChangeHandler = (e) => setEditTitle(e.target.value)
+   const editDesciptionChangeHandler = (e) => setEditDescription(e.target.value)
+
+   const saveHandler = () => {
+      const data = {
+         editTitle,
+         editDescription,
+      }
+      console.log(data)
    }
    return (
       <>
@@ -32,25 +70,35 @@ export const Groups = ({ openModal }) => {
             onClick={openModal}
          />
          <ContainerItem>
-            {cardsGroup.map((el) => {
-               return <Card key={el.id} el={el} onClick={deleteCardHandler} />
+            {todos.map((el) => {
+               return (
+                  <Card
+                     key={el.id}
+                     el={el}
+                     onClick={openModalDeleteAndEditHandler}
+                  />
+               )
             })}
          </ContainerItem>
          <div>
-            {openModalDelete && (
-               <ModalDeleteGroup
-                  open={openModalDelete}
-                  handleClose={closeModalDeleteHandler}
-               />
-            )}
-            {openModalEdit && (
-               <ModalEditGroup
-                  openModal={openModalEdit}
-                  handleClose={closeModalEditHandler}
-                  onDateChange={setDateEditModal}
-                  value={dateEditModal}
-               />
-            )}
+            <ModalDeleteGroup
+               open={isActiveModal1}
+               handleClose={closeModalDeleteHandler}
+               deleteCardHandler={deleteCardHandler}
+            />
+
+            <ModalGroup
+               variant
+               openModal={isActiveModal2}
+               handleClose={closeModalEditHandler}
+               onDateChange={setDateEditModal}
+               value={dateEditModal}
+               onSubmit={saveHandler}
+               editTitleChangeHandler={editTitleChangeHandler}
+               editDesciptionChangeHandler={editDesciptionChangeHandler}
+               editDescription={editDescription}
+               editTitle={editTitle}
+            />
          </div>
       </>
    )
@@ -58,6 +106,5 @@ export const Groups = ({ openModal }) => {
 const ContainerItem = styled('div')`
    display: flex;
    flex-wrap: wrap;
-   justify-content: space-between;
    gap: 20px;
 `

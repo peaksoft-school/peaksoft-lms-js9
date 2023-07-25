@@ -10,7 +10,11 @@ const menuItems = []
 
 export const Card = ({ el, onClick }) => {
    const getMenuIdAndSetCardId = (menuID) => {
-      onClick({ menuId: menuID, cardId: el.id })
+      onClick({
+         menuId: menuID,
+         cardId: el.id,
+         data: el,
+      })
    }
    return (
       <ContainerCard>

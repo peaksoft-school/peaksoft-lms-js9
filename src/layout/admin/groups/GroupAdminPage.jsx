@@ -1,21 +1,53 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material'
-import { ModalAddedNewGroup } from './groups-modal/ModalAddedNewGroup'
+import { ModalGroup } from './groups-modal/ModalGroup'
 import { AdminRoutes } from '../../../routes/adminRoutes/AdminRoutes'
 import { Sidebar } from '../../sidebar/Sidebar'
+import { useToggle } from '../../../utils/hooks/general'
 
 export const GroupAdminPage = () => {
-   const [openModal, setOpenModal] = useState(false)
-   const [dataValue, setDataValue] = useState('')
+   const { isActive, setActive } = useToggle('addedgroupmodal')
+   const [dateValue, setDateValue] = useState(null)
+   const [imageValue, setImageValue] = useState(null)
+   const [description, setDescription] = useState('')
+   const [title, setTitle] = useState('')
 
+   const isFormEmpty =
+      !title.trim() || !description.trim() || !dateValue || !imageValue
+
+   const descriptionChangeHandler = (e) => {
+      setDescription(e.target.value)
+   }
+   const titleChangeHandler = (e) => {
+      setTitle(e.target.value)
+   }
+   const dateChangeHandler = (date) => {
+      setDateValue(date)
+   }
+   const onImageUpload = (img) => {
+      setImageValue(img)
+   }
    const openModalAddedNewGroupHandler = () => {
-      setOpenModal((prev) => !prev)
-   }
-   const closeModalAddedNewGroupHandler = () => {
-      setOpenModal((prev) => !prev)
+      setActive(!isActive)
    }
 
-   const addedNewGroupHandler = () => {}
+   const closeModalAddedNewGroupHandler = () => {
+      setActive('')
+   }
+   const addedNewGroupHandler = (e) => {
+      e.preventDefault()
+      const data = {
+         title,
+         description,
+         date: dateValue.toString(),
+         img: imageValue,
+      }
+      console.log(data)
+      setTitle('')
+      setDescription('')
+      setDateValue(null)
+      setImageValue(null)
+   }
 
    return (
       <>
@@ -23,13 +55,21 @@ export const GroupAdminPage = () => {
             <Sidebar roles="admin" />
          </SidebarStyled>
          <ContainerModalGroup>
-            <ModalAddedNewGroup
+            <ModalGroup
+               variant
                handleClose={closeModalAddedNewGroupHandler}
-               openModal={openModal}
+               openModal={isActive}
                onSubmit={addedNewGroupHandler}
-               onDateChange={setDataValue}
-               value={dataValue}
+               onDateChange={dateChangeHandler}
+               value={dateValue}
+               description={description}
+               title={title}
+               descriptionChangeHandler={descriptionChangeHandler}
+               titleChangeHandler={titleChangeHandler}
+               isFormEmpty={isFormEmpty}
+               onImageUpload={onImageUpload}
             />
+
             <AdminRoutes
                openModal={openModalAddedNewGroupHandler}
                roles="admin"

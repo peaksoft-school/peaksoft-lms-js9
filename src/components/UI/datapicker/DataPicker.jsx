@@ -5,15 +5,11 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 
 export default function BasicDatePicker({ onDateChange, value }) {
-   const changeDatePicker = (newDate) => {
-      onDateChange(newDate)
-      onDateChange('')
-   }
    return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
          <StyledDatePicker
             value={value}
-            onChange={changeDatePicker}
+            onChange={onDateChange}
             renderInput={(props) => <input {...props} />}
          />
       </LocalizationProvider>

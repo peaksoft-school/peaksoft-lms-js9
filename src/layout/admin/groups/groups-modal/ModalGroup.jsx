@@ -1,22 +1,43 @@
 import React from 'react'
 import { styled } from '@mui/material'
+import { useForm, Controller } from 'react-hook-form'
 import { Modal } from '../../../../components/UI/modal/Modal'
 import { UploadImage } from '../../../../components/UI/modal/UploadImage'
 import { Button } from '../../../../components/UI/button/Button'
 import { Input } from '../../../../components/UI/input/Input'
 import BasicDatePicker from '../../../../components/UI/datapicker/DataPicker'
 
-export const ModalAddedNewGroup = ({
+export const ModalGroup = ({
    handleClose,
    openModal,
    onSubmit,
    onDateChange,
+   description,
+   title,
    value,
+   onImageUpload,
+   editTitle,
+   editDescription,
+   variant,
 }) => {
-   const onImageUpload = () => {}
+   const {
+      handleSubmit,
+      control,
+      setValue,
+      formState: { errors },
+   } = useForm()
+
+   const onSubmitForm = (data) => {
+      onSubmit(data)
+   }
+
    return (
-      <Modal title="Создание группы" open={openModal} handleClose={handleClose}>
-         <form onSubmit={onSubmit}>
+      <Modal
+         title={variant ? 'Редактировать группу' : 'Создание группы'}
+         open={openModal}
+         handleClose={handleClose}
+      >
+         <form onSubmit={handleSubmit(onSubmitForm)}>
             <ContainerUploadImageStyled>
                <UploadImage onImageUpload={onImageUpload} />
                <StyledParagUploadImage>
@@ -24,25 +45,61 @@ export const ModalAddedNewGroup = ({
                </StyledParagUploadImage>
             </ContainerUploadImageStyled>
             <ContainerInputTitleDateStyled>
-               <InputTitleStyled type="text" placeholder="Название курса" />
-               <BasicDatePicker onDateChange={onDateChange} value={value} />
+               <Controller
+                  name={variant ? 'editTitle' : 'title'}
+                  control={control}
+                  defaultValue={variant ? editTitle : title}
+                  render={({ field }) => (
+                     <InputTitleStyled
+                        {...field}
+                        type="text"
+                        placeholder="Название курса"
+                        error={!!errors[variant ? 'editTitle' : 'title']}
+                     />
+                  )}
+                  rules={{ required: 'Поле обязательно для заполнения' }}
+               />
+               <BasicDatePicker
+                  onDateChange={(date) => {
+                     setValue('value', date)
+                     onDateChange(date)
+                  }}
+                  dateValue={value}
+               />
             </ContainerInputTitleDateStyled>
-            <InputDescriptionStyled
-               type="text"
-               placeholder="Описание курса"
-               multiline
-               rows={4}
+            <Controller
+               name={variant ? 'editDescription' : 'description'}
+               control={control}
+               defaultValue={variant ? editDescription : description}
+               render={({ field }) => (
+                  <div>
+                     <InputDescriptionStyled
+                        {...field}
+                        type="text"
+                        placeholder="Описание курса"
+                        multiline
+                        rows={4}
+                        error={
+                           !!errors[variant ? 'editDescription' : 'description']
+                        }
+                     />
+                  </div>
+               )}
+               rules={{ required: 'Поле обязательно для заполнения' }}
             />
             <ContainerButtonsStyled>
                <ButtonCloseStyled variant="outlined" onClick={handleClose}>
                   Отмена
                </ButtonCloseStyled>
-               <ButtonAddedStyled type="submit">Добавить</ButtonAddedStyled>
+               <ButtonAddedStyled type="submit">
+                  {variant ? 'Сохранить' : 'Добавить'}
+               </ButtonAddedStyled>
             </ContainerButtonsStyled>
          </form>
       </Modal>
    )
 }
+
 const StyledParagUploadImage = styled('p')`
    color: #8d949e;
    width: 13vw;
@@ -74,7 +131,7 @@ const InputTitleStyled = styled(Input)`
       padding: 0px 1.125rem;
    }
    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-      border: 0.0625rem solid #1f6ed4;
+      border: 0.0625rem solid ${({ error }) => (error ? '#f44336' : '#1f6ed4')};
    }
 `
 
@@ -86,7 +143,7 @@ const InputDescriptionStyled = styled(Input)`
       padding: 0px 1.125rem;
    }
    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-      border: 0.0625rem solid #1f6ed4;
+      border: 0.0625rem solid ${({ error }) => (error ? '#f44336' : '#1f6ed4')};
    }
 `
 
