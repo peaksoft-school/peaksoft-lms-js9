@@ -1,7 +1,7 @@
 export const reusableRoutesRoles = [
    {
       admin: {
-         home: '/',
+         home: '/home',
          courses: '/courses',
          teachers: '/teachers',
          students: '/students',
@@ -9,15 +9,16 @@ export const reusableRoutesRoles = [
    },
    {
       instructor: {
-         home: '/',
+         home: '/homeins',
       },
    },
    {
       student: {
-         home: '/',
+         home: '/homestu',
       },
    },
 ]
+
 export const reusableRoutesLesson = {
    videolesson: '/videolesson',
    presentation: '/presentation',

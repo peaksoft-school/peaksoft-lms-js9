@@ -41,10 +41,10 @@ const StyledModal = styled(Box)(() => ({
    top: '50%',
    left: '50%',
    transform: 'translate(-50%, -50%)',
-   width: '35.5vw',
+   width: 'width',
    backgroundColor: '#fff',
    border: 'none',
-   minHeight: '13.1875rem',
+   // minHeight: '13.1875rem',
    borderRadius: '0.625rem',
 }))
 const Content = styled('div')(() => ({

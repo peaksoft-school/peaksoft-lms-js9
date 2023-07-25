@@ -29,7 +29,7 @@ const TextInput = styled(TextField)`
    }
    input:focus {
       border-radius: 10px;
-      border: 2px solid #1f6ed4;
+      border: none;
    }
    input:invalid {
       border-radius: 10px;

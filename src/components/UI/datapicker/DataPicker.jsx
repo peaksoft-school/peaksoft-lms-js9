@@ -1,35 +1,35 @@
 import React from 'react'
+import { styled } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { styled } from '@mui/material'
 
 export default function BasicDatePicker({ onDateChange, value }) {
-   const changeDatePicker = (newDate) => {
-      onDateChange(newDate)
-   }
    return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
          <StyledDatePicker
             value={value}
-            onChange={changeDatePicker}
+            onChange={onDateChange}
             renderInput={(props) => <input {...props} />}
          />
       </LocalizationProvider>
    )
 }
 const StyledDatePicker = styled(DatePicker)(({ theme, value }) => ({
-   borderRadius: '10px',
-   fontSize: '9px',
-   width: '9.70vw',
-   height: '2.73vw',
-   flexShrink: '0',
-   padding: 0,
+   '& .css-r28ubj-MuiInputBase-root-MuiOutlinedInput-root': {
+      borderRadius: '10px',
+      height: '4.5vh',
+   },
    '& .MuiInputBase-input': {
       padding: theme.spacing(1),
       fontStyle: 'normal',
       color: value ? '#000' : '#8D949E',
       width: '5.53vw',
-      fontSize: '0.84vw',
+      fontSize: '0.9rem',
+      borderRadius: '12px',
+   },
+   '&& :': {
+      border: 'none',
+      color: 'red',
    },
 }))

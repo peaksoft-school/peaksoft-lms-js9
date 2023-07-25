@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import { Box, Select } from '@mui/material'
-import { DropDownIcon, ExitIcon, ProfileIcon } from '../assets/icons'
-import { IconButtons } from './UI/button/IconButtons'
-import { Button } from './UI/button/Button'
-import { Tabs } from './UI/tabs/Tabs'
-import { ReactComponent as PlusIcon } from '../assets/icons/plusIcon.svg'
-import { ReactComponent as ExelExport } from '../assets/icons/exportExel.svg'
+import {
+   DropDownIcon,
+   ExelExport,
+   ExitIcon,
+   PlusIcon,
+   ProfileIcon,
+} from '../../../assets/icons'
+import { IconButtons } from '../button/IconButtons'
+import { Button } from '../button/Button'
+import { Tabs } from '../tabs/Tabs'
 
 export const Header = ({
    onClick,
@@ -106,17 +110,21 @@ export const Header = ({
                   </ImportExelButton>
                </StudentsButtonDiv>
             ) : (
-               <Button
-                  style={{
-                     display: 'flex',
-                     gap: '8px',
-                     textTransform: 'capitalize',
-                  }}
-                  onClick={onClick}
-               >
-                  <PlusIcon />
-                  {buttonContent}
-               </Button>
+               <div>
+                  {buttonContent && (
+                     <Button
+                        style={{
+                           display: 'flex',
+                           gap: '8px',
+                           textTransform: 'capitalize',
+                        }}
+                        onClick={onClick}
+                     >
+                        <PlusIcon />
+                        {buttonContent}
+                     </Button>
+                  )}
+               </div>
             )}
          </ButtonContainer>
       </Container>
@@ -129,7 +137,7 @@ const StyledBox = styled(Box)(() => ({
    alignItems: 'center',
    gap: '5px',
    justifyContent: 'flex-end',
-   borderBottom: '1px solid #000',
+   borderBottom: '1px solid #C4C4C4',
    height: '4.69rem',
    '& p': {
       fontWeight: '400',
