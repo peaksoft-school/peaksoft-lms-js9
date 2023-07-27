@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material'
 import { ModalGroup } from './groups-modal/ModalGroup'
-import { AdminRoutes } from '../../../routes/adminRoutes/AdminRoutes'
+import { AdminRoutes } from '../../../routes/AdminRoutes'
 import { Sidebar } from '../../sidebar/Sidebar'
 import { useToggle } from '../../../utils/hooks/general'
 
@@ -56,7 +56,7 @@ export const GroupAdminPage = () => {
          </SidebarStyled>
          <ContainerModalGroup>
             <ModalGroup
-               variant
+               variant={false}
                handleClose={closeModalAddedNewGroupHandler}
                openModal={isActive}
                onSubmit={addedNewGroupHandler}
