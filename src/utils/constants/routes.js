@@ -1,20 +1,20 @@
 export const reusableRoutesRoles = [
    {
       admin: {
-         home: '/home',
-         courses: '/courses',
-         teachers: '/teachers',
-         students: '/students',
+         home: 'home',
+         courses: 'courses',
+         teachers: 'teachers',
+         students: 'students',
       },
    },
    {
       instructor: {
-         home: '/homeins',
+         myCoursesInstructor: 'mycoursesins',
       },
    },
    {
       student: {
-         home: '/homestu',
+         myCoursesStudent: 'mycoursesstu',
       },
    },
 ]
