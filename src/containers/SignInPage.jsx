@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { styled } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { ForgotModal } from './ForgotModal'
 import { Button } from '../components/UI/button/Button'
 import { Input } from '../components/UI/input/Input'
@@ -21,6 +22,7 @@ const validationSchema = yup.object().shape({
 export const SignInPage = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [open, setOpen] = useState(false)
+   const navigate = useNavigate()
 
    const handleClose = () => {
       setOpen(false)
@@ -34,7 +36,14 @@ export const SignInPage = () => {
       validationSchema,
       onSubmit: (values) => {
          // Логика для отправки формы
-         console.log(values)
+         // Временная для проверки
+         if (values.login === 'admin@gmail.com') {
+            navigate('/admin')
+         } else if (values.login === 'instructor@gmail.com') {
+            navigate('/instructor')
+         } else if (values.login === 'students@gmail.com') {
+            navigate('/student')
+         }
       },
    })
 
@@ -131,6 +140,7 @@ const Container = styled('div')(() => ({
    alignItems: 'center',
    justifyContent: 'center',
    height: '100vh',
+   backgroundColor: '#fff',
    '.error-message': {
       color: 'red',
       fontSize: ' 14px',
@@ -232,7 +242,7 @@ const FormBlock = styled('div')(() => ({
    gap: '10px',
    ' .block': {
       width: '100%',
-      height: '23vh',
+      height: '21vh',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',

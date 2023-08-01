@@ -12,7 +12,14 @@ import {
 
 export const Sidebar = ({ roles }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
-   const { home, courses, teachers, students } = routes[roles]
+   const {
+      home,
+      courses,
+      teachers,
+      students,
+      myCoursesStudent,
+      myCoursesInstructor,
+   } = routes[roles]
    return (
       <Container>
          <LogoPeaksoft>
@@ -40,13 +47,13 @@ export const Sidebar = ({ roles }) => {
                </>
             )}
             {roles === 'instructor' && (
-               <NavLinkStyled to={home} activeClassName="active">
+               <NavLinkStyled to={myCoursesInstructor} activeClassName="active">
                   <CoursesIcon />
                   <h2>Мои курсы</h2>
                </NavLinkStyled>
             )}
             {roles === 'student' && (
-               <NavLinkStyled to={home} activeClassName="active">
+               <NavLinkStyled to={myCoursesStudent} activeClassName="active">
                   <CoursesIcon />
                   <h2>Мои курсы</h2>
                </NavLinkStyled>

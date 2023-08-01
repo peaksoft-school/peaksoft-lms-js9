@@ -3,12 +3,11 @@ import { styled } from '@mui/material'
 import { cardsGroup } from '../../../../utils/constants/cardsGroup'
 import { Card } from '../../../../components/UI/cards/Card'
 import { ModalDeleteGroup } from '../groups-modal/ModalDeleteGroup'
-// import { ModalEditGroup } from '../groups-modal/ModalEditGroup'
 import { Header } from '../../../../components/UI/header/Header'
 import { ModalGroup } from '../groups-modal/ModalGroup'
 import { useToggle } from '../../../../utils/hooks/general'
 
-export const Groups = ({ openModal }) => {
+export const Groups = () => {
    const [todos, setTodos] = useState(cardsGroup)
    const [getCardId, setCardId] = useState(null)
    const [dateEditModal, setDateEditModal] = useState('')
@@ -62,13 +61,71 @@ export const Groups = ({ openModal }) => {
       }
       console.log(data)
    }
+   const [dateValue, setDateValue] = useState(null)
+   const [imageValue, setImageValue] = useState(null)
+   const [description, setDescription] = useState('')
+   const [title, setTitle] = useState('')
+   const { isActive, setActive } = useToggle('addedgroupmodal')
+
+   const isFormEmpty =
+      !title.trim() || !description.trim() || !dateValue || !imageValue
+
+   const descriptionChangeHandler = (e) => {
+      setDescription(e.target.value)
+   }
+   const titleChangeHandler = (e) => {
+      setTitle(e.target.value)
+   }
+   const dateChangeHandler = (date) => {
+      setDateValue(date)
+   }
+   const onImageUpload = (img) => {
+      setImageValue(img)
+   }
+   const openModalAddedNewGroupHandler = () => {
+      setActive(!isActive)
+   }
+
+   const closeModalAddedNewGroupHandler = () => {
+      setActive('')
+   }
+   const addedNewGroupHandler = (e) => {
+      e.preventDefault()
+      const data = {
+         title,
+         description,
+         date: dateValue.toString(),
+         img: imageValue,
+      }
+      console.log(data)
+      setTitle('')
+      setDescription('')
+      setDateValue(null)
+      setImageValue(null)
+   }
+
    return (
       <>
          <Header
             titlePage="Администратор"
             buttonContent="Создать группу"
-            onClick={openModal}
+            onClick={openModalAddedNewGroupHandler}
          />
+         <ModalGroup
+            variant={false}
+            handleClose={closeModalAddedNewGroupHandler}
+            openModal={isActive}
+            onSubmit={addedNewGroupHandler}
+            onDateChange={dateChangeHandler}
+            value={dateValue}
+            description={description}
+            title={title}
+            descriptionChangeHandler={descriptionChangeHandler}
+            titleChangeHandler={titleChangeHandler}
+            isFormEmpty={isFormEmpty}
+            onImageUpload={onImageUpload}
+         />
+
          <ContainerItem>
             {todos.map((el) => {
                return (
