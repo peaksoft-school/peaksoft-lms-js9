@@ -4,14 +4,18 @@ import { Outlet } from 'react-router-dom'
 import { Sidebar } from './sidebar/Sidebar'
 import { Header } from '../components/UI/header/Header'
 
-export const StudentLayout = () => {
+export const Layout = ({ rolesLayout }) => {
    return (
       <>
          <SidebarStyled>
-            <Sidebar roles="student" />
+            <Sidebar
+               roles={rolesLayout === 'student' ? 'student' : 'instructor'}
+            />
          </SidebarStyled>
          <Container>
-            <Header titlePage="Студент" />
+            <Header
+               titlePage={rolesLayout === 'student' ? 'Студент' : 'Инструктор'}
+            />
             <Outlet />
          </Container>
       </>

@@ -10,12 +10,11 @@ import { PrivateRoute } from './PrivateRoutes'
 import { AdminLayout } from '../layout/AdminLayout'
 import { Page } from '../containers/Page'
 import { SignInPage } from '../containers/SignInPage'
-import { StudentLayout } from '../layout/StudentLayout'
+import { Layout } from '../layout/Layout'
 import { MyCoursesStu } from '../pages/student/MyCourses'
 import { MyCoursesIns } from '../pages/instructor/MyCourses'
-import { InstructorLayout } from '../layout/InstructorLayout'
 
-export const AppRoutes = ({ roles }) => {
+export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
    const { home, courses, teachers, students } = routes[roles]
 
@@ -33,7 +32,6 @@ export const AppRoutes = ({ roles }) => {
 
    return (
       <Routes>
-         {/*         sign in         */}
          <Route
             path="/"
             element={
@@ -43,7 +41,6 @@ export const AppRoutes = ({ roles }) => {
             }
          />
          <Route path="*" element={<h1>Такой страницы не существует!</h1>} />
-         {/*          admin           */}
          <Route
             path="/admin"
             element={
@@ -61,28 +58,26 @@ export const AppRoutes = ({ roles }) => {
             <Route path={teachers} element={<Teachers />} />
             <Route path={students} element={<Students />} />
          </Route>
-         {/*        students         */}
          <Route
             path="/student"
             element={
                <PrivateRoute
                   fallBacPath="/"
                   isAllowed={isAllowed(USER_ROLE.STUDENT)}
-                  component={<StudentLayout />}
+                  component={<Layout rolesLayout="student" />}
                />
             }
          >
             <Route path="/student" element={<Navigate to="mycoursesstu" />} />
             <Route path="mycoursesstu" element={<MyCoursesStu />} />
          </Route>
-         {/*      instructor       */}
          <Route
             path="/instructor"
             element={
                <PrivateRoute
                   fallBacPath="/"
                   isAllowed={isAllowed(USER_ROLE.INSTRUCTOR)}
-                  component={<InstructorLayout />}
+                  component={<Layout rolesLayout="instructor" />}
                />
             }
          >
