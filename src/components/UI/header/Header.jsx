@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import { Box, Select } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import {
    DropDownIcon,
    ExelExport,
@@ -21,6 +22,7 @@ export const Header = ({
 }) => {
    const [state, setState] = useState(false)
    const dropdownRef = useRef(null)
+   const navigate = useNavigate()
 
    const handleChange = () => {
       setState(!state)
@@ -30,6 +32,8 @@ export const Header = ({
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
          setState(false)
       }
+      navigate()
+      console.log('sdf')
    }
 
    useEffect(() => {

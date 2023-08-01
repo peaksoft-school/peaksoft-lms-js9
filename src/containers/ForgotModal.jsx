@@ -68,15 +68,14 @@ const ContentTitle = styled('div')(() => ({
 
 const ForgotButton = styled(Button)(() => ({
    padding: '10px 24px',
-   width: '31vw',
+   width: '100%',
    display: 'flex',
    justifyContent: 'center',
    alignItems: 'center',
    borderRadius: '8px',
-   marginLeft: '9px',
 }))
 const FormSubmit = styled('form')(() => ({
-   height: '18vh',
+   height: '13vh',
    display: 'flex',
    flexDirection: 'column',
    justifyContent: 'space-between',
@@ -85,7 +84,7 @@ const FormSubmit = styled('form')(() => ({
 const ForgotInput = styled(Input)(() => ({
    '& .MuiInputBase-root': {
       width: '32vw',
-      height: '42px',
+      height: '5vh',
       borderRadius: '10px',
       marginTop: '0.629rem',
    },
