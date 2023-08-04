@@ -7,7 +7,7 @@ export const Input = forwardRef(
       return (
          <div>
             <TextInput
-               size={size}
+               size="small"
                value={value}
                onChange={onChange}
                variant="outlined"

@@ -1,10 +1,8 @@
 import { Checkbox, FormControlLabel, FormGroup, styled } from '@mui/material'
 
-export const CheckBox = ({ value, label, disabled, variant, onClick }) => {
-   const handleCheckboxClick = (event) => {
-      if (onClick) {
-         onClick(event.target.checked)
-      }
+export const CheckBox = ({ value, label, disabled, variant, onClick, el }) => {
+   const handleCheckboxClick = (e) => {
+      onClick({ event: e.target.checked, id: el.id })
    }
    return (
       <FormGroup>
