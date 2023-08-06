@@ -6,7 +6,7 @@ import { Radio } from '../UI/checkbox-radio/Radio'
 import { Button } from '../UI/button/Button'
 import { CheckBox } from '../UI/checkbox-radio/CheckBox'
 
-const QuestionSection = ({
+export const QuetionSection = ({
    duplicateContainer,
    section,
    deleteDupHandler,
@@ -14,16 +14,17 @@ const QuestionSection = ({
 }) => {
    const [selectedRadioValue, setSelectedRadioValue] = useState('')
    const [check, setCheck] = useState(false)
-
    const [isChecked, setIsChecked] = useState(false)
    const [answers, setAnswers] = useState([
-      { id: 1, value: 'Вариант 1', isChecked: false },
+      { id: 1, value: 'Вариант 1', isChecked: false, check: 'teo' },
    ])
    const [radioCheck, setRadioCheck] = useState(true)
    const [checkboxAndRadio, setCheckboxAndRadio] = useState(true)
+
    const dublicateHandler = () => {
       duplicateContainer()
    }
+
    const checkboxFunc = () => {
       setCheckboxAndRadio(false)
    }
@@ -39,6 +40,7 @@ const QuestionSection = ({
       setAnswers(updatedAnswers)
       console.log('nurislam')
    }
+
    const addDruAnswer = () => {
       const newOtherId = answers.length + 1
       const newOtherAnswer = {
@@ -70,7 +72,13 @@ const QuestionSection = ({
       }
    }
 
-   const toogleRadioBox = () => {
+   const toggleRadioBox = (selectedId) => {
+      const updatedAnswers = answers.map((answer) =>
+         answer.id === selectedId
+            ? { ...answer, isChecked: true }
+            : { ...answer, isChecked: false }
+      )
+      setAnswers(updatedAnswers)
       setSelectedRadioValue('one')
    }
 
@@ -87,6 +95,7 @@ const QuestionSection = ({
       setAnswers(updatedAnswers)
    }
    console.log('check: ', check)
+
    const addNewAnswer = () => {
       const newId = answers.length + 1
       const newAnswer = {
@@ -98,6 +107,7 @@ const QuestionSection = ({
       setAnswers([...answers, newAnswer])
       setCheck(true)
    }
+
    return (
       <QuizItemSection key={section.id}>
          <QuizItemContent>
@@ -133,8 +143,9 @@ const QuestionSection = ({
                {checkboxAndRadio ? (
                   <Radio
                      key={answer.id}
-                     value={answer.isChecked}
-                     onChange={toogleRadioBox}
+                     value={answer.id}
+                     checked={answer.isChecked}
+                     onChange={() => toggleRadioBox(answer.id)}
                   />
                ) : (
                   <StyledCheckBox
@@ -177,7 +188,6 @@ const QuestionSection = ({
    )
 }
 
-export default QuestionSection
 const AddOtherOptionButton = styled(Button)(() => ({
    color: 'var(--blue, #258AFF)',
    background: 'none',
@@ -205,18 +215,14 @@ const AddOptionButton = styled(Button)(() => ({
 const StyledOptions = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'row',
-   marginLeft: '473px',
-   gap: '17px',
+   gap: '0.5vw',
 }))
 const AdditionalOptions = styled('div')(() => ({
-   fontSize: '18px',
+   fontSize: '16px',
    display: 'flex',
    justifyContent: 'space-between',
    alignItems: 'center',
-   marginTop: '20px',
-   marginLeft: '75px',
-   marginRight: '46px',
-   marginBottom: '20px',
+   margin: '20px 28px 20px 75px',
    div: {
       display: 'flex',
       aliginItems: 'center',
@@ -226,35 +232,29 @@ const AdditionalOptions = styled('div')(() => ({
    },
 }))
 const StyledCancelIcon = styled(CancelIcon)(() => ({
-   marginLeft: '1045px',
+   marginLeft: '54.7vw',
    position: 'absolute',
-   zIndex: '10',
 }))
 const QuizItemOptions = styled('div')(() => ({
-   display: 'block ruby',
-   justifyContent: 'center',
-   aliginItems: 'center',
-   gap: '24px',
-
+   display: 'ruby',
    '&& label': {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      gap: '9px',
+      gap: '0.64vw',
       fontWeight: '400',
-      marginRight: '15px',
+      marginRight: '0.88vw',
    },
 }))
 
 const QuizItemContent = styled('div')(() => ({
    display: 'flex',
    alignItems: 'center',
-   justifyContent: 'centre',
-   gap: '19px',
+   gap: '0.9vw',
    '.block': {
       display: 'flex',
       aliginItems: 'center',
-      gap: '13px',
+      gap: '0.69vw',
    },
 }))
 const QuizItemNumber = styled('span')(() => ({
@@ -265,25 +265,25 @@ const QuizItemNumber = styled('span')(() => ({
 }))
 
 const QuizItemSection = styled('div')(() => ({
-   width: '1140px',
+   width: '59.3vw',
    height: 'auto',
    border: '1px solid #D4D4D4',
    background: '#FFF',
-   borderRadius: '10px',
+   borderRadius: '0.625rem',
    marginTop: '1.25rem',
-   marginLeft: '20%', //
    '&& :focus': {
       border: 'none',
    },
 }))
 const QuizItemQuestionInput = styled(Input)(() => ({
    '& .MuiInputBase-root': {
-      width: '659px',
+      width: '32vw',
       height: '42px',
       borderRadius: ' 10px',
       marginTop: '26px',
       paddingTop: '10px',
       paddingBottom: '10px',
+      marginLeft: '3px',
    },
 }))
 const QuizItemAnswers = styled('div')(({ checkboxAndRadio }) => ({
@@ -299,12 +299,10 @@ const QuizItemAnswers = styled('div')(({ checkboxAndRadio }) => ({
    },
 }))
 
-const StyledCheckBox = styled(CheckBox)(() => ({
-   backgroundColor: 'red',
-}))
+const StyledCheckBox = styled(CheckBox)(() => ({}))
 
 const QuizItemAnswerInput = styled(Input)(() => ({
-   width: '1039px',
+   width: '54.30vw',
    height: '42px',
 }))
 const DupBtn = styled('button')(() => ({

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material'
 import { Input } from '../UI/input/Input'
-import QuestionSection from './Question'
+import { QuetionSection } from './Question'
 
 export const TestQuestion = () => {
    const [quizItemSections, setQuizItemSections] = useState([
@@ -48,7 +48,7 @@ export const TestQuestion = () => {
          </TitleContainer>
          <>
             {quizItemSections.map((section) => (
-               <QuestionSection
+               <QuetionSection
                   key={section.id}
                   duplicateContainer={duplicateContainer}
                   section={section}
@@ -64,12 +64,11 @@ export const TestQuestion = () => {
 
 const TitleContainer = styled('div')(() => ({
    marginTop: '60px',
-   width: '1140px',
+   width: '59.3vw',
    height: '124px',
    borderRadius: '10px',
    border: '1px solid #D4D4D4',
    background: ' #FFF',
-   marginLeft: '20%',
    h2: {
       color: 'var(--blue, #1F6ED4)',
       fontSize: '18px',
@@ -84,10 +83,10 @@ const TitleContainer = styled('div')(() => ({
 
 const InputFirst = styled(Input)(() => ({
    '& .MuiInputBase-root': {
-      width: '1080px',
+      width: '56.5vw',
       height: '42px',
       padding: '0px',
-      marginLeft: '26px',
+      marginLeft: '30px',
       marginTop: '16px',
    },
 }))
