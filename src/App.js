@@ -1,7 +1,7 @@
 function App() {
    return (
       <div>
-         <h1>Peaksoft lms js9</h1>
+         <h1>lms 9</h1>
       </div>
    )
 }

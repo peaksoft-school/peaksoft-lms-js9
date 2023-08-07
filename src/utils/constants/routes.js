@@ -1,23 +1,24 @@
 export const reusableRoutesRoles = [
    {
       admin: {
-         home: '/',
-         courses: '/courses',
-         teachers: '/teachers',
-         students: '/students',
+         home: 'home',
+         courses: 'courses',
+         teachers: 'teachers',
+         students: 'students',
       },
    },
    {
       instructor: {
-         home: '/',
+         myCoursesInstructor: 'mycoursesins',
       },
    },
    {
       student: {
-         home: '/',
+         myCoursesStudent: 'mycoursesstu',
       },
    },
 ]
+
 export const reusableRoutesLesson = {
    videolesson: '/videolesson',
    presentation: '/presentation',

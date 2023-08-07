@@ -12,8 +12,6 @@ export const TestQuestion = () => {
          isMultipleChoice: true,
       },
    ])
-   const [count, setCount] = useState(1)
-   console.log('count: ', count)
 
    const duplicateContainer = () => {
       setQuizItemSections((prevSections) => {
@@ -29,15 +27,12 @@ export const TestQuestion = () => {
             })),
             isMultipleChoice: lastSection.isMultipleChoice,
          }
-
          return [...prevSections, newSection]
       })
-
-      setCount((prevCount) => prevCount + 1)
    }
-   const deleteDupHandler = () => {
+   const deleteDupHandler = (idToDelete) => {
       setQuizItemSections((prevSections) =>
-         prevSections.slice(0, prevSections.length - 1)
+         prevSections.filter((section) => section.id !== idToDelete)
       )
    }
    return (
@@ -74,7 +69,7 @@ const TitleContainer = styled('div')(() => ({
       fontSize: '18px',
       fontWeight: '600',
       marginTop: '20px',
-      marginLeft: '26px',
+      marginLeft: '32px',
    },
    '&& :focus': {
       border: 'none',

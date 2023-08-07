@@ -6,11 +6,14 @@ import { Radio } from '../UI/checkbox-radio/Radio'
 import { Button } from '../UI/button/Button'
 import { CheckBox } from '../UI/checkbox-radio/CheckBox'
 
+const selectedIdFromLocalStorage = localStorage.getItem('selectedId')
+const selectedId = selectedIdFromLocalStorage
+   ? JSON.parse(selectedIdFromLocalStorage)
+   : ''
 export const QuetionSection = ({
    duplicateContainer,
    section,
    deleteDupHandler,
-   id,
 }) => {
    const [selectedRadioValue, setSelectedRadioValue] = useState('')
    const [check, setCheck] = useState(false)
@@ -24,13 +27,23 @@ export const QuetionSection = ({
    const dublicateHandler = () => {
       duplicateContainer()
    }
+   const handleDeleteSection = () => {
+      deleteDupHandler(section.id)
+   }
 
    const checkboxFunc = () => {
       setCheckboxAndRadio(false)
    }
 
    const radioFunc = () => {
+      const updatedAnswers = answers.map((answer) =>
+         answer.id === selectedId
+            ? { ...answer, isChecked: true }
+            : { ...answer, isChecked: false }
+      )
+      setAnswers(updatedAnswers)
       setCheckboxAndRadio(true)
+      setSelectedRadioValue('one')
    }
 
    const inputChangeHandler = (e, id) => {
@@ -73,6 +86,7 @@ export const QuetionSection = ({
    }
 
    const toggleRadioBox = (selectedId) => {
+      localStorage.setItem('selectedId', JSON.stringify(selectedId))
       const updatedAnswers = answers.map((answer) =>
          answer.id === selectedId
             ? { ...answer, isChecked: true }
@@ -112,7 +126,7 @@ export const QuetionSection = ({
       <QuizItemSection key={section.id}>
          <QuizItemContent>
             <div className="block">
-               <QuizItemNumber>{id}</QuizItemNumber>
+               <QuizItemNumber>{section.id}</QuizItemNumber>
                <QuizItemQuestionInput placeholder="вопрос" />
             </div>
             <QuizItemOptions>
@@ -181,7 +195,7 @@ export const QuetionSection = ({
 
             <StyledOptions>
                <DuplicateIcon onClick={dublicateHandler} />
-               <DeleteIcon onClick={deleteDupHandler} />
+               <DeleteIcon onClick={handleDeleteSection} />
             </StyledOptions>
          </AdditionalOptions>
       </QuizItemSection>
@@ -216,6 +230,7 @@ const StyledOptions = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'row',
    gap: '0.5vw',
+   cursor: 'pointer',
 }))
 const AdditionalOptions = styled('div')(() => ({
    fontSize: '16px',
@@ -234,9 +249,12 @@ const AdditionalOptions = styled('div')(() => ({
 const StyledCancelIcon = styled(CancelIcon)(() => ({
    marginLeft: '54.7vw',
    position: 'absolute',
+   cursor: 'pointer',
 }))
 const QuizItemOptions = styled('div')(() => ({
    display: 'ruby',
+   cursor: 'pointer',
+
    '&& label': {
       display: 'flex',
       justifyContent: 'center',
@@ -244,6 +262,7 @@ const QuizItemOptions = styled('div')(() => ({
       gap: '0.64vw',
       fontWeight: '400',
       marginRight: '0.88vw',
+      cursor: 'pointer',
    },
 }))
 
@@ -279,23 +298,23 @@ const QuizItemQuestionInput = styled(Input)(() => ({
    '& .MuiInputBase-root': {
       width: '32vw',
       height: '42px',
-      borderRadius: ' 10px',
-      marginTop: '26px',
-      paddingTop: '10px',
+      // borderRadius: '10v7w',
+      marginTop: '1.7vw',
+      paddingTop: '0.7vw',
       paddingBottom: '10px',
       marginLeft: '3px',
    },
 }))
 const QuizItemAnswers = styled('div')(({ checkboxAndRadio }) => ({
-   marginLeft: '17px',
+   marginLeft: '1vw',
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'flex-start',
-   marginBottom: '20px',
+   marginBottom: '1.5vw',
 
    label: {
       marginRight: checkboxAndRadio ? '1.5rem' : '0.3rem',
-      marginLeft: checkboxAndRadio ? '10px' : '0px',
+      marginLeft: checkboxAndRadio ? '10px' : '0vw',
    },
 }))
 
@@ -306,10 +325,12 @@ const QuizItemAnswerInput = styled(Input)(() => ({
    height: '42px',
 }))
 const DupBtn = styled('button')(() => ({
+   cursor: 'pointer',
+
    background: 'none',
    padding: '0',
    margin: '0',
-   fontSize: '15px',
+   fontSize: '0.9vw',
    textDecoration: 'none',
 
    '&:hover': {

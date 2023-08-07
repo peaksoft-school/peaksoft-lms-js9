@@ -12,10 +12,19 @@ import {
 
 export const Sidebar = ({ roles }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
-   const { home, courses, teachers, students } = routes[roles]
+   const {
+      home,
+      courses,
+      teachers,
+      students,
+      myCoursesStudent,
+      myCoursesInstructor,
+   } = routes[roles]
    return (
       <Container>
-         <LogoPeaksoft src={logo} alt="logo-peaksoft" />
+         <LogoPeaksoft>
+            <img src={logo} alt="logo-peaksoft" />
+         </LogoPeaksoft>
          <div>
             {roles === 'admin' && (
                <>
@@ -38,13 +47,13 @@ export const Sidebar = ({ roles }) => {
                </>
             )}
             {roles === 'instructor' && (
-               <NavLinkStyled to={home} activeClassName="active">
+               <NavLinkStyled to={myCoursesInstructor} activeClassName="active">
                   <CoursesIcon />
                   <h2>Мои курсы</h2>
                </NavLinkStyled>
             )}
             {roles === 'student' && (
-               <NavLinkStyled to={home} activeClassName="active">
+               <NavLinkStyled to={myCoursesStudent} activeClassName="active">
                   <CoursesIcon />
                   <h2>Мои курсы</h2>
                </NavLinkStyled>
@@ -63,13 +72,16 @@ const Container = styled('aside')`
    gap: 4.125rem;
 `
 
-const LogoPeaksoft = styled('img')`
-   margin: 2.375rem 0 0 3.125rem;
-   width: 6.875vw;
-   height: 4vh;
+const LogoPeaksoft = styled('div')`
+   text-align: center;
+   margin-top: 2.3rem;
+   img {
+      width: 8vw;
+      height: 5vh;
+   }
 `
 
-const NavLinkStyled = styled(NavLink)(({ theme }) => ({
+const NavLinkStyled = styled(NavLink)(() => ({
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'start',
@@ -78,12 +90,12 @@ const NavLinkStyled = styled(NavLink)(({ theme }) => ({
    height: '5vh',
    lineHeight: '2.875rem',
    svg: {
-      marginLeft: '2.625em',
+      marginLeft: '20%',
       width: '1.5vw',
       height: '5.5vh',
    },
    h2: {
-      fontSize: '1em',
+      fontSize: '1rem',
       fontWeight: '700',
    },
    '&.active': {
@@ -93,10 +105,10 @@ const NavLinkStyled = styled(NavLink)(({ theme }) => ({
       borderTopRightRadius: '0.625em',
       borderBottomRightRadius: '0.625em',
       h2: {
-         color: theme.palette.primary.blue,
+         color: '#1f6ed4',
       },
       path: {
-         fill: theme.palette.primary.blue,
+         fill: '#1f6ed4',
       },
    },
 }))
