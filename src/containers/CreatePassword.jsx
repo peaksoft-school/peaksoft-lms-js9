@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-import { styled } from '@mui/material'
+import { IconButton, styled } from '@mui/material'
 import { Input } from '../components/UI/input/Input'
 import { Button } from '../components/UI/button/Button'
 import { OpenEyePassIcon, ClosedEyePassIcon } from '../assets/icons'
@@ -61,26 +61,24 @@ export const CreatePassword = () => {
                               value={values.newPassword}
                               onChange={handleChange}
                               error={touched.newPassword && errors.newPassword}
+                              InputProps={{
+                                 endAdornment: (
+                                    <PasswordIconContainerFirst
+                                       onClick={() =>
+                                          handleTogglePasswordVisibility(
+                                             'newPassword'
+                                          )
+                                       }
+                                    >
+                                       {showFirstPassword ? (
+                                          <OpenEyePassIcon />
+                                       ) : (
+                                          <ClosedEyePassIcon />
+                                       )}
+                                    </PasswordIconContainerFirst>
+                                 ),
+                              }}
                            />
-                           <PasswordIconContainer>
-                              {showFirstPassword ? (
-                                 <OpenEyePassIcon
-                                    onClick={() =>
-                                       handleTogglePasswordVisibility(
-                                          'newPassword'
-                                       )
-                                    }
-                                 />
-                              ) : (
-                                 <ClosedEyePassIcon
-                                    onClick={() =>
-                                       handleTogglePasswordVisibility(
-                                          'newPassword'
-                                       )
-                                    }
-                                 />
-                              )}
-                           </PasswordIconContainer>
                         </InputContainer>
                         {touched.newPassword && errors.newPassword && (
                            <div className="error-message">
@@ -108,26 +106,24 @@ export const CreatePassword = () => {
                                  touched.confirmPassword &&
                                  errors.confirmPassword
                               }
+                              InputProps={{
+                                 endAdornment: (
+                                    <PasswordIconContainerSecond
+                                       onClick={() =>
+                                          handleTogglePasswordVisibility(
+                                             'confirmPassword'
+                                          )
+                                       }
+                                    >
+                                       {showSecondPassword ? (
+                                          <OpenEyePassIcon />
+                                       ) : (
+                                          <ClosedEyePassIcon />
+                                       )}
+                                    </PasswordIconContainerSecond>
+                                 ),
+                              }}
                            />
-                           <PasswordIconContainer>
-                              {showSecondPassword ? (
-                                 <OpenEyePassIcon
-                                    onClick={() =>
-                                       handleTogglePasswordVisibility(
-                                          'confirmPassword'
-                                       )
-                                    }
-                                 />
-                              ) : (
-                                 <ClosedEyePassIcon
-                                    onClick={() =>
-                                       handleTogglePasswordVisibility(
-                                          'confirmPassword'
-                                       )
-                                    }
-                                 />
-                              )}
-                           </PasswordIconContainer>
                         </InputContainer>
                         {touched.confirmPassword && errors.confirmPassword && (
                            <div className="error-message">
@@ -150,6 +146,20 @@ export const CreatePassword = () => {
       </Container>
    )
 }
+const PasswordIconContainerFirst = styled(IconButton)(() => ({
+   svg: {
+      path: {
+         fill: '#9e8e8d',
+      },
+   },
+}))
+const PasswordIconContainerSecond = styled(IconButton)(() => ({
+   svg: {
+      path: {
+         fill: '#9e8e8d',
+      },
+   },
+}))
 
 const Container = styled('div')(() => ({
    display: 'flex',
@@ -168,21 +178,6 @@ const InputContainer = styled('div')(() => ({
    position: 'relative',
    margin: '0px 0px',
    padding: '0px 0px',
-}))
-
-const PasswordIconContainer = styled('div')(() => ({
-   position: 'absolute',
-   top: '73%',
-   right: '10px',
-   transform: 'translateY(-65%)',
-   cursor: 'pointer',
-   backgroundColor: '#fff',
-   border: 0,
-   svg: {
-      path: {
-         fill: '#8D949E',
-      },
-   },
 }))
 
 const LoginInput = styled(Input)(() => ({
