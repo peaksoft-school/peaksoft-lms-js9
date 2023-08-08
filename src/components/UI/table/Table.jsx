@@ -9,15 +9,14 @@ import {
    TableRow,
    Paper,
 } from '@mui/material'
-import { columns, data } from '../../../utils/constants/tableArray'
 
-const Table = () => {
+const Table = ({ data, columns }) => {
    return (
       <StyledContainer component={Paper}>
          <StyledTable>
             <TableHead>
                <StyledTableRow>
-                  {columns.map((column) => (
+                  {columns?.map((column) => (
                      <StyledTableCell key={column.id}>
                         {column.label}
                      </StyledTableCell>

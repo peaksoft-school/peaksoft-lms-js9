@@ -1,24 +1,35 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef, useState } from 'react'
 import { styled } from '@mui/material'
 import uploadImage from '../../../assets/image/uploadimage.png'
 
-export const UploadImage = ({ onImageUpload }) => {
+export const UploadImage = ({ onImageUpload, imageEditValue }) => {
    const inputRef = useRef(null)
-   const [image, setImage] = useState('')
+   const [image, setImage] = useState(imageEditValue || '')
 
    const handleClick = () => {
       inputRef.current.click()
    }
+
    const handleChange = (e) => {
       const file = e.target.files[0]
       setImage(file)
       onImageUpload(file)
    }
+
    return (
       <Container>
-         <label htmlFor="file" onSubmit={handleClick}>
+         <label htmlFor="file" onClick={handleClick}>
             {image ? (
-               <Img src={URL.createObjectURL(image)} alt="newimage" />
+               <Img
+                  src={
+                     typeof image === 'string'
+                        ? image
+                        : URL.createObjectURL(image)
+                  }
+                  alt="image"
+               />
             ) : (
                <Img src={uploadImage} alt="defaultimage" />
             )}

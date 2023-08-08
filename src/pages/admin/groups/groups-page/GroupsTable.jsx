@@ -1,15 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { styled } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import Table from '../../../../components/UI/table/Table'
 import { Header } from '../../../../components/UI/header/Header'
+import { getGroupUsers } from '../../../../store/group/AdminThunk'
+import { columnsTableGroup } from '../../../../utils/constants/constants'
 
 export const GroupsTable = () => {
    const params = useParams()
    const navigate = useNavigate()
+   const dispatch = useDispatch()
+   const { cards, users } = useSelector((state) => state.cards)
+   const getGroupName = cards.find((item) => item.id === +params.details)
+
    const navigateGoBackGroups = () => {
-      navigate('/home')
+      navigate('/admin/home')
    }
+   useEffect(() => {
+      dispatch(getGroupUsers(params.details))
+   }, [])
+
    return (
       <>
          <div>
@@ -19,9 +30,9 @@ export const GroupsTable = () => {
             <button type="button" onClick={navigateGoBackGroups}>
                Группы
             </button>
-            \ {params.details}
+            \ {getGroupName?.groupName}
          </SpanStyled>
-         <Table />
+         <Table data={users} columns={columnsTableGroup} />
       </>
    )
 }

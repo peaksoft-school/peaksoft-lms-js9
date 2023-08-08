@@ -1,160 +1,188 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
-import { cardsGroup } from '../../../../utils/constants/cardsGroup'
+import { useDispatch, useSelector } from 'react-redux'
+import { format, isValid } from 'date-fns'
+import { useForm } from 'react-hook-form'
 import { Card } from '../../../../components/UI/cards/Card'
 import { ModalDeleteGroup } from '../groups-modal/ModalDeleteGroup'
 import { Header } from '../../../../components/UI/header/Header'
 import { ModalGroup } from '../groups-modal/ModalGroup'
 import { useToggle } from '../../../../utils/hooks/general'
+import {
+   deleteGroup,
+   getCard,
+   postCard,
+   updateCard,
+} from '../../../../store/group/AdminThunk'
+import Snackbar from '../../../../components/UI/snackbar/Snackbar'
 
 export const Groups = () => {
-   const [todos, setTodos] = useState(cardsGroup)
-   const [getCardId, setCardId] = useState(null)
+   const dispatch = useDispatch()
+   const { cards } = useSelector((state) => state.cards)
+   const [getCardId, setCardId] = useState('')
+   const [getGroupName, setGroupName] = useState('')
    const [dateEditModal, setDateEditModal] = useState('')
-   const [editTitle, setEditTitle] = useState('')
-   const [editDescription, setEditDescription] = useState('')
-   const { setActive: setActiveModal1, isActive: isActiveModal1 } = useToggle(
-      'modal1',
-      false
-   )
-   const { setActive: setActiveModal2, isActive: isActiveModal2 } = useToggle(
-      'modal2',
-      false
-   )
-
-   const editHandler = (data) => {
-      setActiveModal2(!isActiveModal2)
-      setEditTitle(data.title)
-      setEditDescription(data.description)
-   }
-   const deleteHandler = (cardId) => {
-      setActiveModal1(!isActiveModal1)
-      setCardId(cardId)
-   }
-
-   const openModalDeleteAndEditHandler = ({ menuId, cardId, data }) => {
-      if (menuId === 1) {
-         editHandler(data)
-      } else if (menuId === 2) {
-         deleteHandler(cardId)
-      }
-   }
-
-   const closeModalDeleteHandler = () => {
-      setActiveModal1('')
-   }
-   const closeModalEditHandler = () => {
-      setActiveModal2('')
-   }
-   const deleteCardHandler = () => {
-      setTodos(todos.filter((el) => el.id !== getCardId))
-      closeModalDeleteHandler()
-   }
-
-   const editTitleChangeHandler = (e) => setEditTitle(e.target.value)
-   const editDesciptionChangeHandler = (e) => setEditDescription(e.target.value)
-
-   const saveHandler = () => {
-      const data = {
-         editTitle,
-         editDescription,
-      }
-      console.log(data)
-   }
-   const [dateValue, setDateValue] = useState(null)
-   const [imageValue, setImageValue] = useState(null)
-   const [description, setDescription] = useState('')
-   const [title, setTitle] = useState('')
+   const [dateValue, setDateValue] = useState('')
+   const [imageValue, setImageValue] = useState('')
+   const [imageEditValue, setImageEditValue] = useState('')
    const { isActive, setActive } = useToggle('addedgroupmodal')
+   const { setActive: setActiveModal1, isActive: isActiveModal1 } =
+      useToggle('modalDelete')
+   const { setActive: setActiveModal2, isActive: isActiveModal2 } =
+      useToggle('modalEdit')
+   const {
+      handleSubmit,
+      setValue,
+      register,
+      getValues,
+      formState: { errors },
+   } = useForm({
+      defaultValues: {
+         groupName: '',
+         description: '',
+         editTitle: '',
+         editDescription: '',
+      },
+   })
+   console.log(imageEditValue)
 
-   const isFormEmpty =
-      !title.trim() || !description.trim() || !dateValue || !imageValue
-
-   const descriptionChangeHandler = (e) => {
-      setDescription(e.target.value)
+   let formatDate = ''
+   if (dateValue && isValid(new Date(dateValue))) {
+      formatDate = format(new Date(dateValue), 'yyyy-MM-dd')
    }
-   const titleChangeHandler = (e) => {
-      setTitle(e.target.value)
-   }
-   const dateChangeHandler = (date) => {
-      setDateValue(date)
-   }
-   const onImageUpload = (img) => {
-      setImageValue(img)
-   }
-   const openModalAddedNewGroupHandler = () => {
-      setActive(!isActive)
+   let editFormatDate = ''
+   if (dateEditModal && isValid(new Date(dateEditModal))) {
+      editFormatDate = format(new Date(dateEditModal), 'yyyy-MM-dd')
    }
 
+   const closeModalEditHandler = () => setActiveModal2('')
+   const closeModalDeleteHandler = () => setActiveModal1('')
+   const openModalAddedNewGroupHandler = () => setActive(!isActive)
+   const onImageUpload = (img) => setImageValue(img)
+   const dateChangeHandler = (date) => setDateValue(date)
    const closeModalAddedNewGroupHandler = () => {
       setActive('')
+      setValue('groupName', '')
+      setValue('description', '')
    }
-   const addedNewGroupHandler = (e) => {
-      e.preventDefault()
+
+   useEffect(() => {
+      dispatch(getCard())
+   }, [])
+
+   const isFormEmpty =
+      !getValues().groupName.trim() ||
+      !getValues().description.trim() ||
+      !dateValue ||
+      !imageValue
+
+   const deleteOpenModal = (data) => {
+      setActiveModal1(!isActiveModal1)
+      setCardId(data.id)
+      setGroupName(data.groupName)
+   }
+
+   const deleteHandler = () => {
+      dispatch(deleteGroup(getCardId))
+      setActiveModal1('')
+   }
+
+   const editOpenModal = (data) => {
+      setActiveModal2(!isActiveModal2)
+      setValue('editTitle', data.groupName)
+      setValue('editDescription', data.description)
+      setValue('dateEditModal', data.dateOfGraduation)
+      setImageEditValue(data.image)
+      setImageValue(data.image)
+      setCardId(data.id)
+   }
+
+   const addedHandler = () => {
       const data = {
-         title,
-         description,
-         date: dateValue.toString(),
-         img: imageValue,
+         groupName: getValues().groupName,
+         description: getValues().description,
+         image: 'https://www.soyuz.ru/public/uploads/files/2/7621730/202303141402448bac77dadb.jpg',
+         dateOfGraduation: formatDate,
       }
       console.log(data)
-      setTitle('')
-      setDescription('')
-      setDateValue(null)
-      setImageValue(null)
+      dispatch(postCard(data))
+      setActive('')
+      setValue('')
+   }
+   console.log(editFormatDate)
+   const saveHandler = (data) => {
+      const updatedData = {
+         id: getCardId,
+         groupName: data.editTitle,
+         description: data.editDescription,
+         dateOfGraduation: editFormatDate,
+         image: imageEditValue,
+      }
+      console.log(updatedData)
+      dispatch(updateCard(updatedData))
+      setActiveModal2('')
+   }
+
+   const openModalDeleteAndEditHandler = ({ menuId, data }) => {
+      if (menuId === 1) {
+         editOpenModal(data)
+      } else if (menuId === 2) {
+         deleteOpenModal(data)
+      }
    }
 
    return (
       <>
+         <Snackbar />
          <Header
             titlePage="Администратор"
             buttonContent="Создать группу"
             onClick={openModalAddedNewGroupHandler}
          />
-         <ModalGroup
-            variant={false}
-            handleClose={closeModalAddedNewGroupHandler}
-            openModal={isActive}
-            onSubmit={addedNewGroupHandler}
-            onDateChange={dateChangeHandler}
-            value={dateValue}
-            description={description}
-            title={title}
-            descriptionChangeHandler={descriptionChangeHandler}
-            titleChangeHandler={titleChangeHandler}
-            isFormEmpty={isFormEmpty}
-            onImageUpload={onImageUpload}
-         />
-
          <ContainerItem>
-            {todos.map((el) => {
-               return (
-                  <Card
-                     key={el.id}
-                     el={el}
-                     onClick={openModalDeleteAndEditHandler}
-                  />
-               )
-            })}
+            {cards?.map((el) => (
+               <Card
+                  key={el.id}
+                  el={el}
+                  onClick={openModalDeleteAndEditHandler}
+               />
+            ))}
          </ContainerItem>
          <div>
+            <ModalGroup
+               variant={false}
+               openModal={isActive}
+               handleClose={closeModalAddedNewGroupHandler}
+               onSubmit={addedHandler}
+               onDateChange={dateChangeHandler}
+               value={dateValue}
+               register={register}
+               onImageUpload={onImageUpload}
+               errors={errors}
+               handleSubmit={handleSubmit}
+               setValue={setValue}
+               isFormEmpty={isFormEmpty}
+            />
             <ModalDeleteGroup
                open={isActiveModal1}
                handleClose={closeModalDeleteHandler}
-               deleteCardHandler={deleteCardHandler}
+               deleteCardHandler={deleteHandler}
+               getGroupName={getGroupName}
             />
-
             <ModalGroup
                variant
+               imageEditValue={imageEditValue}
+               dateEditModal={dateEditModal}
                openModal={isActiveModal2}
+               onSubmit={saveHandler}
                handleClose={closeModalEditHandler}
                onDateChange={setDateEditModal}
-               value={dateEditModal}
-               onSubmit={saveHandler}
-               editTitleChangeHandler={editTitleChangeHandler}
-               editDesciptionChangeHandler={editDesciptionChangeHandler}
-               editDescription={editDescription}
-               editTitle={editTitle}
+               register={register}
+               onImageUpload={onImageUpload}
+               errors={errors}
+               handleSubmit={handleSubmit}
+               setValue={setValue}
+               isFormEmpty={isFormEmpty}
             />
          </div>
       </>

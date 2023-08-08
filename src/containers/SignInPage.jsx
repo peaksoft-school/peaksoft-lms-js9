@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-import { styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { styled } from '@mui/material/styles'
 import { ForgotModal } from './ForgotModal'
 import { Button } from '../components/UI/button/Button'
 import { Input } from '../components/UI/input/Input'
 import { ClosedEyePassIcon, OpenEyePassIcon } from '../assets/icons'
 
 const validationSchema = yup.object().shape({
-   login: yup
+   email: yup
       .string()
       .required('Введите логин')
       .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Не валидный электронный адрес!'),
@@ -22,7 +21,6 @@ const validationSchema = yup.object().shape({
 export const SignInPage = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [open, setOpen] = useState(false)
-   const navigate = useNavigate()
 
    const handleClose = () => {
       setOpen(false)
@@ -30,20 +28,12 @@ export const SignInPage = () => {
 
    const formik = useFormik({
       initialValues: {
-         login: '',
+         email: '',
          password: '',
       },
       validationSchema,
       onSubmit: (values) => {
-         // Логика для отправки формы
-         // Временная для проверки
-         if (values.login === 'admin@gmail.com') {
-            navigate('/admin')
-         } else if (values.login === 'instructor@gmail.com') {
-            navigate('/instructor')
-         } else if (values.login === 'students@gmail.com') {
-            navigate('/student')
-         }
+         console.log(values)
       },
    })
 
@@ -62,20 +52,20 @@ export const SignInPage = () => {
             <FormBlock>
                <div className="block">
                   <ContainertConfirmLogin>
-                     <label style={{ color: '#8D949E' }} htmlFor="login">
+                     <label style={{ color: '#8D949E' }} htmlFor="email">
                         Логин:
                         <LoginInput
                            size="small"
                            placeholder="Введите логин"
                            type="text"
-                           id="login"
-                           name="login"
-                           value={values.login}
+                           id="email"
+                           name="email"
+                           value={values.email}
                            onChange={handleChange}
-                           error={touched.login && errors.login}
+                           error={touched.email && errors.email}
                         />
-                        {touched.login && errors.login && (
-                           <span className="error-message">{errors.login}</span>
+                        {touched.email && errors.email && (
+                           <span className="error-message">{errors.email}</span>
                         )}
                      </label>
                   </ContainertConfirmLogin>
@@ -112,9 +102,7 @@ export const SignInPage = () => {
                   </ContainertConfirmPassword>
                </div>
                <ForgotButtonContainer>
-                  {open ? (
-                     <ForgotModal open={open} handleClose={handleClose} />
-                  ) : null}
+                  <ForgotModal open={open} handleClose={handleClose} />
                   <ForgotButton onClick={() => setOpen(true)} type="button">
                      Забыли пароль?
                   </ForgotButton>

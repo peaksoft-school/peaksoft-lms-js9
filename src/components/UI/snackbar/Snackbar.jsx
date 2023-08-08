@@ -1,20 +1,8 @@
+import { styled } from '@mui/material'
 import React from 'react'
 import { toast, Toaster } from 'react-hot-toast'
 import { BiSolidErrorCircle } from 'react-icons/bi'
 import { HiCheckCircle } from 'react-icons/hi'
-import { styled } from 'styled-components'
-
-const ErrorIcon = styled(BiSolidErrorCircle)`
-   font-size: 1.5rem;
-   margin-top: 2px;
-   margin-right: 3px;
-`
-
-const SuccessIcon = styled(HiCheckCircle)`
-   font-size: 1.5rem;
-   margin-top: 2px;
-   margin-right: 3px;
-`
 
 const showSnackbar = (myFetch, succesMessage, errorMessage) => {
    toast.promise(
@@ -71,3 +59,15 @@ const Snackbar = ({ myFetch, succesMessage, errorMessage }) => {
 }
 
 export default Snackbar
+
+const ErrorIcon = styled(BiSolidErrorCircle)`
+   font-size: 1.5rem;
+   margin-top: 2px;
+   margin-right: 3px;
+`
+
+const SuccessIcon = styled(HiCheckCircle)`
+   font-size: 1.5rem;
+   margin-top: 2px;
+   margin-right: 3px;
+`

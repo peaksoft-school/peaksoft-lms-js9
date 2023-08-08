@@ -1,14 +1,14 @@
 import React from 'react'
 import { styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import logo from '../../assets/image/logoPeksoft.png'
-import { reusableRoutesRoles } from '../../utils/constants/routes'
+import logo from '../assets/image/logoPeksoft.png'
 import {
    GroupsIcon,
    CoursesIcon,
    TeachersIcon,
    StudentsIcon,
-} from '../../assets/icons/index'
+} from '../assets/icons/index'
+import { reusableRoutesRoles } from '../utils/constants/constants'
 
 export const Sidebar = ({ roles }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])

@@ -12,19 +12,18 @@ export const Card = ({ el, onClick }) => {
    const getMenuIdAndSetCardId = (menuID) => {
       onClick({
          menuId: menuID,
-         cardId: el.id,
          data: el,
       })
    }
    return (
       <ContainerCard>
-         <Link to={`${el.title}`}>
+         <Link to={`${el.id}`}>
             <ContainerImg>
-               <img src={el.img} alt="groupfoto" />
+               <img src={el.image} alt="groupfoto" />
             </ContainerImg>
             <ContainerContent>
                <ContainerHeader>
-                  <p>{el.title}</p> <span>{el.date}</span>
+                  <p>{el.groupName}</p> <span>{el.create_date}</span>
                </ContainerHeader>
                <ContainerDescriptionStyled>
                   {el.description}
@@ -88,6 +87,9 @@ const ContainerHeader = styled(Typography)(() => ({
       fontStyle: 'normal',
       fontWeight: 600,
       lineHeight: 'normal',
+      width: '10rem',
+      height: '1.5rem',
+      overflow: 'hidden',
    },
    span: {
       color: '#1D293F',

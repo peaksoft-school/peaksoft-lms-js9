@@ -1,6 +1,5 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { reusableRoutesRoles } from '../utils/constants/routes'
 import { Groups } from '../pages/admin/groups/groups-page/Groups'
 import { GroupsTable } from '../pages/admin/groups/groups-page/GroupsTable'
 import { Courses } from '../pages/admin/courses/Courses'
@@ -13,6 +12,7 @@ import { SignInPage } from '../containers/SignInPage'
 import { Layout } from '../layout/Layout'
 import { MyCoursesStu } from '../pages/student/MyCourses'
 import { MyCoursesIns } from '../pages/instructor/MyCourses'
+import { USER_ROLE, reusableRoutesRoles } from '../utils/constants/constants'
 
 export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
@@ -22,12 +22,6 @@ export const AppRoutes = ({ roles = 'admin' }) => {
 
    const isAllowed = (userRole) => {
       return userRole.includes(role)
-   }
-
-   const USER_ROLE = {
-      STUDENT: 'STUDENT',
-      ADMIN: 'ADMIN',
-      INSTRUCTOR: 'INSTRUCTOR',
    }
 
    return (
