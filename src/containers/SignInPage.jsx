@@ -3,17 +3,13 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { styled } from '@mui/material/styles'
 import { IconButton } from '@mui/material'
-// import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { ForgotModal } from './ForgotModal'
 import { Button } from '../components/UI/button/Button'
 import { Input } from '../components/UI/input/Input'
 import { ClosedEyePassIcon, OpenEyePassIcon } from '../assets/icons'
-import { signInThunk } from '../store/signInThunk'
-import Snackbar from '../components/UI/snackbar/Snackbar'
-// import { Snackbar } from '../components/UI/snackbar/Snackbar'
-// import Snackbar from '../components/UI/snackbar/Snackbar'
-// import { USER_ROLE } from '../utils/constants/constants'
+import { signInThunk } from '../store/signIn/signInThunk'
+import { showSnackbar } from '../components/UI/snackbar/Snackbar'
 
 const validationSchema = yup.object().shape({
    email: yup
@@ -29,9 +25,7 @@ const validationSchema = yup.object().shape({
 export const SignInPage = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [open, setOpen] = useState(false)
-   // const navigate = useNavigate()
    const dispatch = useDispatch()
-   // const { role } = useSelector((state) => state.auth)
 
    const handleClose = () => {
       setOpen(false)
@@ -47,31 +41,16 @@ export const SignInPage = () => {
          dispatch(signInThunk(values))
             .unwrap()
             .then(() => {
-               return (
-                  <Snackbar
-                     myFetch="Loading..."
-                     succesMessage="Success message"
-                  />
-               )
+               showSnackbar('Вы успешно зашли!', 'success')
             })
             .catch((error) => {
-               return (
-                  <Snackbar
-                     myFetch={error.message}
-                     errorMessage="Error message"
-                  />
-               )
+               showSnackbar(`${error}`, 'error')
             })
       },
    })
 
    const { values, errors, touched, handleChange, submitForm } = formik
-   // const error = 'djfksjkfjdskfjksjjsffskdos'
-   // const snackbar = (e) => {
-   //    e.preventDefault()
-   //    showSnackbar(`${error}`, 'success')
-   //    handleSubmit()
-   // }
+
    const handleSubmit = (e) => {
       e.preventDefault()
       submitForm()
@@ -161,7 +140,6 @@ export const SignInPage = () => {
                </Button>
             </ContainerButton>
          </form>
-         <Snackbar myFetch="Loading..." succesMessage="Success!" />
       </Container>
    )
 }

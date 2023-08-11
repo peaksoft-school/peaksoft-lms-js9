@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import { Box, Select } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { IconButtons } from '../button/IconButtons'
 import {
    DropDownIcon,
    ExelExport,
@@ -9,9 +10,9 @@ import {
    PlusIcon,
    ProfileIcon,
 } from '../../../assets/icons'
-import { IconButtons } from '../button/IconButtons'
 import { Button } from '../button/Button'
 import { Tabs } from '../tabs/Tabs'
+import { logout } from '../../../store/signIn/signInThunk'
 
 export const Header = ({
    onClick,
@@ -22,17 +23,19 @@ export const Header = ({
 }) => {
    const [state, setState] = useState(false)
    const dropdownRef = useRef(null)
-   const navigate = useNavigate()
 
+   const dispatch = useDispatch()
    const handleChange = () => {
       setState(!state)
+   }
+   const logoutHandler = () => {
+      dispatch(logout())
    }
 
    const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
          setState(false)
       }
-      navigate()
       console.log('sdf')
    }
 
@@ -58,15 +61,15 @@ export const Header = ({
                <ProfileIcon />
                <p>{titlePage}</p>
                <DropDownIcon />
+               <IconButtons>
+                  {state && (
+                     <StyledDropDown onClick={logoutHandler}>
+                        <ExitIcon style={{ marginLeft: '1.20rem' }} />
+                        <span>Выйти</span>
+                     </StyledDropDown>
+                  )}
+               </IconButtons>
             </BoxLogOut>
-            <IconButtons>
-               {state && (
-                  <StyledDropDown>
-                     <ExitIcon style={{ marginLeft: '1.20rem' }} />
-                     <span>Выйти</span>
-                  </StyledDropDown>
-               )}
-            </IconButtons>
          </StyledBox>
          <ButtonContainer>
             {conditionButton === 'Students' ? (

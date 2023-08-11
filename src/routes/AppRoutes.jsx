@@ -15,6 +15,7 @@ import { Layout } from '../layout/Layout'
 import { MyCoursesStu } from '../pages/student/MyCourses'
 import { MyCoursesIns } from '../pages/instructor/MyCourses'
 import { USER_ROLE } from '../utils/constants/constants'
+import { CreatePassword } from '../containers/CreatePassword'
 
 export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
@@ -51,6 +52,14 @@ export const AppRoutes = ({ roles = 'admin' }) => {
             }
          />
          <Route path="*" element={<h1>Такой страницы не существует!</h1>} />
+         <Route
+            path="/createPassword/:id"
+            element={
+               <Page>
+                  <CreatePassword />
+               </Page>
+            }
+         />
          <Route
             path="/admin"
             element={

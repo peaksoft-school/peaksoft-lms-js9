@@ -1,44 +1,54 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import { useDispatch } from 'react-redux'
 import { IconButton, styled } from '@mui/material'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Input } from '../components/UI/input/Input'
 import { Button } from '../components/UI/button/Button'
 import { OpenEyePassIcon, ClosedEyePassIcon } from '../assets/icons'
+import { createPasswordThunk } from '../store/signIn/signInThunk'
 
 const schema = yup.object().shape({
-   newPassword: yup
+   password: yup
       .string()
       .required('Введите новый пароль')
       .min(8, 'Пароль должен содержать минимум 8 символов'),
-   confirmPassword: yup
+   repeatPassword: yup
       .string()
       .required('Подтвердите пароль')
-      .oneOf([yup.ref('newPassword'), null], 'Пароли должны совпадать'),
+      .oneOf([yup.ref('password'), null], 'Пароли должны совпадать'),
 })
 
 export const CreatePassword = () => {
-   const [showFirstPassword, setShowFirstPassword] = useState(false)
-   const [showSecondPassword, setShowSecondPassword] = useState(false)
+   const [showPassword, setShowPassword] = useState(false)
+   const [showRepeatPassword, setShowRepeatPassword] = useState(false)
+
+   const dispatch = useDispatch()
+   const { id } = useParams()
+   const navigate = useNavigate()
 
    const formik = useFormik({
       initialValues: {
-         newPassword: '',
-         confirmPassword: '',
+         password: '',
+         repeatPassword: '',
       },
       validationSchema: schema,
       onSubmit: (values) => {
-         console.log(values)
+         values.userId = id
+         dispatch(createPasswordThunk(values))
+         navigate('/')
+         console.log(values, 'kkkk')
       },
    })
 
    const { values, errors, touched, handleChange, handleSubmit } = formik
 
    const handleTogglePasswordVisibility = (field) => {
-      if (field === 'newPassword') {
-         setShowFirstPassword(!showFirstPassword)
-      } else if (field === 'confirmPassword') {
-         setShowSecondPassword(!showSecondPassword)
+      if (field === 'password') {
+         setShowPassword(!showPassword)
+      } else if (field === 'repeatPassword') {
+         setShowRepeatPassword(!showRepeatPassword)
       }
    }
 
@@ -49,28 +59,28 @@ export const CreatePassword = () => {
             <ContainerInput>
                <div className="block">
                   <ContainerFirstInputConfirmPassword>
-                     <label style={{ color: '#8D949E' }} htmlFor="newPassword">
+                     <label style={{ color: '#8D949E' }} htmlFor="password">
                         Новый пароль:
                         <InputContainer>
                            <LoginInput
                               size="small"
                               placeholder="Введите новый пароль"
-                              type={showFirstPassword ? 'text' : 'password'}
-                              id="newPassword"
-                              name="newPassword"
-                              value={values.newPassword}
+                              type={showPassword ? 'text' : 'password'}
+                              id="password"
+                              name="password"
+                              value={values.password}
                               onChange={handleChange}
-                              error={touched.newPassword && errors.newPassword}
+                              error={touched.password && errors.password}
                               InputProps={{
                                  endAdornment: (
                                     <PasswordIconContainerFirst
                                        onClick={() =>
                                           handleTogglePasswordVisibility(
-                                             'newPassword'
+                                             'password'
                                           )
                                        }
                                     >
-                                       {showFirstPassword ? (
+                                       {showPassword ? (
                                           <OpenEyePassIcon />
                                        ) : (
                                           <ClosedEyePassIcon />
@@ -80,9 +90,9 @@ export const CreatePassword = () => {
                               }}
                            />
                         </InputContainer>
-                        {touched.newPassword && errors.newPassword && (
+                        {touched.password && errors.password && (
                            <div className="error-message">
-                              {errors.newPassword}
+                              {errors.password}
                            </div>
                         )}
                      </label>
@@ -90,32 +100,31 @@ export const CreatePassword = () => {
                   <ContainerSecondInputConfirmPassword>
                      <label
                         style={{ color: '#8D949E' }}
-                        htmlFor="confirmPassword"
+                        htmlFor="repeatPassword"
                      >
                         Подтверждение:
                         <InputContainer>
                            <LoginInput
                               size="small"
                               placeholder="Подтвердите пароль"
-                              type={showSecondPassword ? 'text' : 'password'}
-                              id="confirmPassword"
-                              name="confirmPassword"
-                              value={values.confirmPassword}
+                              type={showRepeatPassword ? 'text' : 'password'}
+                              id="repeatPassword"
+                              name="repeatPassword"
+                              value={values.repeatPassword}
                               onChange={handleChange}
                               error={
-                                 touched.confirmPassword &&
-                                 errors.confirmPassword
+                                 touched.repeatPassword && errors.repeatPassword
                               }
                               InputProps={{
                                  endAdornment: (
                                     <PasswordIconContainerSecond
                                        onClick={() =>
                                           handleTogglePasswordVisibility(
-                                             'confirmPassword'
+                                             'repeatPassword'
                                           )
                                        }
                                     >
-                                       {showSecondPassword ? (
+                                       {showRepeatPassword ? (
                                           <OpenEyePassIcon />
                                        ) : (
                                           <ClosedEyePassIcon />
@@ -125,9 +134,9 @@ export const CreatePassword = () => {
                               }}
                            />
                         </InputContainer>
-                        {touched.confirmPassword && errors.confirmPassword && (
+                        {touched.repeatPassword && errors.repeatPassword && (
                            <div className="error-message">
-                              {errors.confirmPassword}
+                              {errors.repeatPassword}
                            </div>
                         )}
                      </label>
@@ -146,6 +155,7 @@ export const CreatePassword = () => {
       </Container>
    )
 }
+
 const PasswordIconContainerFirst = styled(IconButton)(() => ({
    svg: {
       path: {
@@ -153,6 +163,7 @@ const PasswordIconContainerFirst = styled(IconButton)(() => ({
       },
    },
 }))
+
 const PasswordIconContainerSecond = styled(IconButton)(() => ({
    svg: {
       path: {

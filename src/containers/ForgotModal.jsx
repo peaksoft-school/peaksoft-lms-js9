@@ -2,9 +2,12 @@ import React from 'react'
 import { styled } from '@mui/material'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import { useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { Modal } from '../components/UI/modal/Modal'
 import { Button } from '../components/UI/button/Button'
 import { Input } from '../components/UI/input/Input'
+import { forgotPasswordThunk } from '../store/signIn/signInThunk'
 
 const validationSchema = yup.object().shape({
    email: yup
@@ -18,13 +21,19 @@ const validationSchema = yup.object().shape({
 })
 
 export const ForgotModal = ({ open, handleClose }) => {
+   const dispatch = useDispatch()
+   const { id } = useParams()
+   console.log('id:', id)
    const formik = useFormik({
       initialValues: {
          email: '',
+         link: 'http://localhost:3000/createPassword',
       },
       validationSchema,
-      onSubmit: (values) => {
-         console.log(values)
+      onSubmit: (email) => {
+         dispatch(forgotPasswordThunk(email))
+         console.log(email)
+         handleClose()
       },
    })
 
