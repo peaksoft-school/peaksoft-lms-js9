@@ -8,6 +8,7 @@ import { Input } from '../components/UI/input/Input'
 import { Button } from '../components/UI/button/Button'
 import { OpenEyePassIcon, ClosedEyePassIcon } from '../assets/icons'
 import { createPasswordThunk } from '../store/signIn/signInThunk'
+import { showSnackbar } from '../components/UI/snackbar/Snackbar'
 
 const schema = yup.object().shape({
    password: yup
@@ -36,9 +37,8 @@ export const CreatePassword = () => {
       validationSchema: schema,
       onSubmit: (values) => {
          values.userId = id
-         dispatch(createPasswordThunk(values))
+         dispatch(createPasswordThunk({ values, showSnackbar }))
          navigate('/')
-         console.log(values, 'kkkk')
       },
    })
 

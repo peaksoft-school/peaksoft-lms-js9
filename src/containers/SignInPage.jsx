@@ -38,14 +38,7 @@ export const SignInPage = () => {
       },
       validationSchema,
       onSubmit: (values) => {
-         dispatch(signInThunk(values))
-            .unwrap()
-            .then(() => {
-               showSnackbar('Вы успешно зашли!', 'success')
-            })
-            .catch((error) => {
-               showSnackbar(`${error}`, 'error')
-            })
+         dispatch(signInThunk({ values, showSnackbar }))
       },
    })
 
@@ -212,6 +205,7 @@ const ForgotButton = styled('button')`
    background-color: white;
    border: none;
    margin-left: auto;
+   cursor: pointer;
 `
 
 const ForgotButtonContainer = styled('div')`
@@ -219,6 +213,7 @@ const ForgotButtonContainer = styled('div')`
    display: flex;
    align-items: center;
    justify-content: end;
+   cursor: 'pointer';
 `
 
 const ContainerSecondInput = styled('div')`

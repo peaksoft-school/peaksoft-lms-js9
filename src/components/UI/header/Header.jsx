@@ -36,7 +36,6 @@ export const Header = ({
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
          setState(false)
       }
-      console.log('sdf')
    }
 
    useEffect(() => {

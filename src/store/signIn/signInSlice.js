@@ -45,7 +45,6 @@ export const signInSlice = createSlice({
    extraReducers: (builder) => {
       builder
          .addCase(signInThunk.fulfilled, (state, actions) => {
-            console.log('actions', actions)
             state.isAuthorization = true
             state.email = actions.payload.email
             state.token = actions.payload.token
@@ -67,30 +66,24 @@ export const signInSlice = createSlice({
          // forgotPassword
 
          .addCase(forgotPasswordThunk.fulfilled, (state) => {
-            state.isAuthorization = true
             state.isLoading = false
          })
          .addCase(forgotPasswordThunk.pending, (state) => {
-            state.isAuthorization = false
             state.isLoading = true
          })
          .addCase(forgotPasswordThunk.rejected, (state) => {
-            state.isAuthorization = false
             state.isLoading = false
          })
 
          // createPassword
 
          .addCase(createPasswordThunk.fulfilled, (state) => {
-            state.isAuthorization = true
             state.isLoading = false
          })
          .addCase(createPasswordThunk.pending, (state) => {
-            state.isAuthorization = false
             state.isLoading = true
          })
          .addCase(createPasswordThunk.rejected, (state) => {
-            state.isAuthorization = false
             state.isLoading = false
          })
    },

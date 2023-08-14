@@ -4,17 +4,20 @@ import { STORAGE_KEY } from '../../utils/constants/constants'
 
 export const signInThunk = createAsyncThunk(
    'auth/signIn',
-   async (values, { rejectWithValue }) => {
+   async (payload, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.post(`/auth/signIn`, values)
-         console.log(response.data)
+         const response = await axiosInstance.post(
+            `/auth/signIn`,
+            payload.values
+         )
          localStorage.setItem(
             STORAGE_KEY.AUTH_KEY,
             JSON.stringify(response.data)
          )
+         payload.showSnackbar('Вы успешно зашли!', 'success')
          return response.data
       } catch (error) {
-         console.log(error.response.data.message)
+         payload.showSnackbar(`${error.response.data.message}`, 'error')
          return rejectWithValue(error.response.data.message)
       }
    }
@@ -23,16 +26,18 @@ export const signInThunk = createAsyncThunk(
 
 export const forgotPasswordThunk = createAsyncThunk(
    'auth/forgotPassword',
-   async (values, { rejectWithValue }) => {
-      console.log('values:', values)
+   async (payload, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.post(
-            `/auth/sendEmail?emailAddress=${values.email}&link=${values.link}`
+            `/auth/sendEmail?emailAddress=${payload.values.email}&link=${payload.values.link}`
          )
-         console.log('response:', response)
+         payload.showSnackbar(
+            'Вам успешно отправлено ссылка для сброса пароля!',
+            'success'
+         )
          return response
       } catch (error) {
-         console.log(error.response.data)
+         payload.showSnackbar(`${error.response.data.message}`, 'error')
          return rejectWithValue(error.response.data)
       }
    }
@@ -42,17 +47,16 @@ export const forgotPasswordThunk = createAsyncThunk(
 
 export const createPasswordThunk = createAsyncThunk(
    'auth/createPassword',
-   async (values, { rejectWithValue }) => {
-      console.log('values:', values)
+   async (payload, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.post(
-            `/auth/recover-password/${values.userId}`,
-            values
+            `/auth/recover-password/${payload.values.userId}`,
+            payload.values
          )
-         console.log('response:', response)
+         payload.showSnackbar('Вы успешно изменили пароль!', 'success')
          return response
       } catch (error) {
-         console.log(error.response.data)
+         payload.showSnackbar(`${error.response.data.message}`, 'error')
          return rejectWithValue(error.response.data)
       }
    }
