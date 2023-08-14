@@ -1,7 +1,9 @@
 import axios from 'axios'
-import { BASE_URL } from '../utils/constants/axios'
+import { BASE_URL } from '../utils/constants/constants'
 
-const logoutAction = () => {}
+const logoutAction = () => {
+   console.log('402')
+}
 const headers = {
    'Content-Type': 'application/json',
 }
@@ -15,7 +17,7 @@ export const injectStore = (_store) => {
 }
 axiosInstance.interceptors.request.use((config) => {
    const updatedConfig = { ...config }
-   const token = store.getState().login.accessToken
+   const { token } = store.getState().auth
    if (token) {
       updatedConfig.headers.Authorization = `Bearer ${token}`
    }

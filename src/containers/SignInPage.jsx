@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-import { styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { styled } from '@mui/material/styles'
+import { IconButton } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import { ForgotModal } from './ForgotModal'
 import { Button } from '../components/UI/button/Button'
 import { Input } from '../components/UI/input/Input'
 import { ClosedEyePassIcon, OpenEyePassIcon } from '../assets/icons'
+import { signInThunk } from '../store/signIn/signInThunk'
+import { showSnackbar } from '../components/UI/snackbar/Snackbar'
 
 const validationSchema = yup.object().shape({
-   login: yup
+   email: yup
       .string()
       .required('Введите логин')
       .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Не валидный электронный адрес!'),
@@ -22,7 +25,7 @@ const validationSchema = yup.object().shape({
 export const SignInPage = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [open, setOpen] = useState(false)
-   const navigate = useNavigate()
+   const dispatch = useDispatch()
 
    const handleClose = () => {
       setOpen(false)
@@ -30,25 +33,21 @@ export const SignInPage = () => {
 
    const formik = useFormik({
       initialValues: {
-         login: '',
+         email: '',
          password: '',
       },
       validationSchema,
       onSubmit: (values) => {
-         // Логика для отправки формы
-         // Временная для проверки
-         if (values.login === 'admin@gmail.com') {
-            navigate('/admin')
-         } else if (values.login === 'instructor@gmail.com') {
-            navigate('/instructor')
-         } else if (values.login === 'students@gmail.com') {
-            navigate('/student')
-         }
+         dispatch(signInThunk({ values, showSnackbar }))
       },
    })
 
-   const { values, errors, touched, handleChange, handleSubmit } = formik
+   const { values, errors, touched, handleChange, submitForm } = formik
 
+   const handleSubmit = (e) => {
+      e.preventDefault()
+      submitForm()
+   }
    return (
       <Container>
          <ContainerTitle>
@@ -62,20 +61,20 @@ export const SignInPage = () => {
             <FormBlock>
                <div className="block">
                   <ContainertConfirmLogin>
-                     <label style={{ color: '#8D949E' }} htmlFor="login">
+                     <label style={{ color: '#8D949E' }} htmlFor="email">
                         Логин:
                         <LoginInput
                            size="small"
                            placeholder="Введите логин"
                            type="text"
-                           id="login"
-                           name="login"
-                           value={values.login}
+                           id="email"
+                           name="email"
+                           value={values.email}
                            onChange={handleChange}
-                           error={touched.login && errors.login}
+                           error={touched.email && errors.email}
                         />
-                        {touched.login && errors.login && (
-                           <span className="error-message">{errors.login}</span>
+                        {touched.email && errors.email && (
+                           <span className="error-message">{errors.email}</span>
                         )}
                      </label>
                   </ContainertConfirmLogin>
@@ -92,16 +91,22 @@ export const SignInPage = () => {
                               value={values.password}
                               onChange={handleChange}
                               error={touched.password && errors.password}
+                              InputProps={{
+                                 endAdornment: (
+                                    <PasswordIconContainer
+                                       onClick={() =>
+                                          setShowPassword(!showPassword)
+                                       }
+                                    >
+                                       {showPassword ? (
+                                          <OpenEyePassIcon />
+                                       ) : (
+                                          <ClosedEyePassIcon />
+                                       )}
+                                    </PasswordIconContainer>
+                                 ),
+                              }}
                            />
-                           <PasswordIconContainer
-                              onClick={() => setShowPassword(!showPassword)}
-                           >
-                              {showPassword ? (
-                                 <OpenEyePassIcon />
-                              ) : (
-                                 <ClosedEyePassIcon />
-                              )}
-                           </PasswordIconContainer>
                         </ContainerSecondInput>
                         {touched.password && errors.password && (
                            <span className="error-message">
@@ -112,9 +117,7 @@ export const SignInPage = () => {
                   </ContainertConfirmPassword>
                </div>
                <ForgotButtonContainer>
-                  {open ? (
-                     <ForgotModal open={open} handleClose={handleClose} />
-                  ) : null}
+                  <ForgotModal open={open} handleClose={handleClose} />
                   <ForgotButton onClick={() => setOpen(true)} type="button">
                      Забыли пароль?
                   </ForgotButton>
@@ -154,7 +157,7 @@ const LoginInput = styled(Input)(() => ({
       width: '28.8vw',
       height: '42px',
       borderRadius: '10px',
-      marginTop: '0.629rem',
+      marginTop: '0.4rem',
    },
    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
       borderColor: '#1F6ED4',
@@ -174,7 +177,7 @@ const LoginSecondInput = styled(Input)(() => ({
       width: '28.8vw',
       height: '42px',
       borderRadius: '10px',
-      marginTop: '0.629rem',
+      marginTop: '0.4rem',
       position: 'relative',
    },
    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
@@ -202,6 +205,7 @@ const ForgotButton = styled('button')`
    background-color: white;
    border: none;
    margin-left: auto;
+   cursor: pointer;
 `
 
 const ForgotButtonContainer = styled('div')`
@@ -209,22 +213,17 @@ const ForgotButtonContainer = styled('div')`
    display: flex;
    align-items: center;
    justify-content: end;
+   cursor: 'pointer';
 `
 
 const ContainerSecondInput = styled('div')`
    position: relative;
 `
 
-const PasswordIconContainer = styled('div')(() => ({
-   position: 'absolute',
-   top: '57%',
-   right: '20px',
-   transform: 'translateY(-35%)',
-   cursor: 'pointer',
-   border: 0,
+const PasswordIconContainer = styled(IconButton)(() => ({
    svg: {
       path: {
-         fill: '#8D949E',
+         fill: '#9e8e8d',
       },
    },
 }))
@@ -242,7 +241,7 @@ const FormBlock = styled('div')(() => ({
    gap: '10px',
    ' .block': {
       width: '100%',
-      height: '21vh',
+      height: '22.5vh',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
