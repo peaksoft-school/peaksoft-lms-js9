@@ -2,24 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
 import { fileAxiosInstanse } from '../../config/fileAxiosInstance'
 
-export const getCard = createAsyncThunk(
-   'cards/getCards',
+export const getCardsCourses = createAsyncThunk(
+   'courses/getCardsCourses',
    async (_, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.get('/api/groups')
-         return response.data
-      } catch (error) {
-         return rejectWithValue(error.message)
-      }
-   }
-)
-export const getGroupUsers = createAsyncThunk(
-   'cards/getGroupUsers',
-   async (id, { rejectWithValue }) => {
-      try {
-         const response = await axiosInstance.get(
-            `/api/groups/getStudents/${id}`
-         )
+         const response = await axiosInstance.get('/api/courses')
          return response.data
       } catch (error) {
          return rejectWithValue(error.message)
@@ -28,7 +15,7 @@ export const getGroupUsers = createAsyncThunk(
 )
 
 export const postFile = createAsyncThunk(
-   'cards/postFile',
+   'courses/postFile',
    async (data, { rejectWithValue }) => {
       try {
          const response = await fileAxiosInstanse.post('/api/file', {
@@ -40,15 +27,27 @@ export const postFile = createAsyncThunk(
       }
    }
 )
-
+export const deleteFile = createAsyncThunk(
+   'courses/deleteFile',
+   async (image, { rejectWithValue, dispatch }) => {
+      try {
+         await fileAxiosInstanse.delete(`/api/file`, image)
+         return dispatch(getCardsCourses())
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
 export const postCard = createAsyncThunk(
-   'cards/postCards',
+   'courses/postCards',
    async (data, { rejectWithValue, dispatch }) => {
       try {
-         // const getFile = await dispatch(postFile(data.image)).unwrap()
-         // console.log(getFile)
-         await axiosInstance.post('/api/groups', data)
-         return dispatch(getCard())
+         const getFile = await dispatch(postFile(data.image)).unwrap()
+         await axiosInstance.post('/api/courses', {
+            ...data,
+            image: getFile,
+         })
+         return dispatch(getCardsCourses())
       } catch (error) {
          return rejectWithValue(error.message)
       }
@@ -56,11 +55,15 @@ export const postCard = createAsyncThunk(
 )
 
 export const updateCard = createAsyncThunk(
-   'cards/putCards',
+   'courses/putCards',
    async (data, { rejectWithValue, dispatch }) => {
       try {
-         await axiosInstance.put(`api/groups/${data.id}`, data)
-         return dispatch(getCard())
+         const getFile = await dispatch(postFile(data.image)).unwrap()
+         await axiosInstance.put(`/api/courses/${data.id}`, {
+            ...data,
+            image: getFile,
+         })
+         return dispatch(getCardsCourses())
       } catch (error) {
          return rejectWithValue(error.message)
       }
@@ -68,11 +71,11 @@ export const updateCard = createAsyncThunk(
 )
 
 export const deleteGroup = createAsyncThunk(
-   'cards/deleteGroup',
+   'courses/deleteGroup',
    async (id, { rejectWithValue, dispatch }) => {
       try {
-         await axiosInstance.delete(`/api/groups/${id}`)
-         return dispatch(getCard())
+         await axiosInstance.delete(`/api/courses/${id}`)
+         return dispatch(getCardsCourses())
       } catch (error) {
          return rejectWithValue(error.message)
       }

@@ -4,14 +4,16 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Table from '../../../../components/UI/table/Table'
 import { Header } from '../../../../components/UI/header/Header'
-import { getGroupUsers } from '../../../../store/group/AdminThunk'
 import { columnsTableGroup } from '../../../../utils/constants/constants'
+import { getGroupUsers } from '../../../../store/students/studentsThunk'
+import { Isloading } from '../../../../components/UI/snackbar/Isloading'
 
 export const GroupsTable = () => {
    const params = useParams()
    const navigate = useNavigate()
    const dispatch = useDispatch()
-   const { cards, users } = useSelector((state) => state.cards)
+   const { cards } = useSelector((state) => state.cards)
+   const { students, isLoading } = useSelector((state) => state.students)
    const getGroupName = cards.find((item) => item.id === +params.details)
 
    const navigateGoBackGroups = () => {
@@ -23,6 +25,7 @@ export const GroupsTable = () => {
 
    return (
       <>
+         {isLoading && <Isloading />}
          <div>
             <Header titlePage="Администратор" />
          </div>
@@ -32,7 +35,7 @@ export const GroupsTable = () => {
             </button>
             \ {getGroupName?.groupName}
          </SpanStyled>
-         <Table data={users} columns={columnsTableGroup} />
+         <Table data={students} columns={columnsTableGroup} />
       </>
    )
 }

@@ -14,7 +14,7 @@ fileAxiosInstanse.interceptors.request.use(
       const configUpdate = { ...config }
       //   const { token } = store.getState().auth
       const token =
-         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTE3NTEzMjYsImlhdCI6MTY5MTQ5MjEyNiwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.6DOC3QceNEwLaRZTCrA49ADPDHvjvquA0aWUTXNOACA'
+         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTIzMzkyMDcsImlhdCI6MTY5MjA4MDAwNywidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.TaWiCgwtHHJ6w47GLqih8LMfRxyNunrOMmrCrszJ0bo'
       if (token) {
          configUpdate.headers.Authorization = `Bearer ${token}`
       }

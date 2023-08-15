@@ -24,7 +24,7 @@ const Table = ({ data, columns }) => {
                </StyledTableRow>
             </TableHead>
             <TableBody>
-               {data.map((row) => (
+               {data?.map((row) => (
                   <StyledTableRow key={row.id}>
                      {columns?.map((column) => {
                         if (column.render) {

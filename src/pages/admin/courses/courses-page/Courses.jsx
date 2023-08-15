@@ -1,37 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { format, isValid } from 'date-fns'
 import { useForm } from 'react-hook-form'
-import { Card } from '../../../../components/UI/cards/Card'
-import { ModalDeleteGroup } from '../groups-modal/ModalDeleteGroup'
+import { format, isValid } from 'date-fns'
+import { useDispatch, useSelector } from 'react-redux'
 import { Header } from '../../../../components/UI/header/Header'
-import { ModalGroup } from '../groups-modal/ModalGroup'
+import { Card } from '../../../../components/UI/cards/Card'
 import { useToggle } from '../../../../utils/hooks/general'
+import { ModalCourses } from '../courses-modal/ModalCourses'
+import { ModalDelete } from '../courses-modal/ModalDelete'
+import { AppointIcon, DeleteIcon, EditIcon } from '../../../../assets/icons'
 import {
    deleteFile,
    deleteGroup,
-   getCard,
+   getCardsCourses,
    postCard,
    updateCard,
-} from '../../../../store/group/groupThunk'
+} from '../../../../store/courses/coursesThunk'
+import { ModalSelect } from '../courses-modal/ModalSelect'
+import {
+   assignInstructor,
+   getAllInstructors,
+} from '../../../../store/instructor/instructorThunk'
 import { showSnackbar } from '../../../../components/UI/snackbar/Snackbar'
 import { Isloading } from '../../../../components/UI/snackbar/Isloading'
 
-export const Groups = () => {
+export const Courses = () => {
    const dispatch = useDispatch()
-   const { cards, isLoading } = useSelector((state) => state.cards)
+   const { cards, isLoading } = useSelector((state) => state.courses)
+   const { getAllIns, instructors } = useSelector((state) => state.instructors)
    const [getCardId, setCardId] = useState('')
-   const [getGroupName, setGroupName] = useState('')
+   const [getCourseName, setCourseName] = useState('')
    const [dateEditModal, setDateEditModal] = useState('')
    const [dateValue, setDateValue] = useState('')
    const [imageValue, setImageValue] = useState('')
    const [imageEditValue, setImageEditValue] = useState('')
-   const { isActive, setActive } = useToggle('addedgroupmodal')
+   const { isActive, setActive } = useToggle('addedmodal')
    const { setActive: setActiveModal1, isActive: isActiveModal1 } =
       useToggle('modalDelete')
    const { setActive: setActiveModal2, isActive: isActiveModal2 } =
       useToggle('modalEdit')
+   const { setActive: setActiveModal3, isActive: isActiveModal3 } =
+      useToggle('modalSelect')
    const {
       handleSubmit,
       setValue,
@@ -68,7 +77,8 @@ export const Groups = () => {
    }
 
    useEffect(() => {
-      dispatch(getCard())
+      dispatch(getCardsCourses())
+      dispatch(getAllInstructors())
    }, [])
 
    const isFormEmpty =
@@ -80,19 +90,19 @@ export const Groups = () => {
    const deleteOpenModal = (data) => {
       setActiveModal1(!isActiveModal1)
       setCardId(data.id)
-      setGroupName(data.groupName)
+      setCourseName(data.courseName)
    }
 
    const deleteHandler = () => {
-      setActiveModal1('')
       dispatch(deleteGroup(getCardId))
          .unwrap()
-         .then(() => showSnackbar('Группа успешно удалено!', 'success'))
+         .then(() => showSnackbar('Курс успешно удален', 'success'))
          .catch((error) => showSnackbar(error, 'error'))
+      setActiveModal1('')
    }
    const editOpenModal = (data) => {
       setActiveModal2(!isActiveModal2)
-      setValue('editTitle', data.groupName)
+      setValue('editTitle', data.courseName)
       setValue('editDescription', data.description)
       setValue('dateEditModal', data.dateOfGraduation)
       setImageEditValue(data.image)
@@ -102,14 +112,14 @@ export const Groups = () => {
 
    const addedHandler = () => {
       const data = {
-         groupName: getValues().groupName,
+         courseName: getValues().groupName,
          description: getValues().description,
          image: imageValue,
-         dateOfGraduation: formatDate,
+         DateOfGraduation: formatDate,
       }
       dispatch(postCard(data))
          .unwrap()
-         .then(() => showSnackbar('Группа успешно создано!', 'success'))
+         .then(() => showSnackbar('Курс успешно создан!', 'success'))
          .catch((error) => showSnackbar(error, 'error'))
       setActive('')
       setValue('groupName', '')
@@ -118,36 +128,66 @@ export const Groups = () => {
    const saveHandler = (data) => {
       const updatedData = {
          id: getCardId,
-         groupName: data.editTitle,
+         courseName: data.editTitle,
          description: data.editDescription,
-         dateOfGraduation: editFormatDate,
+         DateOfGraduation: editFormatDate,
          image: imageValue,
          delImage: imageEditValue,
       }
       dispatch(deleteFile(updatedData.delImage))
       dispatch(updateCard(updatedData))
          .unwrap()
-         .then(() => showSnackbar('Группа успешно редактировано!', 'success'))
+         .then(() => showSnackbar('Курс успешно редактирован!', 'success'))
          .catch((error) => showSnackbar(error, 'error'))
       setActiveModal2('')
    }
+
+   const appointHandler = () => {
+      dispatch(assignInstructor(getCardId))
+   }
+   const appointOpenModal = (data) => {
+      setCardId(data.id)
+      setActiveModal3(!isActiveModal3)
+   }
+   console.log(getAllIns)
 
    const openModalDeleteAndEditHandler = ({ menuId, data }) => {
       if (menuId === 1) {
          editOpenModal(data)
       } else if (menuId === 2) {
          deleteOpenModal(data)
+      } else if (menuId === 3) {
+         appointOpenModal(data)
       }
    }
-   const menuItems = []
+   const menuItems = [
+      {
+         id: 3,
+         img: <AppointIcon />,
+         title: 'Назначить учителя',
+      },
+      {
+         id: 1,
+         img: <EditIcon />,
+         title: 'Редактировать',
+      },
+      {
+         id: 2,
+         img: <DeleteIcon />,
+         title: 'Удалить',
+      },
+   ]
+
    return (
-      <>
+      <div>
          {isLoading && <Isloading />}
-         <Header
-            titlePage="Администратор"
-            buttonContent="Создать группу"
-            onClick={openModalAddedNewGroupHandler}
-         />
+         <div>
+            <Header
+               onClick={openModalAddedNewGroupHandler}
+               titlePage="Администратор"
+               buttonContent="Создать курс"
+            />
+         </div>
          <ContainerItem>
             {cards && cards.length > 0 ? (
                cards.map((el) => (
@@ -155,19 +195,26 @@ export const Groups = () => {
                      key={el.id}
                      el={el}
                      image={el.image}
-                     title={el.groupName}
-                     date={el.create_date}
+                     title={el.courseName}
+                     date={el.dateOfGraduation}
                      description={el.description}
                      onClick={openModalDeleteAndEditHandler}
                      menuItems={menuItems}
                   />
                ))
             ) : (
-               <h1>ПОКА ЧТО НЕТ ГРУПП!</h1>
+               <h1>ПОКА ЧТО НЕТ КУРСОВ!</h1>
             )}
          </ContainerItem>
-         <>
-            <ModalGroup
+         <div>
+            <ModalSelect
+               coursesIns={instructors}
+               array={getAllIns}
+               openModal={isActiveModal3}
+               handleClose={() => setActiveModal3('')}
+               onClick={appointHandler}
+            />
+            <ModalCourses
                variant={false}
                openModal={isActive}
                handleClose={closeModalAddedNewGroupHandler}
@@ -181,13 +228,13 @@ export const Groups = () => {
                setValue={setValue}
                isFormEmpty={isFormEmpty}
             />
-            <ModalDeleteGroup
+            <ModalDelete
                open={isActiveModal1}
                handleClose={closeModalDeleteHandler}
                deleteCardHandler={deleteHandler}
-               getGroupName={getGroupName}
+               getCourseName={getCourseName}
             />
-            <ModalGroup
+            <ModalCourses
                variant
                imageEditValue={imageEditValue}
                dateEditModal={dateEditModal}
@@ -202,8 +249,8 @@ export const Groups = () => {
                setValue={setValue}
                isFormEmpty={isFormEmpty}
             />
-         </>
-      </>
+         </div>
+      </div>
    )
 }
 const ContainerItem = styled('div')`

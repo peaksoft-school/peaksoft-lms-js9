@@ -16,7 +16,14 @@ export const columnsTableGroup = [
    { id: 'phoneNumber', label: 'Номер телефона' },
    { id: 'email', label: 'E-mail' },
 ]
-
+export const columnsTableCourses = [
+   { id: 'id', label: 'ID' },
+   { id: 'fullName', label: 'Имя Фамилия' },
+   { id: 'groupName', label: 'Группа' },
+   { id: 'studyFormat', label: 'Формат' },
+   { id: 'phoneNumber', label: 'Номер телефона' },
+   { id: 'email', label: 'E-mail' },
+]
 export const materialsLesson = [
    {
       id: 1,

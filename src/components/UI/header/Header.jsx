@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import { Box, Select } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
 import {
    DropDownIcon,
    ExelExport,
@@ -9,7 +8,6 @@ import {
    PlusIcon,
    ProfileIcon,
 } from '../../../assets/icons'
-import { IconButtons } from '../button/IconButtons'
 import { Button } from '../button/Button'
 import { Tabs } from '../tabs/Tabs'
 
@@ -22,51 +20,40 @@ export const Header = ({
 }) => {
    const [state, setState] = useState(false)
    const dropdownRef = useRef(null)
-   const navigate = useNavigate()
 
    const handleChange = () => {
       setState(!state)
    }
-
-   const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-         setState(false)
-      }
-      navigate()
-      console.log('sdf')
+   const logoutHandler = () => {
+      console.log('logout')
    }
-
-   useEffect(() => {
-      document.addEventListener('mousedown', handleClickOutside)
-      return () => {
-         document.removeEventListener('mousedown', handleClickOutside)
-      }
-   }, [])
 
    return (
       <Container>
          <StyledBox>
-            {courses === 'Courses' && (
-               <TabsStyle
-                  labelOne="Учителя"
-                  labelTwo="Студенты"
-                  toOne="/"
-                  toTwo="s"
-               />
-            )}
-            <BoxLogOut ref={dropdownRef} onClick={handleChange}>
-               <ProfileIcon />
-               <p>{titlePage}</p>
-               <DropDownIcon />
-            </BoxLogOut>
-            <IconButtons>
+            <TabsStyle>
+               {courses === 'Courses' && (
+                  <Tabs
+                     labelOne="Учителя"
+                     labelTwo="Студенты"
+                     toOne="teachers"
+                     toTwo="students"
+                  />
+               )}
+            </TabsStyle>
+            <Div>
+               <BoxLogOut ref={dropdownRef} onClick={handleChange}>
+                  <ProfileIcon />
+                  <p>{titlePage}</p>
+                  <DropDownIcon />
+               </BoxLogOut>
                {state && (
-                  <StyledDropDown>
+                  <StyledDropDown onClick={logoutHandler}>
                      <ExitIcon style={{ marginLeft: '1.20rem' }} />
                      <span>Выйти</span>
                   </StyledDropDown>
                )}
-            </IconButtons>
+            </Div>
          </StyledBox>
          <ButtonContainer>
             {conditionButton === 'Students' ? (
@@ -138,9 +125,8 @@ export const Header = ({
 const StyledBox = styled(Box)(() => ({
    width: '100%',
    display: 'flex',
-   alignItems: 'center',
-   gap: '5px',
-   justifyContent: 'flex-end',
+   // alignItems: 'center',
+   // justifyContent: 'center',
    borderBottom: '1px solid #C4C4C4',
    height: '4.69rem',
    '& p': {
@@ -153,8 +139,8 @@ const StyledDropDown = styled('h3')({
    display: 'flex',
    zIndex: 1,
    position: 'absolute',
-   top: '40px',
-   right: '10px',
+   top: '60px',
+   right: '30px',
    width: '13.31rem',
    height: '3.5rem',
    background: '#DDE9F9',
@@ -177,11 +163,17 @@ const Container = styled(Box)`
    }
 `
 
-const TabsStyle = styled(Tabs)`
-   color: red;
-   margin-top: 27px;
-   margin: 0 auto;
+const TabsStyle = styled('div')`
+   display: flex;
+   justify-content: end;
+   width: 60%;
 `
+const Div = styled('div')`
+   display: flex;
+   justify-content: end;
+   width: 50%;
+`
+
 const ButtonContainer = styled(Box)(() => ({
    width: '100%',
    display: 'flex',

@@ -6,9 +6,15 @@ import Typography from '@mui/material/Typography'
 import { Link } from 'react-router-dom'
 import MeatBall from '../meatBall/MeatBall'
 
-const menuItems = []
-
-export const Card = ({ el, onClick }) => {
+export const Card = ({
+   el,
+   onClick,
+   title,
+   date,
+   image,
+   description,
+   menuItems,
+}) => {
    const getMenuIdAndSetCardId = (menuID) => {
       onClick({
          menuId: menuID,
@@ -19,14 +25,14 @@ export const Card = ({ el, onClick }) => {
       <ContainerCard>
          <Link to={`${el.id}`}>
             <ContainerImg>
-               <img src={el.image} alt="groupfoto" />
+               <img src={image} alt="groupfoto" />
             </ContainerImg>
             <ContainerContent>
                <ContainerHeader>
-                  <p>{el.groupName}</p> <span>{el.create_date}</span>
+                  <p>{title}</p> <span>{date}</span>
                </ContainerHeader>
                <ContainerDescriptionStyled>
-                  {el.description}
+                  {description}
                </ContainerDescriptionStyled>
             </ContainerContent>
          </Link>
