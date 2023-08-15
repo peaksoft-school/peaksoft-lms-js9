@@ -20,32 +20,33 @@ export const Material = ({
    clickDeleteHandler,
    clickDeleteAll,
    el,
+   // item,
 }) => {
    const navLink = [
       {
          route: reusableRoutesLesson.videolesson,
          icon: <LessonVideoIcon />,
-         title: el.lessonVideo,
+         title: 'Видеоурок',
       },
       {
          route: reusableRoutesLesson.presentation,
          icon: <PresentationIcon />,
-         title: el.presentation,
+         title: 'Презентация',
       },
       {
          route: reusableRoutesLesson.task,
          icon: <TaskIcon />,
-         title: el.task,
+         title: 'Задания',
       },
       {
          route: reusableRoutesLesson.link,
          icon: <LinkIcon />,
-         title: el.link,
+         title: 'Ссылка',
       },
       {
          route: reusableRoutesLesson.test,
          icon: <TestIcon />,
-         title: el.test,
+         title: 'Тест',
       },
    ]
    const [selectedValues, setSelectedValues] = useState({})
@@ -56,13 +57,15 @@ export const Material = ({
          [id]: value,
       }))
    }
+   console.log(clickDeleteAll)
+   console.log(el)
 
    return (
       <Container key={el.id}>
          <div className="containerHeader">
             <div>
                <LogoLessonIcon />
-               <h1>{el.lesson}</h1>
+               <h1>{el.lessonName}</h1>
             </div>
             <div className="containerDeleteIconButton">
                <FormControl size="small">
@@ -99,7 +102,7 @@ export const Material = ({
                      ))}
                   </Select>
                </FormControl>
-               <DeleteRedIcon onClick={() => clickDeleteAll(el.id)} />
+               <DeleteRedIcon onClick={() => clickDeleteAll(el.lessonName)} />
             </div>
          </div>
          <div className="containerItem">
@@ -137,7 +140,7 @@ export const Material = ({
 }
 
 const Container = styled('div')(({ theme }) => ({
-   backgroundColor: theme.palette.primary.light,
+   backgroundColor: '#ffffff',
    margin: '1.25rem',
    width: '29vw',
    height: '33.7vh',
@@ -164,16 +167,15 @@ const Container = styled('div')(({ theme }) => ({
          alignItems: 'center',
          gap: '1.88rem',
 
-         '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
-            {
-               borderColor: '#EBEBEB',
-            },
-
-         '.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
-            {
-               border: '1px solid #EBEBEB',
-               width: '4vw',
-            },
+         // '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
+         // {
+         //    borderColor: '#EBEBEB',
+         // },
+         // '.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
+         // {
+         //    border: '1px solid #EBEBEB',
+         //    width: '4vw',
+         // },
       },
    },
    '.containerItem': {

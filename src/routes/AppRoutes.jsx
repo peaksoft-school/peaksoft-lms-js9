@@ -18,7 +18,7 @@ export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
    const { home, courses, teachers, students } = routes[roles]
 
-   const role = 'ADMIN'
+   const role = 'INSTRUCTOR'
 
    const isAllowed = (userRole) => {
       return userRole.includes(role)
