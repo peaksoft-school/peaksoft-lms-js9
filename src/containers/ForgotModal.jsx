@@ -2,9 +2,12 @@ import React from 'react'
 import { styled } from '@mui/material'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import { useDispatch } from 'react-redux'
 import { Modal } from '../components/UI/modal/Modal'
 import { Button } from '../components/UI/button/Button'
 import { Input } from '../components/UI/input/Input'
+import { forgotPasswordThunk } from '../store/signIn/signInThunk'
+import { showSnackbar } from '../components/UI/snackbar/Snackbar'
 
 const validationSchema = yup.object().shape({
    email: yup
@@ -18,13 +21,17 @@ const validationSchema = yup.object().shape({
 })
 
 export const ForgotModal = ({ open, handleClose }) => {
+   const dispatch = useDispatch()
    const formik = useFormik({
       initialValues: {
          email: '',
+         link: 'http://localhost:3000/createPassword',
       },
       validationSchema,
       onSubmit: (values) => {
-         console.log(values)
+         dispatch(forgotPasswordThunk({ values, showSnackbar }))
+         formik.resetForm()
+         handleClose()
       },
    })
 
@@ -75,7 +82,7 @@ const ForgotButton = styled(Button)(() => ({
    borderRadius: '8px',
 }))
 const FormSubmit = styled('form')(() => ({
-   height: '13vh',
+   height: '16vh',
    display: 'flex',
    flexDirection: 'column',
    justifyContent: 'space-between',
