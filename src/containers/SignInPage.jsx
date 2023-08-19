@@ -2,10 +2,14 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { styled } from '@mui/material/styles'
+import { IconButton } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import { ForgotModal } from './ForgotModal'
 import { Button } from '../components/UI/button/Button'
 import { Input } from '../components/UI/input/Input'
 import { ClosedEyePassIcon, OpenEyePassIcon } from '../assets/icons'
+import { signInThunk } from '../store/signIn/signInThunk'
+import { showSnackbar } from '../components/UI/snackbar/Snackbar'
 
 const validationSchema = yup.object().shape({
    email: yup
@@ -21,6 +25,7 @@ const validationSchema = yup.object().shape({
 export const SignInPage = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [open, setOpen] = useState(false)
+   const dispatch = useDispatch()
 
    const handleClose = () => {
       setOpen(false)
@@ -33,12 +38,16 @@ export const SignInPage = () => {
       },
       validationSchema,
       onSubmit: (values) => {
-         console.log(values)
+         dispatch(signInThunk({ values, showSnackbar }))
       },
    })
 
-   const { values, errors, touched, handleChange, handleSubmit } = formik
+   const { values, errors, touched, handleChange, submitForm } = formik
 
+   const handleSubmit = (e) => {
+      e.preventDefault()
+      submitForm()
+   }
    return (
       <Container>
          <ContainerTitle>
@@ -82,16 +91,22 @@ export const SignInPage = () => {
                               value={values.password}
                               onChange={handleChange}
                               error={touched.password && errors.password}
+                              InputProps={{
+                                 endAdornment: (
+                                    <PasswordIconContainer
+                                       onClick={() =>
+                                          setShowPassword(!showPassword)
+                                       }
+                                    >
+                                       {showPassword ? (
+                                          <OpenEyePassIcon />
+                                       ) : (
+                                          <ClosedEyePassIcon />
+                                       )}
+                                    </PasswordIconContainer>
+                                 ),
+                              }}
                            />
-                           <PasswordIconContainer
-                              onClick={() => setShowPassword(!showPassword)}
-                           >
-                              {showPassword ? (
-                                 <OpenEyePassIcon />
-                              ) : (
-                                 <ClosedEyePassIcon />
-                              )}
-                           </PasswordIconContainer>
                         </ContainerSecondInput>
                         {touched.password && errors.password && (
                            <span className="error-message">
@@ -142,7 +157,7 @@ const LoginInput = styled(Input)(() => ({
       width: '28.8vw',
       height: '42px',
       borderRadius: '10px',
-      marginTop: '0.629rem',
+      marginTop: '0.4rem',
    },
    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
       borderColor: '#1F6ED4',
@@ -162,7 +177,7 @@ const LoginSecondInput = styled(Input)(() => ({
       width: '28.8vw',
       height: '42px',
       borderRadius: '10px',
-      marginTop: '0.629rem',
+      marginTop: '0.4rem',
       position: 'relative',
    },
    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
@@ -190,6 +205,7 @@ const ForgotButton = styled('button')`
    background-color: white;
    border: none;
    margin-left: auto;
+   cursor: pointer;
 `
 
 const ForgotButtonContainer = styled('div')`
@@ -197,22 +213,17 @@ const ForgotButtonContainer = styled('div')`
    display: flex;
    align-items: center;
    justify-content: end;
+   cursor: 'pointer';
 `
 
 const ContainerSecondInput = styled('div')`
    position: relative;
 `
 
-const PasswordIconContainer = styled('div')(() => ({
-   position: 'absolute',
-   top: '57%',
-   right: '20px',
-   transform: 'translateY(-35%)',
-   cursor: 'pointer',
-   border: 0,
+const PasswordIconContainer = styled(IconButton)(() => ({
    svg: {
       path: {
-         fill: '#8D949E',
+         fill: '#9e8e8d',
       },
    },
 }))
@@ -230,7 +241,7 @@ const FormBlock = styled('div')(() => ({
    gap: '10px',
    ' .block': {
       width: '100%',
-      height: '21vh',
+      height: '22.5vh',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',

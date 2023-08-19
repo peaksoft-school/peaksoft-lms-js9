@@ -21,17 +21,22 @@ import { Isloading } from '../../../../components/UI/snackbar/Isloading'
 export const Groups = () => {
    const dispatch = useDispatch()
    const { cards, isLoading } = useSelector((state) => state.cards)
+
    const [getCardId, setCardId] = useState('')
    const [getGroupName, setGroupName] = useState('')
-   const [dateEditModal, setDateEditModal] = useState('')
-   const [dateValue, setDateValue] = useState('')
+
+   const [dateAdded, setDateAdded] = useState('')
+   const [dateEdit, setDateEdit] = useState('')
+
    const [imageValue, setImageValue] = useState('')
    const [imageEditValue, setImageEditValue] = useState('')
+
    const { isActive, setActive } = useToggle('addedgroupmodal')
    const { setActive: setActiveModal1, isActive: isActiveModal1 } =
       useToggle('modalDelete')
    const { setActive: setActiveModal2, isActive: isActiveModal2 } =
       useToggle('modalEdit')
+
    const {
       handleSubmit,
       setValue,
@@ -48,19 +53,20 @@ export const Groups = () => {
    })
 
    let formatDate = ''
-   if (dateValue && isValid(new Date(dateValue))) {
-      formatDate = format(new Date(dateValue), 'yyyy-MM-dd')
+   if (dateAdded && isValid(new Date(dateAdded))) {
+      formatDate = format(new Date(dateAdded), 'yyyy-MM-dd')
    }
    let editFormatDate = ''
-   if (dateEditModal && isValid(new Date(dateEditModal))) {
-      editFormatDate = format(new Date(dateEditModal), 'yyyy-MM-dd')
+   if (dateEdit && isValid(new Date(dateEdit))) {
+      editFormatDate = format(new Date(dateEdit), 'yyyy-MM-dd')
    }
 
    const closeModalEditHandler = () => setActiveModal2('')
    const closeModalDeleteHandler = () => setActiveModal1('')
    const openModalAddedNewGroupHandler = () => setActive(!isActive)
+
    const onImageUpload = (img) => setImageValue(img)
-   const dateChangeHandler = (date) => setDateValue(date)
+   const dateChangeHandler = (date) => setDateAdded(date)
    const closeModalAddedNewGroupHandler = () => {
       setActive('')
       setValue('groupName', '')
@@ -74,7 +80,7 @@ export const Groups = () => {
    const isFormEmpty =
       !getValues().groupName.trim() ||
       !getValues().description.trim() ||
-      !dateValue ||
+      !setDateAdded ||
       !imageValue
 
    const deleteOpenModal = (data) => {
@@ -85,16 +91,15 @@ export const Groups = () => {
 
    const deleteHandler = () => {
       setActiveModal1('')
-      dispatch(deleteGroup(getCardId))
-         .unwrap()
-         .then(() => showSnackbar('Группа успешно удалено!', 'success'))
-         .catch((error) => showSnackbar(error, 'error'))
+      dispatch(deleteGroup({ getCardId, showSnackbar }))
    }
+
    const editOpenModal = (data) => {
       setActiveModal2(!isActiveModal2)
       setValue('editTitle', data.groupName)
       setValue('editDescription', data.description)
-      setValue('dateEditModal', data.dateOfGraduation)
+      // setValue('dateEditModal', dateValue)
+      setDateEdit(dateEdit)
       setImageEditValue(data.image)
       setImageValue(data.image)
       setCardId(data.id)
@@ -107,28 +112,22 @@ export const Groups = () => {
          image: imageValue,
          dateOfGraduation: formatDate,
       }
-      dispatch(postCard(data))
-         .unwrap()
-         .then(() => showSnackbar('Группа успешно создано!', 'success'))
-         .catch((error) => showSnackbar(error, 'error'))
+      dispatch(postCard({ data, showSnackbar }))
       setActive('')
       setValue('groupName', '')
       setValue('description', '')
    }
-   const saveHandler = (data) => {
-      const updatedData = {
+   const saveHandler = (el) => {
+      const data = {
          id: getCardId,
-         groupName: data.editTitle,
-         description: data.editDescription,
+         groupName: el.editTitle,
+         description: el.editDescription,
          dateOfGraduation: editFormatDate,
          image: imageValue,
          delImage: imageEditValue,
       }
-      dispatch(deleteFile(updatedData.delImage))
-      dispatch(updateCard(updatedData))
-         .unwrap()
-         .then(() => showSnackbar('Группа успешно редактировано!', 'success'))
-         .catch((error) => showSnackbar(error, 'error'))
+      dispatch(deleteFile(data.delImage))
+      dispatch(updateCard({ data, showSnackbar }))
       setActiveModal2('')
    }
 
@@ -173,7 +172,7 @@ export const Groups = () => {
                handleClose={closeModalAddedNewGroupHandler}
                onSubmit={addedHandler}
                onDateChange={dateChangeHandler}
-               value={dateValue}
+               value={setDateAdded}
                register={register}
                onImageUpload={onImageUpload}
                errors={errors}
@@ -190,11 +189,11 @@ export const Groups = () => {
             <ModalGroup
                variant
                imageEditValue={imageEditValue}
-               dateEditModal={dateEditModal}
+               dateEditModal={dateEdit}
                openModal={isActiveModal2}
                onSubmit={saveHandler}
                handleClose={closeModalEditHandler}
-               onDateChange={setDateEditModal}
+               onDateChange={setDateEdit}
                register={register}
                onImageUpload={onImageUpload}
                errors={errors}

@@ -82,8 +82,8 @@ export const ModalCourses = ({
 
 const StyledParagUploadImage = styled('p')`
    color: #8d949e;
-   width: 13vw;
-   height: 3vh;
+   width: 16em;
+   height: 1.5em;
    text-align: center;
    font-size: 0.875rem;
    font-weight: 400;

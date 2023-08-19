@@ -18,7 +18,7 @@ export default function BasicDatePicker({ onDateChange, value }) {
 const StyledDatePicker = styled(DatePicker)(({ theme, value }) => ({
    '& .css-r28ubj-MuiInputBase-root-MuiOutlinedInput-root': {
       borderRadius: '10px',
-      height: '4.5vh',
+      height: '2.5rem',
    },
    '& .MuiInputBase-input': {
       padding: theme.spacing(1),

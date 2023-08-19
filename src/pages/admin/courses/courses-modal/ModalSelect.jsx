@@ -1,55 +1,89 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import { Modal } from '../../../../components/UI/modal/Modal'
 import { Input } from '../../../../components/UI/input/Input'
 import MultiSelect from '../../../../components/UI/select/Select'
 import { Button } from '../../../../components/UI/button/Button'
 import { CancelIcon } from '../../../../assets/icons'
+import { IconButtons } from '../../../../components/UI/button/IconButtons'
+import { ModalDelete } from './ModalDelete'
+import { useToggle } from '../../../../utils/hooks/general'
+import { deleteAllTeacherCourse } from '../../../../store/instructor/instructorThunk'
+import { showSnackbar } from '../../../../components/UI/snackbar/Snackbar'
 
 export const ModalSelect = ({
    openModal,
    handleClose,
    array,
    onClick,
+   handleMultiSelectChange,
+   selectedItems,
    coursesIns,
+   courseId,
 }) => {
-   const [selectedValues, setSelectedValues] = useState([])
-   const [value, setValue] = useState(coursesIns)
+   const [value, setValue] = useState([])
+   const dispatch = useDispatch()
+   const { isActive, setActive } = useToggle('modaldeleteallteachersbycourse')
 
-   const handleMultiSelectChange = (event) => {
-      setSelectedValues(event.target.value)
+   useEffect(() => {
+      const allFullNames = coursesIns.map((course) => course.fullName)
+      setValue(allFullNames)
+   }, [coursesIns])
+
+   const openModalDelete = () => {
+      setActive(!isActive)
+      handleClose()
+   }
+   const deleteHandler = () => {
+      dispatch(deleteAllTeacherCourse({ showSnackbar, id: courseId.id }))
+      setActive('')
    }
    return (
-      <Modal
-         title="Назначить учителя"
-         open={openModal}
-         handleClose={handleClose}
-      >
-         <Container>
-            <InputContainer>
-               <InputStyled
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
+      <div>
+         <Modal
+            title="Назначить учителя"
+            open={openModal}
+            handleClose={handleClose}
+         >
+            <Container>
+               <InputContainer>
+                  <InputStyled
+                     placeholder="В этом курсе нет учителей."
+                     value={value}
+                     onChange={(e) => setValue(e.target.value)}
+                  />
+                  <IconContainer>
+                     <IconButtons onClick={openModalDelete}>
+                        <CancelIcon />
+                     </IconButtons>
+                  </IconContainer>
+               </InputContainer>
+               <MultiSelectStyled
+                  array={array}
+                  value={selectedItems}
+                  onChange={handleMultiSelectChange}
                />
-               <IconContainer>
-                  <CancelIcon onClick={() => setValue('')} />
-               </IconContainer>
-            </InputContainer>
-            <MultiSelectStyled
-               array={array}
-               value={selectedValues}
-               onChange={handleMultiSelectChange}
+            </Container>
+            <ContainerButton>
+               <ButtonCloseStyled variant="outlined" onClick={handleClose}>
+                  Отмена
+               </ButtonCloseStyled>
+               <ButtonAddedStyled onClick={onClick}>Добавить</ButtonAddedStyled>
+            </ContainerButton>
+         </Modal>
+         <div>
+            <ModalDelete
+               open={isActive}
+               handleClose={() => setActive('')}
+               deleteCardHandler={deleteHandler}
+               paragraph={`учителей ${value}`}
             />
-         </Container>
-         <ContainerButton>
-            <ButtonCloseStyled variant="outlined" onClick={handleClose}>
-               Отмена
-            </ButtonCloseStyled>
-            <ButtonAddedStyled onClick={onClick}>Добавить</ButtonAddedStyled>
-         </ContainerButton>
-      </Modal>
+         </div>
+      </div>
    )
 }
+
 const Container = styled('div')`
    display: flex;
    flex-direction: column;
@@ -88,13 +122,18 @@ const ButtonAddedStyled = styled(Button)`
    width: 5.4vw;
    height: 4.5vh;
 `
-
 const InputContainer = styled('div')`
    position: relative;
+   /* width: 32rem; */
+   /* overflow: hidden; */
+   display: flex;
+   align-items: center;
 `
 const IconContainer = styled('div')`
    position: absolute;
-   top: 58%;
-   right: 10px;
-   transform: translateY(-50%);
+   right: 5px;
+   background-color: #fff;
+   border-radius: 99%;
+   height: 2.3rem;
+   width: 2.3rem;
 `

@@ -27,11 +27,45 @@ export const getAllInstructors = createAsyncThunk(
 )
 export const assignInstructor = createAsyncThunk(
    'instructors/assignInstructor',
-   async (id, { rejectWithValue }) => {
+   async (payload, { rejectWithValue, dispatch }) => {
       try {
-         const response = await axiosInstance.put(`api/courses/assign/${id}/2`)
-         return response
+         await axiosInstance.post(`api/courses/assign/${payload.courseId}`, {
+            instructorsId: payload.instructorsId,
+         })
+         payload.showSnackbar('Учители учпешно добавлены в курс!', 'success')
+         return dispatch(getInstructors(payload.courseId))
       } catch (error) {
+         payload.showSnackbar(error.response.data.message, 'error')
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const deleteTeacherCourse = createAsyncThunk(
+   'instructors/deleteTeacherCourse',
+   async (payload, { rejectWithValue, dispatch }) => {
+      try {
+         await axiosInstance.delete(
+            `api/courses/instructor/${payload.courseId}/${payload.instructorId}`
+         )
+         payload.showSnackbar('Учитель учпешно удален с курса!', 'success')
+         return dispatch(getInstructors(payload.courseId))
+      } catch (error) {
+         payload.showSnackbar(error.message, 'error')
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const deleteAllTeacherCourse = createAsyncThunk(
+   'instructors/deleteAllTeacherCourse',
+   async (payload, { rejectWithValue, dispatch }) => {
+      try {
+         await axiosInstance.delete(`api/courses/instructors/${payload.id}`)
+         payload.showSnackbar('Учители учпешно удалены с курса!', 'success')
+         return dispatch(getInstructors(payload.id))
+      } catch (error) {
+         payload.showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
       }
    }

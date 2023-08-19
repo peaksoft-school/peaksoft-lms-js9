@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { BASE_URL } from '../utils/constants/constants'
-// import { store } from '../store'
 
 export const fileAxiosInstanse = axios.create({
    baseURL: BASE_URL,
@@ -9,12 +8,15 @@ export const fileAxiosInstanse = axios.create({
    },
 })
 
+let store
+export const injectStoreFile = (_store) => {
+   store = _store
+}
+
 fileAxiosInstanse.interceptors.request.use(
    (config) => {
       const configUpdate = { ...config }
-      //   const { token } = store.getState().auth
-      const token =
-         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTIzMzkyMDcsImlhdCI6MTY5MjA4MDAwNywidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.TaWiCgwtHHJ6w47GLqih8LMfRxyNunrOMmrCrszJ0bo'
+      const { token } = store.getState().auth
       if (token) {
          configUpdate.headers.Authorization = `Bearer ${token}`
       }

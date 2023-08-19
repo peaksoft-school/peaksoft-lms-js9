@@ -20,6 +20,8 @@ import { ModalSelect } from '../courses-modal/ModalSelect'
 import {
    assignInstructor,
    getAllInstructors,
+   getInstructors,
+   // getInstructors,
 } from '../../../../store/instructor/instructorThunk'
 import { showSnackbar } from '../../../../components/UI/snackbar/Snackbar'
 import { Isloading } from '../../../../components/UI/snackbar/Isloading'
@@ -41,6 +43,10 @@ export const Courses = () => {
       useToggle('modalEdit')
    const { setActive: setActiveModal3, isActive: isActiveModal3 } =
       useToggle('modalSelect')
+   const [selectedItems, setSelectedItems] = useState([])
+   const handleMultiSelectChange = (newSelectedItems) => {
+      setSelectedItems(newSelectedItems)
+   }
    const {
       handleSubmit,
       setValue,
@@ -81,12 +87,6 @@ export const Courses = () => {
       dispatch(getAllInstructors())
    }, [])
 
-   const isFormEmpty =
-      !getValues().groupName.trim() ||
-      !getValues().description.trim() ||
-      !dateValue ||
-      !imageValue
-
    const deleteOpenModal = (data) => {
       setActiveModal1(!isActiveModal1)
       setCardId(data.id)
@@ -94,17 +94,14 @@ export const Courses = () => {
    }
 
    const deleteHandler = () => {
-      dispatch(deleteGroup(getCardId))
-         .unwrap()
-         .then(() => showSnackbar('Курс успешно удален', 'success'))
-         .catch((error) => showSnackbar(error, 'error'))
+      dispatch(deleteGroup({ id: getCardId, showSnackbar }))
       setActiveModal1('')
    }
+
    const editOpenModal = (data) => {
       setActiveModal2(!isActiveModal2)
       setValue('editTitle', data.courseName)
       setValue('editDescription', data.description)
-      setValue('dateEditModal', data.dateOfGraduation)
       setImageEditValue(data.image)
       setImageValue(data.image)
       setCardId(data.id)
@@ -117,39 +114,40 @@ export const Courses = () => {
          image: imageValue,
          DateOfGraduation: formatDate,
       }
-      dispatch(postCard(data))
-         .unwrap()
-         .then(() => showSnackbar('Курс успешно создан!', 'success'))
-         .catch((error) => showSnackbar(error, 'error'))
+      dispatch(postCard({ data, showSnackbar }))
       setActive('')
       setValue('groupName', '')
       setValue('description', '')
    }
-   const saveHandler = (data) => {
-      const updatedData = {
+   const saveHandler = (el) => {
+      const data = {
          id: getCardId,
-         courseName: data.editTitle,
-         description: data.editDescription,
+         courseName: el.editTitle,
+         description: el.editDescription,
          DateOfGraduation: editFormatDate,
          image: imageValue,
          delImage: imageEditValue,
       }
-      dispatch(deleteFile(updatedData.delImage))
-      dispatch(updateCard(updatedData))
-         .unwrap()
-         .then(() => showSnackbar('Курс успешно редактирован!', 'success'))
-         .catch((error) => showSnackbar(error, 'error'))
+      dispatch(deleteFile(data.delImage))
+      dispatch(updateCard({ data, showSnackbar }))
       setActiveModal2('')
    }
 
    const appointHandler = () => {
-      dispatch(assignInstructor(getCardId))
+      dispatch(
+         assignInstructor({
+            courseId: getCardId,
+            instructorsId: selectedItems,
+            showSnackbar,
+         })
+      )
+      setActiveModal3('')
    }
    const appointOpenModal = (data) => {
-      setCardId(data.id)
       setActiveModal3(!isActiveModal3)
+      setCardId(data.id)
+      dispatch(getInstructors(data.id))
    }
-   console.log(getAllIns)
 
    const openModalDeleteAndEditHandler = ({ menuId, data }) => {
       if (menuId === 1) {
@@ -177,7 +175,6 @@ export const Courses = () => {
          title: 'Удалить',
       },
    ]
-
    return (
       <div>
          {isLoading && <Isloading />}
@@ -213,6 +210,9 @@ export const Courses = () => {
                openModal={isActiveModal3}
                handleClose={() => setActiveModal3('')}
                onClick={appointHandler}
+               selectedItems={selectedItems}
+               handleMultiSelectChange={handleMultiSelectChange}
+               courseId={{ id: getCardId }}
             />
             <ModalCourses
                variant={false}
@@ -226,13 +226,12 @@ export const Courses = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
-               isFormEmpty={isFormEmpty}
             />
             <ModalDelete
                open={isActiveModal1}
                handleClose={closeModalDeleteHandler}
                deleteCardHandler={deleteHandler}
-               getCourseName={getCourseName}
+               paragraph={`курс ${getCourseName}`}
             />
             <ModalCourses
                variant
@@ -247,7 +246,7 @@ export const Courses = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
-               isFormEmpty={isFormEmpty}
+               // formattedDate={formattedDate}
             />
          </div>
       </div>

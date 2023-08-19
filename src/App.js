@@ -1,10 +1,9 @@
-import Snackbar from './components/UI/snackbar/Snackbar'
 import { AppRoutes } from './routes/AppRoutes'
+import Snackbar from './components/UI/snackbar/Snackbar'
 
 function App() {
    return (
       <div>
-         {/* <h1>lms 9</h1> */}
          <AppRoutes />
          <Snackbar />
       </div>

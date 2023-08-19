@@ -7,6 +7,7 @@ import { Header } from '../../../../components/UI/header/Header'
 import { columnsTableGroup } from '../../../../utils/constants/constants'
 import { getGroupUsers } from '../../../../store/students/studentsThunk'
 import { Isloading } from '../../../../components/UI/snackbar/Isloading'
+import { getCard } from '../../../../store/group/groupThunk'
 
 export const GroupsTable = () => {
    const params = useParams()
@@ -21,6 +22,7 @@ export const GroupsTable = () => {
    }
    useEffect(() => {
       dispatch(getGroupUsers(params.details))
+      dispatch(getCard())
    }, [])
 
    return (
@@ -35,7 +37,11 @@ export const GroupsTable = () => {
             </button>
             \ {getGroupName?.groupName}
          </SpanStyled>
-         <Table data={students} columns={columnsTableGroup} />
+         {students && students.length > 0 ? (
+            <Table data={students} columns={columnsTableGroup} />
+         ) : (
+            <h1>Пока что нет студентов!</h1>
+         )}
       </>
    )
 }

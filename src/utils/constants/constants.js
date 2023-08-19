@@ -8,6 +8,10 @@ export const USER_ROLE = {
    INSTRUCTOR: 'INSTRUCTOR',
 }
 
+export const STORAGE_KEY = {
+   AUTH_KEY: 'AUTH_KEY',
+}
+
 export const columnsTableGroup = [
    { id: 'id', label: 'ID' },
    { id: 'fullName', label: 'Имя Фамилия' },
@@ -24,6 +28,7 @@ export const columnsTableCourses = [
    { id: 'phoneNumber', label: 'Номер телефона' },
    { id: 'email', label: 'E-mail' },
 ]
+
 export const materialsLesson = [
    {
       id: 1,

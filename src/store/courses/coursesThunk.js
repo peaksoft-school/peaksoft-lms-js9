@@ -40,15 +40,17 @@ export const deleteFile = createAsyncThunk(
 )
 export const postCard = createAsyncThunk(
    'courses/postCards',
-   async (data, { rejectWithValue, dispatch }) => {
+   async (payload, { rejectWithValue, dispatch }) => {
       try {
-         const getFile = await dispatch(postFile(data.image)).unwrap()
+         const getFile = await dispatch(postFile(payload.data.image)).unwrap()
          await axiosInstance.post('/api/courses', {
-            ...data,
+            ...payload.data,
             image: getFile,
          })
+         payload.showSnackbar('Курс успешно создан!', 'success')
          return dispatch(getCardsCourses())
       } catch (error) {
+         payload.showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
       }
    }
@@ -56,15 +58,17 @@ export const postCard = createAsyncThunk(
 
 export const updateCard = createAsyncThunk(
    'courses/putCards',
-   async (data, { rejectWithValue, dispatch }) => {
+   async (payload, { rejectWithValue, dispatch }) => {
       try {
-         const getFile = await dispatch(postFile(data.image)).unwrap()
-         await axiosInstance.put(`/api/courses/${data.id}`, {
-            ...data,
+         const getFile = await dispatch(postFile(payload.data.image)).unwrap()
+         await axiosInstance.put(`/api/courses/${payload.data.id}`, {
+            ...payload.data,
             image: getFile,
          })
+         payload.showSnackbar('Курс успешно редактирован!', 'success')
          return dispatch(getCardsCourses())
       } catch (error) {
+         payload.showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
       }
    }
@@ -72,11 +76,13 @@ export const updateCard = createAsyncThunk(
 
 export const deleteGroup = createAsyncThunk(
    'courses/deleteGroup',
-   async (id, { rejectWithValue, dispatch }) => {
+   async (payload, { rejectWithValue, dispatch }) => {
       try {
-         await axiosInstance.delete(`/api/courses/${id}`)
+         await axiosInstance.delete(`/api/courses/${payload.id}`)
+         payload.showSnackbar('Курс успешно удален', 'success')
          return dispatch(getCardsCourses())
       } catch (error) {
+         payload.showSnackbar(error, 'error')
          return rejectWithValue(error.message)
       }
    }

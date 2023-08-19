@@ -6,6 +6,19 @@ export const getGroupUsers = createAsyncThunk(
    async (id, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(
+            `/api/groups/getStudents/${id}`
+         )
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+export const getCourseStudents = createAsyncThunk(
+   'students/getCourseStudents',
+   async (id, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(
             `/api/courses/getStudents/${id}`
          )
          return response.data

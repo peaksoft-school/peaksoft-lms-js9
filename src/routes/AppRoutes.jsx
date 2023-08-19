@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Groups } from '../pages/admin/groups/groups-page/Groups'
 import { GroupsTable } from '../pages/admin/groups/groups-page/GroupsTable'
@@ -13,18 +14,19 @@ import { Layout } from '../layout/Layout'
 import { MyCoursesStu } from '../pages/student/MyCourses'
 import { MyCoursesIns } from '../pages/instructor/MyCourses'
 import { USER_ROLE, reusableRoutesRoles } from '../utils/constants/constants'
+import { CreatePassword } from '../containers/CreatePassword'
 import { CoursesTable } from '../pages/admin/courses/courses-page/CoursesTable'
-import { TableStudents } from '../pages/admin/courses/courses-page/TableStudents'
 import { TableTeachers } from '../pages/admin/courses/courses-page/TableTeachers'
+import { TableStudents } from '../pages/admin/courses/courses-page/TableStudents'
 
 export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
    const { home, courses, teachers, students } = routes[roles]
 
-   const role = 'ADMIN'
+   const { role } = useSelector((state) => state.auth)
 
-   const isAllowed = (userRole) => {
-      return userRole.includes(role)
+   const isAllowed = (roles) => {
+      return roles.includes(role)
    }
 
    return (
@@ -32,18 +34,40 @@ export const AppRoutes = ({ roles = 'admin' }) => {
          <Route
             path="/"
             element={
-               <Page>
-                  <SignInPage />
-               </Page>
+               <PrivateRoute
+                  component={
+                     <Page>
+                        <SignInPage />
+                     </Page>
+                  }
+                  fallBacPath={
+                     role === USER_ROLE.GUEST
+                        ? '/'
+                        : role === USER_ROLE.ADMIN
+                        ? '/admin'
+                        : role === USER_ROLE.INSTRUCTOR
+                        ? '/instructor'
+                        : '/student'
+                  }
+                  isAllowed={isAllowed([USER_ROLE.GUEST])}
+               />
             }
          />
          <Route path="*" element={<h1>Такой страницы не существует!</h1>} />
+         <Route
+            path="/createPassword/:id"
+            element={
+               <Page>
+                  <CreatePassword />
+               </Page>
+            }
+         />
          <Route
             path="/admin"
             element={
                <PrivateRoute
                   fallBacPath="/"
-                  isAllowed={isAllowed(USER_ROLE.ADMIN)}
+                  isAllowed={isAllowed([USER_ROLE.ADMIN])}
                   component={<AdminLayout />}
                />
             }
@@ -63,12 +87,13 @@ export const AppRoutes = ({ roles = 'admin' }) => {
             <Route path={teachers} element={<Teachers />} />
             <Route path={students} element={<Students />} />
          </Route>
+
          <Route
             path="/student"
             element={
                <PrivateRoute
                   fallBacPath="/"
-                  isAllowed={isAllowed(USER_ROLE.STUDENT)}
+                  isAllowed={isAllowed([USER_ROLE.STUDENT])}
                   component={<Layout rolesLayout="student" />}
                />
             }
@@ -81,7 +106,7 @@ export const AppRoutes = ({ roles = 'admin' }) => {
             element={
                <PrivateRoute
                   fallBacPath="/"
-                  isAllowed={isAllowed(USER_ROLE.INSTRUCTOR)}
+                  isAllowed={isAllowed([USER_ROLE.INSTRUCTOR])}
                   component={<Layout rolesLayout="instructor" />}
                />
             }

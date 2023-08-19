@@ -29,15 +29,17 @@ export const postFile = createAsyncThunk(
 )
 export const postCard = createAsyncThunk(
    'cards/postCards',
-   async (data, { rejectWithValue, dispatch }) => {
+   async (payload, { rejectWithValue, dispatch }) => {
       try {
-         const getFile = await dispatch(postFile(data.image)).unwrap()
+         const getFile = await dispatch(postFile(payload.data.image)).unwrap()
          await axiosInstance.post('/api/groups', {
-            ...data,
+            ...payload.data,
             image: getFile,
          })
+         payload.showSnackbar('Группа успешно создано!', 'success')
          return dispatch(getCard())
       } catch (error) {
+         payload.showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
       }
    }
@@ -56,15 +58,17 @@ export const deleteFile = createAsyncThunk(
 
 export const updateCard = createAsyncThunk(
    'cards/putCards',
-   async (data, { rejectWithValue, dispatch }) => {
+   async (payload, { rejectWithValue, dispatch }) => {
       try {
-         const getFile = await dispatch(postFile(data.image)).unwrap()
-         await axiosInstance.put(`/api/groups/${data.id}`, {
-            ...data,
+         const getFile = await dispatch(postFile(payload.data.image)).unwrap()
+         await axiosInstance.put(`/api/groups/${payload.data.id}`, {
+            ...payload.data,
             image: getFile,
          })
+         payload.showSnackbar('Группа успешно редактировано!', 'success')
          return dispatch(getCard())
       } catch (error) {
+         payload.showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
       }
    }
@@ -72,11 +76,13 @@ export const updateCard = createAsyncThunk(
 
 export const deleteGroup = createAsyncThunk(
    'cards/deleteGroup',
-   async (id, { rejectWithValue, dispatch }) => {
+   async (payload, { rejectWithValue, dispatch }) => {
       try {
-         await axiosInstance.delete(`/api/groups/${id}`)
+         await axiosInstance.delete(`/api/groups/${payload.getCardId}`)
+         payload.showSnackbar('Группа успешно удалено!', 'success')
          return dispatch(getCard())
       } catch (error) {
+         payload.showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
       }
    }

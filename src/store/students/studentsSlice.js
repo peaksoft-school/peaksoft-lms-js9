@@ -1,9 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import { getGroupUsers } from './studentsThunk'
+import { getCourseStudents, getGroupUsers } from './studentsThunk'
 
 const initialState = {
    students: [],
+   courseStudents: [],
    error: '',
    isLoading: false,
 }
@@ -20,6 +21,17 @@ export const studentsSlice = createSlice({
          state.isLoading = true
       })
       builder.addCase(getGroupUsers.rejected, (state) => {
+         state.isLoading = false
+      })
+      // courses students
+      builder.addCase(getCourseStudents.fulfilled, (state, action) => {
+         state.courseStudents = action.payload
+         state.isLoading = false
+      })
+      builder.addCase(getCourseStudents.pending, (state) => {
+         state.isLoading = true
+      })
+      builder.addCase(getCourseStudents.rejected, (state) => {
          state.isLoading = false
       })
    },

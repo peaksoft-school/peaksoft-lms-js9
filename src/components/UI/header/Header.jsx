@@ -1,7 +1,10 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import { Box, Select } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { IconButtons } from '../button/IconButtons'
 import {
+   AppointIconWhite,
    DropDownIcon,
    ExelExport,
    ExitIcon,
@@ -10,6 +13,7 @@ import {
 } from '../../../assets/icons'
 import { Button } from '../button/Button'
 import { Tabs } from '../tabs/Tabs'
+import { logout } from '../../../store/signIn/signInThunk'
 
 export const Header = ({
    onClick,
@@ -21,12 +25,26 @@ export const Header = ({
    const [state, setState] = useState(false)
    const dropdownRef = useRef(null)
 
+   const dispatch = useDispatch()
    const handleChange = () => {
       setState(!state)
    }
    const logoutHandler = () => {
-      console.log('logout')
+      dispatch(logout())
    }
+
+   const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+         setState(false)
+      }
+   }
+
+   useEffect(() => {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => {
+         document.removeEventListener('mousedown', handleClickOutside)
+      }
+   }, [])
 
    return (
       <Container>
@@ -46,13 +64,15 @@ export const Header = ({
                   <ProfileIcon />
                   <p>{titlePage}</p>
                   <DropDownIcon />
+                  <IconButtons>
+                     {state && (
+                        <StyledDropDown onClick={logoutHandler}>
+                           <ExitIcon style={{ marginLeft: '1.20rem' }} />
+                           <span>Выйти</span>
+                        </StyledDropDown>
+                     )}
+                  </IconButtons>
                </BoxLogOut>
-               {state && (
-                  <StyledDropDown onClick={logoutHandler}>
-                     <ExitIcon style={{ marginLeft: '1.20rem' }} />
-                     <span>Выйти</span>
-                  </StyledDropDown>
-               )}
             </Div>
          </StyledBox>
          <ButtonContainer>
@@ -111,7 +131,12 @@ export const Header = ({
                         }}
                         onClick={onClick}
                      >
-                        <PlusIcon />
+                        {buttonContent === 'Назначить учителя' ? (
+                           <AppointIconWhite />
+                        ) : (
+                           <PlusIcon />
+                        )}
+
                         {buttonContent}
                      </Button>
                   )}
@@ -125,8 +150,9 @@ export const Header = ({
 const StyledBox = styled(Box)(() => ({
    width: '100%',
    display: 'flex',
-   // alignItems: 'center',
-   // justifyContent: 'center',
+   alignItems: 'center',
+   gap: '5px',
+   justifyContent: 'flex-end',
    borderBottom: '1px solid #C4C4C4',
    height: '4.69rem',
    '& p': {
@@ -139,8 +165,8 @@ const StyledDropDown = styled('h3')({
    display: 'flex',
    zIndex: 1,
    position: 'absolute',
-   top: '60px',
-   right: '30px',
+   top: '40px',
+   right: '10px',
    width: '13.31rem',
    height: '3.5rem',
    background: '#DDE9F9',

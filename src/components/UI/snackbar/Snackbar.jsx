@@ -1,9 +1,8 @@
-import { BiSolidErrorCircle } from 'react-icons/bi'
-import { HiCheckCircle } from 'react-icons/hi'
-
 import React from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 import { styled } from '@mui/material'
+import { BiSolidErrorCircle } from 'react-icons/bi'
+import { HiCheckCircle } from 'react-icons/hi'
 
 export const showSnackbar = (message, status) => {
    const icons = status === 'success' ? <SuccessIcon /> : <ErrorIcon />

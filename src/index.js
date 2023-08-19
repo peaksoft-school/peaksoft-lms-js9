@@ -8,18 +8,20 @@ import { store } from './store'
 import App from './App'
 import './index.css'
 import { injectStore } from './config/axiosInstance'
+import { injectStoreFile } from './config/fileAxiosInstance'
 
 injectStore(store)
+injectStoreFile(store)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
    <React.StrictMode>
-      <ThemeProvider theme={theme}>
+      <Provider store={store}>
          <BrowserRouter>
-            <Provider store={store}>
+            <ThemeProvider theme={theme}>
                <App />
-            </Provider>
+            </ThemeProvider>
          </BrowserRouter>
-      </ThemeProvider>
+      </Provider>
    </React.StrictMode>
 )
