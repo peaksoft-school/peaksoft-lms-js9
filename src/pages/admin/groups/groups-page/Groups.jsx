@@ -199,7 +199,6 @@ export const Groups = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
-               isFormEmpty={isFormEmpty}
             />
          </>
       </>

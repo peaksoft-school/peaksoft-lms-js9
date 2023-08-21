@@ -62,6 +62,12 @@ export const Courses = () => {
       },
    })
 
+   const isFormEmpty =
+      !getValues().groupName.trim() ||
+      !getValues().description.trim() ||
+      !dateValue ||
+      !imageValue
+
    let formatDate = ''
    if (dateValue && isValid(new Date(dateValue))) {
       formatDate = format(new Date(dateValue), 'yyyy-MM-dd')
@@ -226,6 +232,7 @@ export const Courses = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
+               isFormEmpty={isFormEmpty}
             />
             <ModalDelete
                open={isActiveModal1}
@@ -246,7 +253,6 @@ export const Courses = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
-               // formattedDate={formattedDate}
             />
          </div>
       </div>

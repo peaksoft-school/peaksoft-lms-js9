@@ -19,6 +19,7 @@ export const ModalCourses = ({
    register,
    imageEditValue,
    dateEditModal,
+   isFormEmpty,
 }) => {
    const onSubmitForm = (data) => {
       onSubmit(data)
@@ -71,7 +72,7 @@ export const ModalCourses = ({
                <ButtonCloseStyled variant="outlined" onClick={handleClose}>
                   Отмена
                </ButtonCloseStyled>
-               <ButtonAddedStyled type="submit">
+               <ButtonAddedStyled type="submit" disabled={isFormEmpty}>
                   {variant ? 'Сохранить' : 'Добавить'}
                </ButtonAddedStyled>
             </ContainerButtonsStyled>
