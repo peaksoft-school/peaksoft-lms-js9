@@ -14,13 +14,13 @@ import {
    EditGreenIcon,
    LinkIcon,
 } from '../../../assets/icons'
+import { IconButtons } from '../button/IconButtons'
 
 export const Material = ({
    clickEditHandler,
    clickDeleteHandler,
-   clickDeleteAll,
+   openModalHandler,
    el,
-   // item,
 }) => {
    const navLink = [
       {
@@ -50,21 +50,20 @@ export const Material = ({
       },
    ]
    const [selectedValues, setSelectedValues] = useState({})
-
    const handleChange = (id, value) => {
       setSelectedValues((prevState) => ({
          ...prevState,
          [id]: value,
       }))
    }
-   console.log(clickDeleteAll)
-   console.log(el)
 
    return (
       <Container key={el.id}>
          <div className="containerHeader">
             <div>
-               <LogoLessonIcon />
+               <IconButtons onClick={() => clickEditHandler(el.lessonId)}>
+                  <LogoLessonIcon />
+               </IconButtons>
                <h1>{el.lessonName}</h1>
             </div>
             <div className="containerDeleteIconButton">
@@ -102,7 +101,18 @@ export const Material = ({
                      ))}
                   </Select>
                </FormControl>
-               <DeleteRedIcon onClick={() => clickDeleteAll(el.lessonName)} />
+               <div key={el.id}>
+                  <IconButtons
+                     onClick={() =>
+                        openModalHandler({
+                           name: el.lessonName,
+                           id: el.lessonId,
+                        })
+                     }
+                  >
+                     <DeleteRedIcon />
+                  </IconButtons>
+               </div>
             </div>
          </div>
          <div className="containerItem">
@@ -119,7 +129,7 @@ export const Material = ({
                   <div className="buttons">
                      <StyledButton
                         className="button"
-                        onClick={() => clickEditHandler(el.id)}
+                        onClick={() => clickEditHandler()}
                      >
                         <EditGreenIcon />
                         Редактировать
