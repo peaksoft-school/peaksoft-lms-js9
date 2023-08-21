@@ -1,51 +1,28 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
 import { Modal } from '../../../components/UI/modal/Modal'
 import { Input } from '../../../components/UI/input/Input'
 import { Button } from '../../../components/UI/button/Button'
-import { updateLesson } from '../../../store/lesson/lessonThunk'
-
-console.log('useDispatch: ', useDispatch)
-
-console.log('updateLesson: ', updateLesson)
 
 export const ModalEditLesson = ({
    handleClose,
    openModal,
-   editChangeModal,
    value,
-   id,
-   // clickEditHandler,
+   changeUpdateTitle,
+   handleSubmit,
 }) => {
-   const dispatch = useDispatch()
-
-   console.log('value lesson edite::>>', value)
-   const { handleSubmit } = useForm()
-
-   const onSubmitForm = (data) => {
-      console.log('data: submit>> ', data)
-      dispatch(
-         updateLesson({
-            lessonId: id,
-            updatedData: { lessonName: data.lessonName },
-         })
-      )
-   }
-
    return (
       <Modal
          title="Редактировать урок "
          open={openModal}
          handleClose={handleClose}
       >
-         <form onSubmit={handleSubmit(onSubmitForm)}>
+         <form onSubmit={handleSubmit}>
             <ContainerInputTitleDateStyled>
                <InputTitleStyled
                   type="text"
                   value={value}
-                  onChange={editChangeModal}
+                  onChange={changeUpdateTitle}
                />
             </ContainerInputTitleDateStyled>
             <ContainerButtonsStyled>
@@ -55,7 +32,7 @@ export const ModalEditLesson = ({
                >
                   Отмена
                </ButtonCloseStyled>
-               <ButtonAddedStyled type="submit">
+               <ButtonAddedStyled type="submit" handleClose>
                   Редактировать
                </ButtonAddedStyled>
             </ContainerButtonsStyled>

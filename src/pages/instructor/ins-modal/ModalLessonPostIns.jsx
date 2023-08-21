@@ -38,9 +38,6 @@ const InputTitleStyled = styled(Input)`
       height: 4.5vh;
       padding: 0px 1.125rem;
    }
-   .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-      border: 0.0625rem solid ${({ error }) => (error ? '#f44336' : '#1f6ed4')};
-   }
 `
 
 const ContainerButtonsStyled = styled('div')`

@@ -56,12 +56,11 @@ export const Material = ({
          [id]: value,
       }))
    }
-
    return (
       <Container key={el.id}>
          <div className="containerHeader">
             <div>
-               <IconButtons onClick={() => clickEditHandler(el.lessonId)}>
+               <IconButtons onClick={() => clickEditHandler(el)}>
                   <LogoLessonIcon />
                </IconButtons>
                <h1>{el.lessonName}</h1>
@@ -127,16 +126,13 @@ export const Material = ({
                      <h2>{item.title}</h2>
                   </div>
                   <div className="buttons">
-                     <StyledButton
-                        className="button"
-                        onClick={() => clickEditHandler()}
-                     >
+                     <StyledButton className="button">
                         <EditGreenIcon />
                         Редактировать
                      </StyledButton>
                      <StyledButton
                         className="button"
-                        onClick={() => clickDeleteHandler(el.id)}
+                        onClick={() => clickDeleteHandler(el)}
                      >
                         <DeleteRedIcon />
                         Удалить
