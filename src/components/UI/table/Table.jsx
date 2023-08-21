@@ -9,15 +9,14 @@ import {
    TableRow,
    Paper,
 } from '@mui/material'
-import { columns, data } from '../../../utils/constants/tableArray'
 
-const Table = () => {
+const Table = ({ data, columns }) => {
    return (
       <StyledContainer component={Paper}>
          <StyledTable>
             <TableHead>
                <StyledTableRow>
-                  {columns.map((column) => (
+                  {columns?.map((column) => (
                      <StyledTableCell key={column.id}>
                         {column.label}
                      </StyledTableCell>
@@ -25,7 +24,7 @@ const Table = () => {
                </StyledTableRow>
             </TableHead>
             <TableBody>
-               {data.map((row) => (
+               {data?.map((row) => (
                   <StyledTableRow key={row.id}>
                      {columns?.map((column) => {
                         if (column.render) {
@@ -53,6 +52,8 @@ const StyledContainer = styled(TableContainer)`
    width: 100%;
 `
 const StyledTableRow = styled(TableRow)`
+   /* div { */
+   /* } */
    &:nth-child(even) {
       background-color: #eceaea9f;
    }

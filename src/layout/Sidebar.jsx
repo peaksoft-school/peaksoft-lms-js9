@@ -1,14 +1,14 @@
 import React from 'react'
 import { styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import logo from '../../assets/image/logoPeksoft.png'
-import { reusableRoutesRoles } from '../../utils/constants/routes'
+import logo from '../assets/image/logoPeksoft.png'
 import {
    GroupsIcon,
    CoursesIcon,
    TeachersIcon,
    StudentsIcon,
-} from '../../assets/icons/index'
+} from '../assets/icons/index'
+import { reusableRoutesRoles } from '../utils/constants/constants'
 
 export const Sidebar = ({ roles }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
@@ -70,14 +70,24 @@ const Container = styled('aside')`
    display: flex;
    flex-direction: column;
    gap: 4.125rem;
+   @media (max-width: 600px) {
+      div h2 {
+         display: none;
+      }
+   }
 `
 
 const LogoPeaksoft = styled('div')`
    text-align: center;
    margin-top: 2.3rem;
    img {
-      width: 8vw;
-      height: 5vh;
+      width: 9rem;
+      height: 3rem;
+   }
+   @media (max-width: 1100px) {
+      img {
+         display: none;
+      }
    }
 `
 
@@ -87,12 +97,12 @@ const NavLinkStyled = styled(NavLink)(() => ({
    justifyContent: 'start',
    gap: '1rem',
    width: '11.5vw',
-   height: '5vh',
+   height: '2.9rem',
    lineHeight: '2.875rem',
    svg: {
       marginLeft: '20%',
-      width: '1.5vw',
-      height: '5.5vh',
+      width: '2rem',
+      height: '2rem',
    },
    h2: {
       fontSize: '1rem',
@@ -109,6 +119,11 @@ const NavLinkStyled = styled(NavLink)(() => ({
       },
       path: {
          fill: '#1f6ed4',
+      },
+   },
+   '@media (max-width: 1360px)': {
+      h2: {
+         display: 'none',
       },
    },
 }))
