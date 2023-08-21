@@ -1,19 +1,23 @@
 import { styled } from '@mui/material'
+import { useSelector } from 'react-redux'
 import React from 'react'
 import PageLogo from '../assets/icons/pageLogo.svg'
+import { Isloading } from '../components/UI/snackbar/Isloading'
 
 export const Page = ({ children, title }) => {
+   const { isLoading } = useSelector((state) => state.auth)
    return (
       <Container>
          <ContainerPageOne>
             <ContainerLogo>
-               <img src={PageLogo} alt="efw" />
+               <img src={PageLogo} alt="PEAKSOFTLMSLOGO" />
             </ContainerLogo>
          </ContainerPageOne>
          <ContainePageTwo>
             <ContainerTitles>{title}</ContainerTitles>
             <div>{children}</div>
          </ContainePageTwo>
+         {isLoading && <Isloading />}
       </Container>
    )
 }
