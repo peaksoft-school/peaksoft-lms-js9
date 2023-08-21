@@ -8,7 +8,7 @@ import MeatBall from '../meatBall/MeatBall'
 
 const menuItems = []
 
-export const Card = ({ el, onClick }) => {
+export const Card = ({ el, onClick, image, date, title, description }) => {
    const getMenuIdAndSetCardId = (menuID) => {
       onClick({
          menuId: menuID,
@@ -18,16 +18,16 @@ export const Card = ({ el, onClick }) => {
    }
    return (
       <ContainerCard>
-         <Link to={`${el.title}`}>
+         <Link to={`${el.id}`}>
             <ContainerImg>
-               <img src={el.img} alt="groupfoto" />
+               <img src={image} alt="groupfoto" />
             </ContainerImg>
             <ContainerContent>
                <ContainerHeader>
-                  <p>{el.title}</p> <span>{el.date}</span>
+                  <p>{title}</p> <span>{date}</span>
                </ContainerHeader>
                <ContainerDescriptionStyled>
-                  {el.description}
+                  {description}
                </ContainerDescriptionStyled>
             </ContainerContent>
          </Link>

@@ -2,7 +2,7 @@ import React from 'react'
 import { styled } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 import { Sidebar } from './sidebar/Sidebar'
-import { Header } from '../components/UI/header/Header'
+// import { Header } from '../components/UI/header/Header'
 
 export const Layout = ({ rolesLayout }) => {
    return (
@@ -13,9 +13,9 @@ export const Layout = ({ rolesLayout }) => {
             />
          </SidebarStyled>
          <Container>
-            <Header
+            {/* <Header
                titlePage={rolesLayout === 'student' ? 'Студент' : 'Инструктор'}
-            />
+            /> */}
             <Outlet />
          </Container>
       </>

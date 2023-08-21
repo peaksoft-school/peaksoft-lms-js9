@@ -16,6 +16,9 @@ import { MyCoursesStu } from '../pages/student/MyCourses'
 import { MyCoursesIns } from '../pages/instructor/MyCourses'
 import { USER_ROLE } from '../utils/constants/constants'
 import { CreatePassword } from '../containers/CreatePassword'
+import { MyCoursesTable } from '../pages/instructor/MyCoursesTable'
+import { MyCoursesStudents } from '../pages/instructor/MyCoursesStudents'
+import { MyCoursesMaterial } from '../pages/instructor/MyCoursesMaterial'
 
 export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
@@ -106,6 +109,14 @@ export const AppRoutes = ({ roles = 'admin' }) => {
                element={<Navigate to="mycoursesins" />}
             />
             <Route path="mycoursesins" element={<MyCoursesIns />} />
+            <Route
+               path="mycoursesins/:id"
+               element={<Navigate to="materials" />}
+            />
+            <Route path="mycoursesins/:id" element={<MyCoursesTable />}>
+               <Route path="materials" element={<MyCoursesMaterial />} />
+               <Route path="students" element={<MyCoursesStudents />} />
+            </Route>
          </Route>
       </Routes>
    )

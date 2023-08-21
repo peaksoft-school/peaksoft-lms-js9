@@ -22,6 +22,8 @@ const Container = styled('div')(() => ({
    width: '100%',
    height: '100vh',
    position: 'absolute',
+   top: '0',
+   left: '0',
    zIndex: '999',
    backdropFilter: 'blur(2px)',
 }))
