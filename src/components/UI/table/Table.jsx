@@ -9,9 +9,9 @@ import {
    TableRow,
    Paper,
 } from '@mui/material'
-import { columns, data } from '../../../utils/constants/tableArray'
+// import { TrashIcon, Eyes, EditTeachers } from '../../../assets/icons'
 
-const Table = () => {
+const Table = ({ data, columns }) => {
    return (
       <StyledContainer component={Paper}>
          <StyledTable>

@@ -1,5 +1,3 @@
-// import { Button } from '../../components/UI/button/Button'
-
 export const columns = [
    { id: 'id', label: 'ID' },
    { id: 'name', label: 'Имя Фамилия' },
@@ -7,7 +5,6 @@ export const columns = [
    { id: 'format', label: 'Формат' },
    { id: 'numberPhone', label: 'Номер телефона' },
    { id: 'email', label: 'E-mail' },
-   // { render: () => <Button>d</Button>, label: 'Удалить' },
 ]
 
 export const data = [
