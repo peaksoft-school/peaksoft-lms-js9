@@ -3,11 +3,9 @@ import { axiosInstance } from '../../config/axiosInstance'
 
 export const getLesson = createAsyncThunk(
    'api/getLessons',
-   async (courseId, { rejectWithValue }) => {
+   async (_, { rejectWithValue }) => {
       try {
-         // console.log('courseId: ', courseId)
          const response = await axiosInstance.get(`/api/lessons/1`)
-         // console.log('response: ', response.data)
          return response.data
       } catch (error) {
          return rejectWithValue(error.message)
@@ -29,9 +27,10 @@ export const deleteCourse = createAsyncThunk(
 
 export const postLessonThunk = createAsyncThunk(
    'api/postLesson',
-   async ({ lessonId, lessonName }, { rejectWithValue, dispatch }) => {
+   async ({ courseId, lessonName }, { rejectWithValue, dispatch }) => {
       try {
-         const response = await axiosInstance.post(`/api/lessons/${lessonId}`, {
+         console.log('lessonId: ', courseId)
+         const response = await axiosInstance.post(`/api/lessons/${courseId}`, {
             lessonName,
          })
          dispatch(getLesson())
@@ -44,12 +43,11 @@ export const postLessonThunk = createAsyncThunk(
 
 export const updateLesson = createAsyncThunk(
    'api/updateLesson',
-   async ({ lessonId, updatedData }, { rejectWithValue, dispatch }) => {
+   async ({ id, lessonName }, { rejectWithValue, dispatch }) => {
       try {
-         const response = await axiosInstance.put(
-            `/api/lessons/${lessonId}`,
-            updatedData
-         )
+         const response = await axiosInstance.put(`/api/lessons/${id}`, {
+            lessonName,
+         })
          dispatch(getLesson())
          return response.data
       } catch (error) {

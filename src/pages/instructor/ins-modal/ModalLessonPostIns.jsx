@@ -12,6 +12,7 @@ export const ModalLessonPost = ({
    postLessonS,
    onChangeHPostandler,
 }) => {
+   console.log('value: >>>', value)
    const { handleSubmit } = useForm()
    const onSubmitForm = () => {
       postLessonS()

@@ -64,10 +64,12 @@ export const MyCoursesIns = () => {
       setIsActiveEdit('openEd')
       setTitle(data.lessonName)
       setChangePutValue(data.lessonName)
+      console.log('data edit >', data)
    }
 
    const changeUpdateTitle = (e) => {
       setChangePutValue(e.target.value)
+      console.log(e.target.value)
    }
 
    const handleSubmit = (e) => {
@@ -78,6 +80,7 @@ export const MyCoursesIns = () => {
       }
       dispatch(updateLesson(data))
       dispatch(getLesson(courseId))
+      console.log('datad >>>', data)
       setIsActiveEdit('')
    }
    //  post
@@ -90,6 +93,7 @@ export const MyCoursesIns = () => {
          courseId,
          lessonName: postValue,
       }
+      console.log('object: >>', object)
       dispatch(postLessonThunk(object))
       dispatch(getLesson(courseId))
    }
