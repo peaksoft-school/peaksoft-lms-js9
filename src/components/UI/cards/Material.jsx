@@ -18,8 +18,8 @@ import { IconButtons } from '../button/IconButtons'
 
 export const Material = ({
    clickEditHandler,
-   clickDeleteHandler,
-   openModalHandler,
+   // clickDeleteHandler,
+   openModalDeleteHandler,
    el,
 }) => {
    const navLink = [
@@ -56,6 +56,10 @@ export const Material = ({
          [id]: value,
       }))
    }
+   const maxLength = 12
+   const { lessonName } = el
+   const truncatedText = el.lessonName.substring(0, maxLength)
+
    return (
       <Container key={el.id}>
          <div className="containerHeader">
@@ -63,7 +67,11 @@ export const Material = ({
                <IconButtons onClick={() => clickEditHandler(el)}>
                   <LogoLessonIcon />
                </IconButtons>
-               <h1>{el.lessonName}</h1>
+               <h1>
+                  {lessonName.length <= maxLength
+                     ? lessonName
+                     : `${truncatedText} ...`}
+               </h1>
             </div>
             <div className="containerDeleteIconButton">
                <FormControl size="small">
@@ -103,7 +111,7 @@ export const Material = ({
                <div key={el.id}>
                   <IconButtons
                      onClick={() =>
-                        openModalHandler({
+                        openModalDeleteHandler({
                            name: el.lessonName,
                            id: el.lessonId,
                         })
@@ -132,7 +140,7 @@ export const Material = ({
                      </StyledButton>
                      <StyledButton
                         className="button"
-                        onClick={() => clickDeleteHandler(el)}
+                        onClick={() => openModalDeleteHandler(el)}
                      >
                         <DeleteRedIcon />
                         Удалить

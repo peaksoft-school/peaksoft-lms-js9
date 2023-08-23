@@ -7,19 +7,19 @@ import {
    deleteCourse,
    getLesson,
    postLessonThunk,
-   // postLessonS,
    updateLesson,
 } from '../../store/lesson/lessonThunk'
-// import { Header } from '../../components/UI/header/Header'
 import { useToggle } from '../../utils/hooks/general'
 import { ModalLessonPost } from './ins-modal/ModalLessonPostIns'
 import { ModalDeleteLesson } from './ins-modal/ModalLessonDeleteIns'
 import { ModalEditLesson } from './ins-modal/ModalLessonEditIns'
 import { PlusIcon } from '../../assets/icons'
 import { Button } from '../../components/UI/button/Button'
+import { Isloading } from '../../components/UI/snackbar/Isloading'
+import { showSnackbar } from '../../components/UI/snackbar/Snackbar'
 
 export const MyCoursesIns = () => {
-   const { lesson } = useSelector((state) => state.lesson)
+   const { lesson, isLoading } = useSelector((state) => state.lesson)
    const { isActive, setActive } = useToggle('openP')
    const { isActive: isActiveDel, setActive: setIsActiveDel } =
       useToggle('open')
@@ -42,36 +42,28 @@ export const MyCoursesIns = () => {
       setIsActiveEdit('')
       setActive('')
    }
-   // post
    const openModalAddLesson = () => {
       setActive(!isActive)
    }
-   // delet
-   const openModalHandler = (data) => {
-      setIsActiveDel('openP')
+   const openModalDeleteHandler = (data) => {
       setId(data.id)
-      setTitle(data.lessonName)
+      setIsActiveDel('openP')
+      setTitle(data.name)
    }
    const deleteCardHandler = () => {
-      dispatch(deleteCourse(id))
+      dispatch(deleteCourse({ id, showSnackbar }))
       setIsActiveDel('')
-      dispatch(getLesson(courseId))
    }
-
-   // edit put
    const clickEditHandler = (data) => {
       setId(data.lessonId)
       setIsActiveEdit('openEd')
       setTitle(data.lessonName)
       setChangePutValue(data.lessonName)
-      console.log('data edit >', data)
    }
 
    const changeUpdateTitle = (e) => {
       setChangePutValue(e.target.value)
-      console.log(e.target.value)
    }
-
    const handleSubmit = (e) => {
       e.preventDefault()
       const data = {
@@ -79,51 +71,50 @@ export const MyCoursesIns = () => {
          lessonName: value,
       }
       dispatch(updateLesson(data))
-      dispatch(getLesson(courseId))
-      console.log('datad >>>', data)
       setIsActiveEdit('')
    }
-   //  post
-
-   const onChangeHPostandler = (e) => {
+   const onChangePostandler = (e) => {
       setpostValue(e.target.value)
    }
-   const postLessonS = () => {
-      const object = {
+   const postLesson = () => {
+      const data = {
          courseId,
          lessonName: postValue,
+         showSnackbar,
       }
-      console.log('object: >>', object)
-      dispatch(postLessonThunk(object))
-      dispatch(getLesson(courseId))
+      setpostValue('')
+      dispatch(postLessonThunk(data))
    }
    return (
       <>
+         {isLoading && <Isloading />}
          <HeaderBtnDiv>
             <Button onClick={openModalAddLesson}>
                <PlusIcon />
                добавить урок
             </Button>
          </HeaderBtnDiv>
-
          <DivMap>
-            {lesson?.map((el) => (
-               <Material
-                  key={el.id}
-                  el={el}
-                  openModalHandler={openModalHandler}
-                  clickEditHandler={clickEditHandler}
-               />
-            ))}
+            {lesson && lesson.length > 0 ? (
+               lesson.map((el) => (
+                  <Material
+                     key={el.id}
+                     el={el}
+                     openModalDeleteHandler={openModalDeleteHandler}
+                     clickEditHandler={clickEditHandler}
+                  />
+               ))
+            ) : (
+               <h1>ПОКА ЧТО НЕТ УРОКОВ!</h1>
+            )}
          </DivMap>
          <ModalLessonPost
             openModal={isActive}
             handleClose={handleClose}
-            postLessonS={postLessonS}
-            onChangeHPostandler={onChangeHPostandler}
+            postLesson={postLesson}
+            onChangePostandler={onChangePostandler}
             value={postValue}
          />
-         {/* delete */}
          {isActiveDel && (
             <ModalDeleteLesson
                key={el.id}
@@ -133,7 +124,6 @@ export const MyCoursesIns = () => {
                getTitle={title}
             />
          )}
-         {/* edit */}
          {isActiveEdit && (
             <ModalEditLesson
                key={el.id}
