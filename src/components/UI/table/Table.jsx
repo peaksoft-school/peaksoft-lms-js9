@@ -9,6 +9,10 @@ import {
    TableRow,
    Paper,
 } from '@mui/material'
+<<<<<<< HEAD
+=======
+// import { TrashIcon, Eyes, EditTeachers } from '../../../assets/icons'
+>>>>>>> 69f05a2 (save feature/adminTeacher)
 
 const Table = ({ data, columns }) => {
    return (

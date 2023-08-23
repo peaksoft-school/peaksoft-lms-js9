@@ -52,6 +52,12 @@ export { ReactComponent as ProfileIcon } from './profile.svg'
 export { ReactComponent as ExitIcon } from './exit.svg'
 export { ReactComponent as PlusIcon } from './plusIcon.svg'
 export { ReactComponent as ExelExport } from './exportExel.svg'
+<<<<<<< HEAD
 export { ReactComponent as AppointIconWhite } from './AppointIconWhite.svg'
 export { ReactComponent as Mountine } from './mountine.svg'
 export { ReactComponent as DeleteIconCourses } from './deleteCourTeacher.svg'
+=======
+export { ReactComponent as TrashIcon } from './trashIcon.svg'
+export { ReactComponent as EditTeachers } from './teacherEdit.svg'
+export { ReactComponent as Eyes } from './eyes.svg'
+>>>>>>> 69f05a2 (save feature/adminTeacher)
