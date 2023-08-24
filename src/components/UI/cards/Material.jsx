@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { FormControl, MenuItem, Select, styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { menuItem } from '../../../utils/constants/MaterialsArray'
+import {
+   menuItem,
+   reusableRoutesLesson,
+} from '../../../utils/constants/constants'
 import { Button } from '../button/Button'
-import { reusableRoutesLesson } from '../../../utils/constants/routes'
+
 import {
    LessonVideoIcon,
    TaskIcon,
@@ -18,8 +21,9 @@ import { IconButtons } from '../button/IconButtons'
 
 export const Material = ({
    clickEditHandler,
-   clickDeleteHandler,
-   openModalHandler,
+   // clickDeleteHandler,
+   openModalDeleteHandler,
+   // openModalHandler,
    el,
 }) => {
    const navLink = [
@@ -103,7 +107,7 @@ export const Material = ({
                <div key={el.id}>
                   <IconButtons
                      onClick={() =>
-                        openModalHandler({
+                        openModalDeleteHandler({
                            name: el.lessonName,
                            id: el.lessonId,
                         })
@@ -132,7 +136,7 @@ export const Material = ({
                      </StyledButton>
                      <StyledButton
                         className="button"
-                        onClick={() => clickDeleteHandler(el)}
+                        onClick={() => openModalDeleteHandler(el)}
                      >
                         <DeleteRedIcon />
                         Удалить

@@ -21,6 +21,7 @@ export const ModalEditLesson = ({
             <ContainerInputTitleDateStyled>
                <InputTitleStyled
                   type="text"
+                  placeholder="Редактировать урок"
                   value={value}
                   onChange={changeUpdateTitle}
                />
@@ -32,7 +33,7 @@ export const ModalEditLesson = ({
                >
                   Отмена
                </ButtonCloseStyled>
-               <ButtonAddedStyled type="submit" handleClose>
+               <ButtonAddedStyled disabled={!value} type="submit" handleClose>
                   Редактировать
                </ButtonAddedStyled>
             </ContainerButtonsStyled>
@@ -43,7 +44,6 @@ export const ModalEditLesson = ({
 const InputTitleStyled = styled(Input)(() => ({
    width: '17.5vw',
 }))
-
 const ContainerInputTitleDateStyled = styled('div')`
    display: flex;
    width: 17vw;
@@ -53,8 +53,8 @@ const ContainerButtonsStyled = styled('div')`
    display: flex;
    justify-content: flex-end;
    align-items: center;
-   margin-top: 1.25rem;
    gap: 0.625rem;
+   margin-top: 1.25rem;
 `
 
 const ButtonCloseStyled = styled(Button)`
