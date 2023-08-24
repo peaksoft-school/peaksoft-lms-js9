@@ -42,8 +42,8 @@ const ModalStyled = styled('div')(() => ({
    gap: '1.5625rem',
    backgroundColor: 'white',
    div: {
-      display: 'flex',
       gap: '0.625rem',
+      display: 'flex',
    },
 
    ':active': {

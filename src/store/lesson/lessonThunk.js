@@ -5,9 +5,7 @@ export const getLesson = createAsyncThunk(
    'api/getLessons',
    async (courseId, { rejectWithValue }) => {
       try {
-         // console.log('courseId: ', courseId)
          const response = await axiosInstance.get(`/api/lessons/1`)
-         // console.log('response: ', response.data)
          return response.data
       } catch (error) {
          return rejectWithValue(error.message)

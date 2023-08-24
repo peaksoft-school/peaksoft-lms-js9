@@ -14,8 +14,8 @@ export const ModalLessonPost = ({
 }) => {
    const { handleSubmit } = useForm()
    const onSubmitForm = () => {
-      postLessonS()
       handleClose()
+      postLessonS()
    }
    return (
       <Modal title="Добавить урок" open={openModal} handleClose={handleClose}>

@@ -145,8 +145,8 @@ export const MyCoursesIns = () => {
 }
 
 const DivMap = styled('div')(() => ({
-   display: 'flex',
    flexWrap: 'wrap',
+   display: 'flex',
 }))
 const HeaderBtnDiv = styled('div')(() => ({
    color: 'green',
