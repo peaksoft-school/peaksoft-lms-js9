@@ -69,6 +69,7 @@ export const MyCoursesLesson = () => {
       const data = {
          id,
          lessonName: value,
+         showSnackbar,
       }
       dispatch(updateLesson(data))
       setIsActiveEdit('')
@@ -146,6 +147,6 @@ const HeaderBtnDiv = styled('div')(() => ({
    color: 'green',
    display: 'flex',
    flexDirection: 'row-reverse',
-   alignItems: 'flex-end',
    textAlign: 'flex-end',
+   alignItems: 'flex-end',
 }))

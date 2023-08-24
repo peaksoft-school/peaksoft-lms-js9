@@ -19,13 +19,7 @@ import {
 } from '../../../assets/icons'
 import { IconButtons } from '../button/IconButtons'
 
-export const Material = ({
-   clickEditHandler,
-   // clickDeleteHandler,
-   openModalDeleteHandler,
-   // openModalHandler,
-   el,
-}) => {
+export const Material = ({ clickEditHandler, openModalDeleteHandler, el }) => {
    const navLink = [
       {
          route: reusableRoutesLesson.videolesson,

@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { getLesson } from './lessonThunk'
 
 const initialState = {
-   lesson: [],
    isLoading: false,
+   lesson: [],
 }
 
 export const lessonSlice = createSlice({

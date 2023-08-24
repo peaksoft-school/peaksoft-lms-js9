@@ -4,8 +4,8 @@ import { Button, Modal, styled } from '@mui/material'
 export const ModalDeleteLesson = ({
    open,
    handleClose,
-   deleteCardHandler,
    getTitle,
+   deleteCardHandler,
 }) => {
    const maxLength = 14
    const truncatedText = getTitle.substring(0, maxLength)

@@ -8,8 +8,8 @@ export const ModalEditLesson = ({
    handleClose,
    openModal,
    value,
-   changeUpdateTitle,
    handleSubmit,
+   changeUpdateTitle,
 }) => {
    return (
       <Modal

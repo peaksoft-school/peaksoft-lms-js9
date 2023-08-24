@@ -7,8 +7,8 @@ import { Button } from '../../../components/UI/button/Button'
 
 export const ModalLessonPost = ({
    handleClose,
-   openModal,
    postLesson,
+   openModal,
    onChangePostandler,
    value,
 }) => {
