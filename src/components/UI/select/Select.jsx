@@ -16,48 +16,29 @@ const MenuProps = {
    },
 }
 
-const MultiSelect = ({ array, value = [], onChange, ...rest }) => {
-   const handleChange = (event) => {
-      const selectedValues = event.target.value
-      onChange(selectedValues)
-   }
-
+const MultiSelect = ({ array, value, onChange, ...rest }) => {
    return (
       <FormControl sx={{ m: 1 }}>
          <Select
-            sx={{ paddingRight: '2rem' }}
-            multiple
             value={value}
-            onChange={handleChange}
-            renderValue={(selected) => (
-               <div>
-                  {selected
-                     .map((id) => {
-                        const selectedItem = array.find(
-                           (item) => item.id === id
-                        )
-                        return selectedItem ? selectedItem.fullName : ''
-                     })
-                     .join(', ')}
-               </div>
-            )}
+            onChange={onChange}
+            renderValue={(selected) => selected}
             MenuProps={MenuProps}
             {...rest}
          >
-            {array?.map((item) => (
-               <MenuItem key={item.id} value={item.id}>
-                  <Checkbox checked={value.indexOf(item.id) > -1} />
+            {array.map((item) => (
+               <MenuItem key={item.id} value={item.fullName || item.id}>
                   <StyledListItem primary={item.fullName} />
+                  <Checkbox checked={value.indexOf(item.fullName) > -1} />
                </MenuItem>
             ))}
          </Select>
       </FormControl>
    )
 }
-export default MultiSelect
-
 const StyledListItem = styled(ListItemText)(() => ({
    '&:hover': {
       color: '#1A237E',
    },
 }))
+export default MultiSelect

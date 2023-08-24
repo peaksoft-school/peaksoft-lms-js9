@@ -18,7 +18,6 @@
       "no-nested-ternary": "off",
       "no-param-reassign": "off",
       "react/prop-types": "off",
-      // "no-param-reassign": "off",
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "react/jsx-props-no-spreading": "off",
       "react/react-in-jsx-scope": "off",

@@ -3,7 +3,7 @@ import { axiosInstance } from '../../config/axiosInstance'
 
 export const getLesson = createAsyncThunk(
    'api/getLessons',
-   async (courseId, { rejectWithValue }) => {
+   async (_, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(`/api/lessons/1`)
          return response.data
@@ -14,12 +14,17 @@ export const getLesson = createAsyncThunk(
 )
 export const deleteCourse = createAsyncThunk(
    'api/deleteLessons',
-   async (lessonId, { rejectWithValue, dispatch }) => {
+   async (payload, { rejectWithValue, dispatch }) => {
       try {
-         const response = await axiosInstance.delete(`/api/lessons/${lessonId}`)
+         const response = await axiosInstance.delete(
+            `/api/lessons/${payload.id}`
+         )
          dispatch(getLesson())
+         payload.showSnackbar('успешно удалено', 'success')
+
          return response.data
       } catch (error) {
+         payload.showSnackbar('не удалено', 'error')
          return rejectWithValue(error.message)
       }
    }
@@ -27,14 +32,19 @@ export const deleteCourse = createAsyncThunk(
 
 export const postLessonThunk = createAsyncThunk(
    'api/postLesson',
-   async ({ lessonId, lessonName }, { rejectWithValue, dispatch }) => {
+   async (
+      { courseId, lessonName, showSnackbar },
+      { rejectWithValue, dispatch }
+   ) => {
       try {
-         const response = await axiosInstance.post(`/api/lessons/${lessonId}`, {
+         const response = await axiosInstance.post(`/api/lessons/${courseId}`, {
             lessonName,
          })
+         showSnackbar('успешно добавлено', 'success')
          dispatch(getLesson())
-         return response
+         return response.data
       } catch (error) {
+         showSnackbar('не добавлено', 'error')
          return rejectWithValue(error.message)
       }
    }
@@ -42,15 +52,17 @@ export const postLessonThunk = createAsyncThunk(
 
 export const updateLesson = createAsyncThunk(
    'api/updateLesson',
-   async ({ lessonId, updatedData }, { rejectWithValue, dispatch }) => {
+   async ({ id, lessonName, showSnackbar }, { rejectWithValue, dispatch }) => {
       try {
-         const response = await axiosInstance.put(
-            `/api/lessons/${lessonId}`,
-            updatedData
-         )
+         const response = await axiosInstance.put(`/api/lessons/${id}`, {
+            lessonName,
+         })
+         showSnackbar('успешно изменено', 'success')
          dispatch(getLesson())
          return response.data
       } catch (error) {
+         showSnackbar('изменение не найдено', 'error')
+
          return rejectWithValue(error.message)
       }
    }
