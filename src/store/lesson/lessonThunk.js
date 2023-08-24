@@ -29,7 +29,6 @@ export const deleteCourse = createAsyncThunk(
       }
    }
 )
-
 export const postLessonThunk = createAsyncThunk(
    'api/postLesson',
    async (
