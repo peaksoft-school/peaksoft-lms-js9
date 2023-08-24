@@ -9,6 +9,7 @@ export const ModalDeleteLesson = ({
 }) => {
    const maxLength = 14
    const truncatedText = getTitle.substring(0, maxLength)
+
    return (
       <Modal width="315px" open={open} handleClose={handleClose}>
          <ModalStyled>
@@ -50,8 +51,8 @@ const ModalStyled = styled('div')(() => ({
    gap: '1.5625rem',
    backgroundColor: 'white',
    div: {
-      display: 'flex',
       gap: '0.625rem',
+      display: 'flex',
    },
 
    ':active': {

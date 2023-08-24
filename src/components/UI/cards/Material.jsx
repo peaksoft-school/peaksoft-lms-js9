@@ -56,8 +56,8 @@ export const Material = ({
          [id]: value,
       }))
    }
-   const maxLength = 12
    const { lessonName } = el
+   const maxLength = 12
    const truncatedText = el.lessonName.substring(0, maxLength)
 
    return (

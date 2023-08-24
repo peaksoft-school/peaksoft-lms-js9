@@ -6,7 +6,7 @@ const initialState = {
    isLoading: false,
 }
 
-export const LessonSlice = createSlice({
+export const lessonSlice = createSlice({
    name: 'lesson',
    initialState,
    reducers: {},
