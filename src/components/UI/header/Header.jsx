@@ -4,7 +4,6 @@ import { Box, Select } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { IconButtons } from '../button/IconButtons'
 import {
-   AppointIconWhite,
    DropDownIcon,
    ExelExport,
    ExitIcon,
@@ -49,31 +48,27 @@ export const Header = ({
    return (
       <Container>
          <StyledBox>
-            <TabsStyle>
-               {courses === 'Courses' && (
-                  <Tabs
-                     labelOne="Учителя"
-                     labelTwo="Студенты"
-                     toOne="teachers"
-                     toTwo="students"
-                  />
-               )}
-            </TabsStyle>
-            <Div>
-               <BoxLogOut ref={dropdownRef} onClick={handleChange}>
-                  <ProfileIcon />
-                  <p>{titlePage}</p>
-                  <DropDownIcon />
-                  <IconButtons>
-                     {state && (
-                        <StyledDropDown onClick={logoutHandler}>
-                           <ExitIcon style={{ marginLeft: '1.20rem' }} />
-                           <span>Выйти</span>
-                        </StyledDropDown>
-                     )}
-                  </IconButtons>
-               </BoxLogOut>
-            </Div>
+            {courses === 'Courses' && (
+               <TabsStyle
+                  labelOne="Учителя"
+                  labelTwo="Студенты"
+                  toOne="/"
+                  toTwo="s"
+               />
+            )}
+            <BoxLogOut ref={dropdownRef} onClick={handleChange}>
+               <ProfileIcon />
+               <p>{titlePage}</p>
+               <DropDownIcon />
+               <IconButtons>
+                  {state && (
+                     <StyledDropDown onClick={logoutHandler}>
+                        <ExitIcon style={{ marginLeft: '1.20rem' }} />
+                        <span>Выйти</span>
+                     </StyledDropDown>
+                  )}
+               </IconButtons>
+            </BoxLogOut>
          </StyledBox>
          <ButtonContainer>
             {conditionButton === 'Students' ? (
@@ -131,12 +126,7 @@ export const Header = ({
                         }}
                         onClick={onClick}
                      >
-                        {buttonContent === 'Назначить учителя' ? (
-                           <AppointIconWhite />
-                        ) : (
-                           <PlusIcon />
-                        )}
-
+                        <PlusIcon />
                         {buttonContent}
                      </Button>
                   )}
@@ -189,17 +179,11 @@ const Container = styled(Box)`
    }
 `
 
-const TabsStyle = styled('div')`
-   display: flex;
-   justify-content: end;
-   width: 60%;
+const TabsStyle = styled(Tabs)`
+   color: red;
+   margin-top: 27px;
+   margin: 0 auto;
 `
-const Div = styled('div')`
-   display: flex;
-   justify-content: end;
-   width: 50%;
-`
-
 const ButtonContainer = styled(Box)(() => ({
    width: '100%',
    display: 'flex',

@@ -3,18 +3,13 @@ import { styled } from '@mui/material'
 import { Modal } from '../../../../components/UI/modal/Modal'
 import { Button } from '../../../../components/UI/button/Button'
 
-export const ModalDeleteGroup = ({
-   open,
-   handleClose,
-   deleteCardHandler,
-   getGroupName,
-}) => {
+export const ModalDeleteGroup = ({ open, handleClose, deleteCardHandler }) => {
    return (
       <div>
          <Modal width="315px" open={open} handleClose={handleClose}>
             <ModalStyled>
                <ParaghQuestionStyled>
-                  Вы уверены, что хотите удалить группу {getGroupName} ?
+                  Вы уверены, что хотите удалить группу ... ?
                </ParaghQuestionStyled>
                <div>
                   <ButtonCloseStyled variant="outlined" onClick={handleClose}>

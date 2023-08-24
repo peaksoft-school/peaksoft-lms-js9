@@ -4,7 +4,7 @@ import {
    ErrorIconCheckbox,
    ErrorIconRadio,
    SuccessIconRadio,
-} from '../../../assets/icons'
+} from '../../assets/icons'
 
 const resultTest = [
    {

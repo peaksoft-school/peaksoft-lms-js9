@@ -1,9 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { reusableRoutesRoles } from '../utils/constants/routes'
 import { Groups } from '../pages/admin/groups/groups-page/Groups'
 import { GroupsTable } from '../pages/admin/groups/groups-page/GroupsTable'
-import { Courses } from '../pages/admin/courses/courses-page/Courses'
+import { Courses } from '../pages/admin/courses/Courses'
 import { Teachers } from '../pages/admin/teachers/Teachers'
 import { Students } from '../pages/admin/students/Students'
 import { PrivateRoute } from './PrivateRoutes'
@@ -13,11 +14,8 @@ import { SignInPage } from '../containers/SignInPage'
 import { Layout } from '../layout/Layout'
 import { MyCoursesStu } from '../pages/student/MyCourses'
 import { MyCoursesIns } from '../pages/instructor/MyCourses'
-import { USER_ROLE, reusableRoutesRoles } from '../utils/constants/constants'
+import { USER_ROLE } from '../utils/constants/constants'
 import { CreatePassword } from '../containers/CreatePassword'
-import { CoursesTable } from '../pages/admin/courses/courses-page/CoursesTable'
-import { TableTeachers } from '../pages/admin/courses/courses-page/TableTeachers'
-import { TableStudents } from '../pages/admin/courses/courses-page/TableStudents'
 
 export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
@@ -76,14 +74,6 @@ export const AppRoutes = ({ roles = 'admin' }) => {
             <Route index path={home} element={<Groups />} />
             <Route path={`${home}/:details`} element={<GroupsTable />} />
             <Route path={courses} element={<Courses />} />
-            <Route
-               path={`${courses}/:id`}
-               element={<Navigate to="teachers" />}
-            />
-            <Route path={`${courses}/:id`} element={<CoursesTable />}>
-               <Route path="students" element={<TableStudents />} />
-               <Route path="teachers" element={<TableTeachers />} />
-            </Route>
             <Route path={teachers} element={<Teachers />} />
             <Route path={students} element={<Students />} />
          </Route>
