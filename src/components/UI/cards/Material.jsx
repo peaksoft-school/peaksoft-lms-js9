@@ -14,55 +14,56 @@ import {
    EditGreenIcon,
    LinkIcon,
 } from '../../../assets/icons'
+import { IconButtons } from '../button/IconButtons'
 
 export const Material = ({
    clickEditHandler,
    clickDeleteHandler,
-   clickDeleteAll,
+   openModalHandler,
    el,
 }) => {
    const navLink = [
       {
          route: reusableRoutesLesson.videolesson,
          icon: <LessonVideoIcon />,
-         title: el.lessonVideo,
+         title: 'Видеоурок',
       },
       {
          route: reusableRoutesLesson.presentation,
          icon: <PresentationIcon />,
-         title: el.presentation,
+         title: 'Презентация',
       },
       {
          route: reusableRoutesLesson.task,
          icon: <TaskIcon />,
-         title: el.task,
+         title: 'Задания',
       },
       {
          route: reusableRoutesLesson.link,
          icon: <LinkIcon />,
-         title: el.link,
+         title: 'Ссылка',
       },
       {
          route: reusableRoutesLesson.test,
          icon: <TestIcon />,
-         title: el.test,
+         title: 'Тест',
       },
    ]
    const [selectedValues, setSelectedValues] = useState({})
-
    const handleChange = (id, value) => {
       setSelectedValues((prevState) => ({
          ...prevState,
          [id]: value,
       }))
    }
-
    return (
       <Container key={el.id}>
          <div className="containerHeader">
             <div>
-               <LogoLessonIcon />
-               <h1>{el.lesson}</h1>
+               <IconButtons onClick={() => clickEditHandler(el)}>
+                  <LogoLessonIcon />
+               </IconButtons>
+               <h1>{el.lessonName}</h1>
             </div>
             <div className="containerDeleteIconButton">
                <FormControl size="small">
@@ -99,7 +100,18 @@ export const Material = ({
                      ))}
                   </Select>
                </FormControl>
-               <DeleteRedIcon onClick={() => clickDeleteAll(el.id)} />
+               <div key={el.id}>
+                  <IconButtons
+                     onClick={() =>
+                        openModalHandler({
+                           name: el.lessonName,
+                           id: el.lessonId,
+                        })
+                     }
+                  >
+                     <DeleteRedIcon />
+                  </IconButtons>
+               </div>
             </div>
          </div>
          <div className="containerItem">
@@ -114,16 +126,13 @@ export const Material = ({
                      <h2>{item.title}</h2>
                   </div>
                   <div className="buttons">
-                     <StyledButton
-                        className="button"
-                        onClick={() => clickEditHandler(el.id)}
-                     >
+                     <StyledButton className="button">
                         <EditGreenIcon />
                         Редактировать
                      </StyledButton>
                      <StyledButton
                         className="button"
-                        onClick={() => clickDeleteHandler(el.id)}
+                        onClick={() => clickDeleteHandler(el)}
                      >
                         <DeleteRedIcon />
                         Удалить
@@ -137,7 +146,7 @@ export const Material = ({
 }
 
 const Container = styled('div')(({ theme }) => ({
-   backgroundColor: theme.palette.primary.light,
+   backgroundColor: '#ffffff',
    margin: '1.25rem',
    width: '29vw',
    height: '33.7vh',
@@ -164,16 +173,15 @@ const Container = styled('div')(({ theme }) => ({
          alignItems: 'center',
          gap: '1.88rem',
 
-         '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
-            {
-               borderColor: '#EBEBEB',
-            },
-
-         '.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
-            {
-               border: '1px solid #EBEBEB',
-               width: '4vw',
-            },
+         // '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
+         // {
+         //    borderColor: '#EBEBEB',
+         // },
+         // '.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
+         // {
+         //    border: '1px solid #EBEBEB',
+         //    width: '4vw',
+         // },
       },
    },
    '.containerItem': {
