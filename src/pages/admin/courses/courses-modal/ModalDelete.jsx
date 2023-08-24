@@ -3,18 +3,18 @@ import { styled } from '@mui/material'
 import { Modal } from '../../../../components/UI/modal/Modal'
 import { Button } from '../../../../components/UI/button/Button'
 
-export const ModalDeleteGroup = ({
+export const ModalDelete = ({
    open,
    handleClose,
    deleteCardHandler,
-   getGroupName,
+   paragraph,
 }) => {
    return (
       <div>
          <Modal width="315px" open={open} handleClose={handleClose}>
             <ModalStyled>
                <ParaghQuestionStyled>
-                  Вы уверены, что хотите удалить группу {getGroupName} ?
+                  Вы уверены, что хотите удалить {paragraph} ?
                </ParaghQuestionStyled>
                <div>
                   <ButtonCloseStyled variant="outlined" onClick={handleClose}>
@@ -37,7 +37,7 @@ const ModalStyled = styled('div')`
    justify-content: center;
    align-items: center;
    flex-direction: column;
-   gap: 1.5625rem;
+   gap: 0.5rem;
    margin-top: 0.125rem;
    div {
       display: flex;
@@ -63,7 +63,8 @@ const ButtonDeleteStyled = styled(Button)`
 
 const ParaghQuestionStyled = styled('p')`
    width: 11.875rem;
-   height: 2.75rem;
+   height: 4rem;
+   overflow: hidden;
    color: var(--black, #1f1c1c);
    text-align: center;
    font-size: 1rem;
