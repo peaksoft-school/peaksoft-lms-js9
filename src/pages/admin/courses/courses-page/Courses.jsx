@@ -259,7 +259,7 @@ export const Courses = () => {
    )
 }
 const ContainerItem = styled('div')`
-   display: flex;
    gap: 20px;
+   display: flex;
    flex-wrap: wrap;
 `

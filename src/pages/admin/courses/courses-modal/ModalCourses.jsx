@@ -86,9 +86,9 @@ const StyledParagUploadImage = styled('p')`
    width: 16em;
    height: 1.5em;
    text-align: center;
+   font-weight: 400;
    font-size: 0.875rem;
    line-height: 130%;
-   font-weight: 400;
 `
 
 const ContainerUploadImageStyled = styled('div')`

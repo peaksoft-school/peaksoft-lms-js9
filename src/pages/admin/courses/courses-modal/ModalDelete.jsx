@@ -48,10 +48,10 @@ const ModalStyled = styled('div')`
 
 const ButtonCloseStyled = styled(Button)`
    border-radius: 0.5rem;
+   width: 6.4375rem;
    border: 0.0625rem solid var(--button, #3772ff);
    text-transform: capitalize;
    height: 2.5rem;
-   width: 6.4375rem;
 `
 
 const ButtonDeleteStyled = styled(Button)`

@@ -6,8 +6,8 @@ const initialState = {
    lesson: [],
 }
 export const lessonSlice = createSlice({
-   name: 'lesson',
    initialState,
+   name: 'lesson',
    reducers: {},
    extraReducers: (builder) => {
       builder

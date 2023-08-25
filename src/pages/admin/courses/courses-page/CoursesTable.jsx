@@ -95,8 +95,8 @@ const SpanStyled = styled('p')`
    gap: 0.3125rem;
    align-items: center;
    button {
+      font-size: 0.875rem;
       border: none;
       color: #747d74;
-      font-size: 0.875rem;
    }
 `

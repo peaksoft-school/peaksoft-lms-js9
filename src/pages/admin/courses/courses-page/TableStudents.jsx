@@ -13,7 +13,6 @@ export const TableStudents = () => {
    useEffect(() => {
       dispatch(getCourseStudents(params.id))
    }, [])
-
    return (
       <div>
          {isLoading && <Isloading />}

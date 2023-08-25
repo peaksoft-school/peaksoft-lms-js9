@@ -69,6 +69,7 @@ export const TableTeachers = () => {
          label: 'Действие',
       },
    ]
+
    return (
       <div>
          {isLoading && <Isloading />}

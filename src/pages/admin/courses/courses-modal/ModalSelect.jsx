@@ -110,9 +110,9 @@ const ContainerButton = styled('div')`
 `
 const ButtonCloseStyled = styled(Button)`
    border-radius: 0.6rem;
+   width: 5.4vw;
    border: 0.0625rem solid var(--button, #3772ff);
    text-transform: capitalize;
-   width: 5.4vw;
    height: 4.5vh;
 `
 
