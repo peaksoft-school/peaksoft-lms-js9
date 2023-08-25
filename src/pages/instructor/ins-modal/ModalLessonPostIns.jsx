@@ -40,8 +40,8 @@ export const ModalLessonPost = ({
 const InputTitleStyled = styled(Input)`
    width: 17vw;
    .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-      height: 4.5vh;
       padding: 0px 1.125rem;
+      height: 4.5vh;
    }
 `
 const ContainerButtonsStyled = styled('div')`

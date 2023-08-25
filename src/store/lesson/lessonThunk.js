@@ -56,7 +56,6 @@ export const updateLesson = createAsyncThunk(
          const response = await axiosInstance.put(`/api/lessons/${id}`, {
             lessonName,
          })
-
          showSnackbar('успешно изменено', 'success')
          dispatch(getLesson())
          return response.data

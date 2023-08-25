@@ -12,7 +12,7 @@ export const store = configureStore({
       [groupSlice.name]: groupSlice.reducer,
       [studentsSlice.name]: studentsSlice.reducer,
       [coursesSlice.name]: coursesSlice.reducer,
-      [instructorsSlice.name]: instructorsSlice.reducer,
       [lessonSlice.name]: lessonSlice.reducer,
+      [instructorsSlice.name]: instructorsSlice.reducer,
    },
 })

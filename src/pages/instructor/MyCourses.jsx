@@ -4,9 +4,9 @@ import { MyCoursesLesson } from './MyCoursesLesson'
 export const MyCoursesIns = () => {
    return (
       <div>
-         <p>
+         <e>
             <MyCoursesLesson />
-         </p>
+         </e>
       </div>
    )
 }

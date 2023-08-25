@@ -5,11 +5,10 @@ const initialState = {
    isLoading: false,
    lesson: [],
 }
-
 export const lessonSlice = createSlice({
    name: 'lesson',
-   initialState,
    reducers: {},
+   initialState,
    extraReducers: (builder) => {
       builder
          .addCase(getLesson.fulfilled, (state, action) => {

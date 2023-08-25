@@ -144,8 +144,8 @@ const DivMap = styled('div')(() => ({
    flexWrap: 'wrap',
 }))
 const HeaderBtnDiv = styled('div')(() => ({
-   color: 'green',
    display: 'flex',
+   color: 'green',
    flexDirection: 'row-reverse',
    textAlign: 'flex-end',
    alignItems: 'flex-end',
