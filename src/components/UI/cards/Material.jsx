@@ -159,8 +159,8 @@ const Container = styled('div')(({ theme }) => ({
       padding: '1.25rem',
       '& div': {
          display: 'flex',
-         alignItems: 'center',
          gap: '1.06rem',
+         alignItems: 'center',
          '& h1': {
             fontSize: '1.125rem',
             fontWeight: '600',

@@ -61,7 +61,6 @@ export const updateLesson = createAsyncThunk(
          return response.data
       } catch (error) {
          showSnackbar('error', 'error')
-
          return rejectWithValue(error.message)
       }
    }

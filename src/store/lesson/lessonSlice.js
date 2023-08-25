@@ -12,8 +12,8 @@ export const lessonSlice = createSlice({
    extraReducers: (builder) => {
       builder
          .addCase(getLesson.fulfilled, (state, action) => {
-            state.lesson = action.payload
             state.isLoading = false
+            state.lesson = action.payload
          })
          .addCase(getLesson.pending, (state) => {
             state.isLoading = true

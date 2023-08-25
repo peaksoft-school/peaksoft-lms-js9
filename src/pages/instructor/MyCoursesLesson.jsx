@@ -147,6 +147,6 @@ const HeaderBtnDiv = styled('div')(() => ({
    display: 'flex',
    color: 'green',
    flexDirection: 'row-reverse',
-   textAlign: 'flex-end',
    alignItems: 'flex-end',
+   textAlign: 'flex-end',
 }))
