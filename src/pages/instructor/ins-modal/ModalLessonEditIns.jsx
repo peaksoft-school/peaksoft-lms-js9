@@ -6,10 +6,10 @@ import { Button } from '../../../components/UI/button/Button'
 
 export const ModalEditLesson = ({
    handleClose,
-   openModal,
    value,
-   changeUpdateTitle,
+   openModal,
    handleSubmit,
+   changeUpdateTitle,
 }) => {
    return (
       <Modal
@@ -21,6 +21,7 @@ export const ModalEditLesson = ({
             <ContainerInputTitleDateStyled>
                <InputTitleStyled
                   type="text"
+                  placeholder="Редактировать урок"
                   value={value}
                   onChange={changeUpdateTitle}
                />
@@ -32,7 +33,7 @@ export const ModalEditLesson = ({
                >
                   Отмена
                </ButtonCloseStyled>
-               <ButtonAddedStyled type="submit" handleClose>
+               <ButtonAddedStyled disabled={!value} type="submit" handleClose>
                   Редактировать
                </ButtonAddedStyled>
             </ContainerButtonsStyled>
@@ -43,7 +44,6 @@ export const ModalEditLesson = ({
 const InputTitleStyled = styled(Input)(() => ({
    width: '17.5vw',
 }))
-
 const ContainerInputTitleDateStyled = styled('div')`
    display: flex;
    width: 17vw;
@@ -52,16 +52,16 @@ const ContainerInputTitleDateStyled = styled('div')`
 const ContainerButtonsStyled = styled('div')`
    display: flex;
    justify-content: flex-end;
+   gap: 0.625rem;
    align-items: center;
    margin-top: 1.25rem;
-   gap: 0.625rem;
 `
 
 const ButtonCloseStyled = styled(Button)`
    border-radius: 0.5rem;
    border: 0.0625rem solid var(--button, #3772ff);
-   text-transform: capitalize;
    width: 'auto';
+   text-transform: capitalize;
    height: 4.5vh;
 `
 

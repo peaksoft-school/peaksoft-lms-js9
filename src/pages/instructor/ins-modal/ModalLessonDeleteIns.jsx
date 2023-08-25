@@ -4,14 +4,22 @@ import { Button, Modal, styled } from '@mui/material'
 export const ModalDeleteLesson = ({
    open,
    handleClose,
-   deleteCardHandler,
    getTitle,
+   deleteCardHandler,
 }) => {
+   const maxLength = 14
+   const truncatedText = getTitle.substring(0, maxLength)
    return (
       <Modal width="315px" open={open} handleClose={handleClose}>
          <ModalStyled>
             <ParaghQuestionStyled>
-               Вы уверены, что хотите удалить урок <b>{getTitle}</b> ?
+               Вы уверены,что хотите удалить урок⠀
+               <b>
+                  {getTitle.length <= maxLength
+                     ? getTitle
+                     : `${truncatedText}...`}
+               </b>
+               ?
             </ParaghQuestionStyled>
             <div>
                <ButtonCloseStyled variant="outlined" onClick={handleClose}>
@@ -34,20 +42,16 @@ const ModalStyled = styled('div')(() => ({
    alignItems: 'center',
    flexDirection: 'column',
    width: '315px',
-   height: '9.0625rem',
+   height: 'auto',
    position: 'absolute',
-   border: '5px solid white',
    top: '37%',
+   border: '5px solid white',
+   backgroundColor: 'white',
    left: '42%',
    gap: '1.5625rem',
-   backgroundColor: 'white',
    div: {
-      gap: '0.625rem',
       display: 'flex',
-   },
-
-   ':active': {
-      border: 'none',
+      gap: '0.625rem',
    },
 }))
 
@@ -72,7 +76,7 @@ const ButtonDeleteStyled = styled(Button)(() => ({
 
 const ParaghQuestionStyled = styled('p')(() => ({
    width: '11.875rem',
-   height: '2.75rem',
+   height: 'auto',
    overflow: 'inherit',
    textAlign: 'center',
    fontSize: '1rem',

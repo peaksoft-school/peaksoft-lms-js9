@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { FormControl, MenuItem, Select, styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { menuItem } from '../../../utils/constants/MaterialsArray'
+import {
+   menuItem,
+   reusableRoutesLesson,
+} from '../../../utils/constants/constants'
 import { Button } from '../button/Button'
-import { reusableRoutesLesson } from '../../../utils/constants/routes'
+
 import {
    LessonVideoIcon,
    TaskIcon,
@@ -16,12 +19,7 @@ import {
 } from '../../../assets/icons'
 import { IconButtons } from '../button/IconButtons'
 
-export const Material = ({
-   clickEditHandler,
-   clickDeleteHandler,
-   openModalHandler,
-   el,
-}) => {
+export const Material = ({ clickEditHandler, openModalDeleteHandler, el }) => {
    const navLink = [
       {
          route: reusableRoutesLesson.videolesson,
@@ -103,7 +101,7 @@ export const Material = ({
                <div key={el.id}>
                   <IconButtons
                      onClick={() =>
-                        openModalHandler({
+                        openModalDeleteHandler({
                            name: el.lessonName,
                            id: el.lessonId,
                         })
@@ -132,7 +130,7 @@ export const Material = ({
                      </StyledButton>
                      <StyledButton
                         className="button"
-                        onClick={() => clickDeleteHandler(el)}
+                        onClick={() => openModalDeleteHandler(el)}
                      >
                         <DeleteRedIcon />
                         Удалить
@@ -161,8 +159,8 @@ const Container = styled('div')(({ theme }) => ({
       padding: '1.25rem',
       '& div': {
          display: 'flex',
-         alignItems: 'center',
          gap: '1.06rem',
+         alignItems: 'center',
          '& h1': {
             fontSize: '1.125rem',
             fontWeight: '600',
@@ -188,10 +186,10 @@ const Container = styled('div')(({ theme }) => ({
       display: 'flex',
       flexDirection: 'column',
       '& a': {
-         padding: '0 1.25rem',
          display: 'flex',
-         alignItems: 'center',
+         padding: '0 1.25rem',
          justifyContent: 'space-between',
+         alignItems: 'center',
          height: '5vh',
          '&:hover': {
             backgroundColor: 'rgba(26, 35, 126, 0.07)',
