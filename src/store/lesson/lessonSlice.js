@@ -7,8 +7,8 @@ const initialState = {
 }
 export const lessonSlice = createSlice({
    name: 'lesson',
-   reducers: {},
    initialState,
+   reducers: {},
    extraReducers: (builder) => {
       builder
          .addCase(getLesson.fulfilled, (state, action) => {

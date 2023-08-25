@@ -9,8 +9,8 @@ import { lessonSlice } from './lesson/lessonSlice'
 export const store = configureStore({
    reducer: {
       [signInSlice.name]: signInSlice.reducer,
-      [groupSlice.name]: groupSlice.reducer,
       [studentsSlice.name]: studentsSlice.reducer,
+      [groupSlice.name]: groupSlice.reducer,
       [instructorsSlice.name]: instructorsSlice.reducer,
       [coursesSlice.name]: coursesSlice.reducer,
       [lessonSlice.name]: lessonSlice.reducer,

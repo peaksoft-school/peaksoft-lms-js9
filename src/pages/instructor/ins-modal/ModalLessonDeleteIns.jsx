@@ -45,10 +45,10 @@ const ModalStyled = styled('div')(() => ({
    height: 'auto',
    position: 'absolute',
    border: '5px solid white',
+   backgroundColor: 'white',
    top: '37%',
    left: '42%',
    gap: '1.5625rem',
-   backgroundColor: 'white',
    div: {
       display: 'flex',
       gap: '0.625rem',

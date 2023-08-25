@@ -188,8 +188,8 @@ const Container = styled('div')(({ theme }) => ({
       '& a': {
          display: 'flex',
          padding: '0 1.25rem',
-         alignItems: 'center',
          justifyContent: 'space-between',
+         alignItems: 'center',
          height: '5vh',
          '&:hover': {
             backgroundColor: 'rgba(26, 35, 126, 0.07)',

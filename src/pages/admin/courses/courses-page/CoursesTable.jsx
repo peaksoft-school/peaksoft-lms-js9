@@ -96,7 +96,7 @@ const SpanStyled = styled('p')`
    align-items: center;
    button {
       border: none;
-      font-size: 0.875rem;
       color: #747d74;
+      font-size: 0.875rem;
    }
 `

@@ -7,6 +7,7 @@ const logoutAction = () => {
 const headers = {
    'Content-Type': 'application/json',
 }
+
 const axiosInstance = axios.create({
    baseURL: BASE_URL,
    headers,

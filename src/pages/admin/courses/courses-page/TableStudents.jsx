@@ -10,7 +10,6 @@ export const TableStudents = () => {
    const dispatch = useDispatch()
    const params = useParams()
    const { courseStudents, isLoading } = useSelector((state) => state.students)
-
    useEffect(() => {
       dispatch(getCourseStudents(params.id))
    }, [])

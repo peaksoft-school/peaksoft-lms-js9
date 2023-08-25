@@ -12,6 +12,7 @@ export const getLesson = createAsyncThunk(
       }
    }
 )
+
 export const deleteCourse = createAsyncThunk(
    'api/deleteLessons',
    async (payload, { rejectWithValue, dispatch }) => {

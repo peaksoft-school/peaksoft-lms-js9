@@ -48,8 +48,8 @@ const ContainerButtonsStyled = styled('div')`
    justify-content: flex-end;
    display: flex;
    gap: 0.625rem;
-   align-items: center;
    margin-top: 1.25rem;
+   align-items: center;
 `
 const ButtonCloseStyled = styled(Button)`
    border-radius: 0.5rem;

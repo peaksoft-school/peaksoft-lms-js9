@@ -260,6 +260,6 @@ export const Courses = () => {
 }
 const ContainerItem = styled('div')`
    display: flex;
-   flex-wrap: wrap;
    gap: 20px;
+   flex-wrap: wrap;
 `

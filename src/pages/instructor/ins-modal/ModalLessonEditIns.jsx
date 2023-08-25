@@ -53,15 +53,15 @@ const ContainerButtonsStyled = styled('div')`
    display: flex;
    justify-content: flex-end;
    margin-top: 1.25rem;
-   align-items: center;
    gap: 0.625rem;
+   align-items: center;
 `
 
 const ButtonCloseStyled = styled(Button)`
    border-radius: 0.5rem;
    border: 0.0625rem solid var(--button, #3772ff);
-   text-transform: capitalize;
    width: 'auto';
+   text-transform: capitalize;
    height: 4.5vh;
 `
 
