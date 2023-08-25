@@ -21,7 +21,6 @@ export const deleteCourse = createAsyncThunk(
          )
          dispatch(getLesson())
          payload.showSnackbar('успешно удалено', 'success')
-
          return response.data
       } catch (error) {
          payload.showSnackbar('error', 'error')

@@ -186,8 +186,8 @@ const Container = styled('div')(({ theme }) => ({
       display: 'flex',
       flexDirection: 'column',
       '& a': {
-         padding: '0 1.25rem',
          display: 'flex',
+         padding: '0 1.25rem',
          alignItems: 'center',
          justifyContent: 'space-between',
          height: '5vh',

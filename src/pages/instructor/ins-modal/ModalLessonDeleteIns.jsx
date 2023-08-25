@@ -53,10 +53,6 @@ const ModalStyled = styled('div')(() => ({
       display: 'flex',
       gap: '0.625rem',
    },
-
-   ':active': {
-      border: 'none',
-   },
 }))
 
 const ButtonCloseStyled = styled(Button)(() => ({

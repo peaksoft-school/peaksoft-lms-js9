@@ -47,8 +47,8 @@ const InputTitleStyled = styled(Input)`
 const ContainerButtonsStyled = styled('div')`
    justify-content: flex-end;
    display: flex;
-   align-items: center;
    gap: 0.625rem;
+   align-items: center;
    margin-top: 1.25rem;
 `
 const ButtonCloseStyled = styled(Button)`

@@ -11,8 +11,8 @@ export const store = configureStore({
       [signInSlice.name]: signInSlice.reducer,
       [groupSlice.name]: groupSlice.reducer,
       [studentsSlice.name]: studentsSlice.reducer,
-      [coursesSlice.name]: coursesSlice.reducer,
       [instructorsSlice.name]: instructorsSlice.reducer,
+      [coursesSlice.name]: coursesSlice.reducer,
       [lessonSlice.name]: lessonSlice.reducer,
    },
 })
