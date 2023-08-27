@@ -258,7 +258,7 @@ export const Courses = () => {
    )
 }
 const ContainerItem = styled('div')`
+   gap: 20px;
    display: flex;
    flex-wrap: wrap;
-   gap: 20px;
 `

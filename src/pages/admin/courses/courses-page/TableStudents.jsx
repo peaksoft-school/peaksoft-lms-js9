@@ -13,11 +13,9 @@ export const TableStudents = () => {
    const params = useParams()
    const [page, setPage] = useState(1)
    const { courseStudents, isLoading } = useSelector((state) => state.students)
-
    useEffect(() => {
       dispatch(getStudents({ id: +params.id, page }))
    }, [])
-
    return (
       <div>
          {isLoading && <Isloading />}

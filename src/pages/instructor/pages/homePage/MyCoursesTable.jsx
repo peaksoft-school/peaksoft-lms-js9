@@ -14,6 +14,8 @@ import {
    getCoursesById,
 } from '../../../../store/courses/coursesThunk'
 import { ModalDelete } from '../../../admin/courses/courses-modal/ModalDelete'
+import { ModalLessonPost } from '../../ins-modal/ModalLessonPostIns'
+import { postLessonThunk } from '../../../../store/lesson/lessonThunk'
 
 export const MyCoursesTable = () => {
    const params = useParams()
@@ -24,7 +26,10 @@ export const MyCoursesTable = () => {
    const { courses, coursesGroup } = useSelector((state) => state.courses)
    const { cards } = useSelector((state) => state.cards)
    const [selectedOption, setSelectedOption] = useState('')
+   const [postValue, setpostValue] = useState('')
    const { isActive, setActive } = useToggle('addgrouptocourse')
+   const { isActive: openCreateLesson, setActive: setCreateLesson } =
+      useToggle('createlesson')
    const { isActive: openModal, setActive: setOpenModal } = useToggle(
       'deletegrouptocourse'
    )
@@ -41,10 +46,8 @@ export const MyCoursesTable = () => {
    const handleSelectChange = (event) => setSelectedOption(event.target.value)
    const openAddGroupToCourse = () => setActive(!isActive)
    const openModalDeleteGroupToCourse = () => setOpenModal(!openModal)
+   const openModalAddLesson = () => setCreateLesson(!openCreateLesson)
 
-   const createLesson = () => {
-      console.log('createLesson')
-   }
    const deleteGroupToCourse = () => {
       dispatch(
          deleteGroupToCourseThunk({
@@ -70,6 +73,19 @@ export const MyCoursesTable = () => {
       setActive('')
    }
 
+   const onChangePostandler = (e) => {
+      setpostValue(e.target.value)
+   }
+   const postLesson = () => {
+      const data = {
+         courseId: +params.id,
+         lessonName: postValue,
+         showSnackbar,
+      }
+      dispatch(postLessonThunk(data))
+      setpostValue('')
+   }
+
    const isStudentsPage =
       location.pathname === `/instructor/mycoursesins/${params.id}/students`
 
@@ -85,7 +101,9 @@ export const MyCoursesTable = () => {
                   buttonContent={
                      isStudentsPage ? 'Добавить группу в курс' : 'Создать урок'
                   }
-                  onClick={isStudentsPage ? openAddGroupToCourse : createLesson}
+                  onClick={
+                     isStudentsPage ? openAddGroupToCourse : openModalAddLesson
+                  }
                   icon={isStudentsPage}
                />
             ) : (
@@ -100,7 +118,7 @@ export const MyCoursesTable = () => {
                   onClick={
                      isStudentsPage
                         ? openModalDeleteGroupToCourse
-                        : createLesson
+                        : openModalAddLesson
                   }
                />
             )}
@@ -119,6 +137,13 @@ export const MyCoursesTable = () => {
             handleClose={() => setActive('')}
             selectedOption={selectedOption}
             handleSelectChange={handleSelectChange}
+         />
+         <ModalLessonPost
+            openModal={openCreateLesson}
+            handleClose={() => setCreateLesson('')}
+            postLesson={postLesson}
+            onChangePostandler={onChangePostandler}
+            value={postValue}
          />
          <ModalDelete
             open={openModal}
