@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import {
    deleteTeacherLMS,
+   editTeacherLMS,
    getTeacherLMS,
    postTeacherLMS,
 } from '../../api/teachersResponse/teachers'
@@ -10,10 +11,8 @@ export const getTeacher = createAsyncThunk(
    async (_, { rejectWithValue }) => {
       try {
          const { data } = await getTeacherLMS()
-         // console.log(data)
          return data
       } catch (error) {
-         // console.log('No data available')
          return rejectWithValue(error.response?.data.message)
       }
    }
@@ -21,13 +20,17 @@ export const getTeacher = createAsyncThunk(
 
 export const postTeacher = createAsyncThunk(
    'teachers/postTeachers',
-   async (teacherData, { rejectWithValue, dispatch }) => {
+   async ({ values, showSnackbar }, { rejectWithValue, dispatch }) => {
       try {
-         const { data } = await postTeacherLMS(teacherData)
-         console.log(data)
+         const { data } = await postTeacherLMS(values)
+         showSnackbar('Данные успешно отправлены', 'success')
          dispatch(getTeacher())
          return data
       } catch (error) {
+         if (error.message === 'Request failed with status code 400') {
+            showSnackbar(error.response.data.message, error.response.status)
+         }
+         showSnackbar('Данные не отправлены', error.message)
          return rejectWithValue(error.message)
       }
    }
@@ -35,12 +38,31 @@ export const postTeacher = createAsyncThunk(
 
 export const deleteTeacherId = createAsyncThunk(
    'deleteTeacher',
-   async (id, { rejectWithValue, dispatch }) => {
+   async ({ idInstructor, showSnackbar }, { rejectWithValue, dispatch }) => {
       try {
-         const { data } = await deleteTeacherLMS(id)
+         const { data } = await deleteTeacherLMS(idInstructor)
          dispatch(getTeacher())
+         showSnackbar('Удалено', 'success')
          return data
       } catch (error) {
+         showSnackbar('Не удалено', error.message)
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const putTeacher = createAsyncThunk(
+   'teachers/putTeachers',
+   async ({ id, values, showSnackbar }, { rejectWithValue, dispatch }) => {
+      try {
+         const { data } = await editTeacherLMS(id, values)
+         dispatch(getTeacher())
+         showSnackbar('Данные учителя успешно обновлены', 'success')
+         return data
+      } catch (error) {
+         if (error.message === 'Request failed with status code 400') {
+            showSnackbar(error.response.data.message, error.response.status)
+         }
          return rejectWithValue(error.message)
       }
    }

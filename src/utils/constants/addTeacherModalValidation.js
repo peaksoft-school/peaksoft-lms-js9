@@ -2,26 +2,29 @@ import * as Yup from 'yup'
 
 export const addTeacherValidation = Yup.object().shape({
    firstName: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
+      .min(2, 'Слишком короткий :(')
+      .max(50, 'Cлишком длинный :(')
       .matches(
          /^.*((?=.*[A-Z]){1}).*$/,
-         'First name must contain one uppercase'
+         'Имя должно содержать одну заглавную букву'
       )
-      .required('Firstname is required'),
+      .required('Нужно указать имя'),
 
    lastName: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .matches(/^.*((?=.*[A-Z]){1}).*$/, 'Last name must contain one uppercase')
-      .required('Lastname is required'),
+      .min(2, 'Слишком короткий :(')
+      .max(20, 'Cлишком длинный :(')
+      .matches(
+         /^.*((?=.*[A-Z]){1}).*$/,
+         'Фамилия должна содержать одну заглавную букву'
+      )
+      .required('Фамилия обязательна'),
 
-   phoneNumber: Yup.string().required('Phone number is required'),
+   phoneNumber: Yup.string().required('Требуется номер телефона'),
 
-   email: Yup.string().email().required('Email is required'),
+   email: Yup.string().email().required('Требуется электронная почта'),
 
    specialization: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Enter your specialization'),
+      .min(1, 'Слишком короткий :(')
+      .max(50, 'Cлишком длинный :(')
+      .required('Укажите свою специализацию'),
 })

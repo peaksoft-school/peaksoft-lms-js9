@@ -6,38 +6,75 @@ import { Box } from '@mui/material'
 import { Modal } from '../../../components/UI/modal/Modal'
 import { Input } from '../../../components/UI/input/Input'
 import { Button } from '../../../components/UI/button/Button'
-import { postTeacher } from '../../../store/teachers/teachers.thunk'
+import { postTeacher, putTeacher } from '../../../store/teachers/teachers.thunk'
 import { addTeacherValidation } from '../../../utils/constants/addTeacherModalValidation'
+import { showSnackbar } from '../../../components/UI/snackbar/Snackbar'
 
-export const ModalTeachers = ({ open, handleClose }) => {
+export const ModalTeachers = ({ open, handleClose, modalData }) => {
    const dispatch = useDispatch()
-   const submitHandler = (values) => {
-      dispatch(postTeacher(values))
 
-      handleClose()
-      console.log(values)
+   const clearFields = (handleChange) => {
+      handleChange({ target: { name: 'firstName', value: '' } })
+      handleChange({ target: { name: 'lastName', value: '' } })
+      handleChange({ target: { name: 'phoneNumber', value: '' } })
+      handleChange({ target: { name: 'email', value: '' } })
+      handleChange({ target: { name: 'specialization', value: '' } })
    }
 
-   const { handleSubmit, handleChange, values, errors, touched } = useFormik({
-      initialValues: {
-         firstName: '',
-         lastName: '',
-         phoneNumber: '',
-         email: '',
-         specialization: '',
-      },
+   const initialValues = {
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+      email: '',
+      specialization: '',
+   }
+
+   if (modalData) {
+      const [firstName, lastName, patronymic] = modalData.fullName.split(' ')
+      const lastNamepatronymic = `${lastName} ${patronymic}`
+      initialValues.firstName = firstName
+      initialValues.lastName = patronymic ? lastNamepatronymic : lastName
+      initialValues.phoneNumber = modalData.phoneNumber
+      initialValues.email = modalData.email
+      initialValues.specialization = modalData.specialization
+   }
+
+   const {
+      handleSubmit,
+      handleChange,
+      setErrors,
+      setTouched,
+      values,
+      errors,
+      touched,
+      resetForm,
+   } = useFormik({
+      initialValues,
       validationSchema: addTeacherValidation,
       onSubmit: (values) => {
-         console.log(values)
-         submitHandler(values)
+         if (modalData) {
+            dispatch(putTeacher({ id: modalData.id, values, showSnackbar }))
+         } else {
+            dispatch(postTeacher({ values, showSnackbar }))
+         }
+         handleClose()
+         clearFields(handleChange)
+         resetForm()
+         setTouched({})
+         setErrors({})
       },
    })
+
+   const handleCloseAndReset = () => {
+      handleClose()
+      resetForm(initialValues)
+   }
+
    return (
       <Modal
-         title="Добавление учителя"
+         title={modalData ? 'Изменение учителя' : 'Добавление учителя'}
          open={open}
-         handleClose={handleClose}
-         //  minHeight="700px"
+         handleClose={handleCloseAndReset}
       >
          <form
             style={{
@@ -54,6 +91,7 @@ export const ModalTeachers = ({ open, handleClose }) => {
                name="firstName"
                value={values.firstName}
                onChange={handleChange}
+               error={touched.firstName && errors.firstName}
             />
             <Error>{touched.firstName && errors.firstName}</Error>
             <InputStyle
@@ -63,6 +101,7 @@ export const ModalTeachers = ({ open, handleClose }) => {
                name="lastName"
                value={values.lastName}
                onChange={handleChange}
+               error={Boolean(touched.lastName && errors.lastName)}
             />
             <Error>{touched.lastName && errors.lastName}</Error>
             <InputStyle
@@ -72,6 +111,7 @@ export const ModalTeachers = ({ open, handleClose }) => {
                name="phoneNumber"
                value={values.phoneNumber}
                onChange={handleChange}
+               error={Boolean(touched.phoneNumber && errors.phoneNumber)}
             />
             <Error>{touched.phoneNumber && errors.phoneNumber}</Error>
             <InputStyle
@@ -81,6 +121,7 @@ export const ModalTeachers = ({ open, handleClose }) => {
                name="email"
                value={values.email}
                onChange={handleChange}
+               error={Boolean(touched.email && errors.email)}
             />
             <Error>{touched.email && errors.email}</Error>
             <InputStyle
@@ -90,10 +131,12 @@ export const ModalTeachers = ({ open, handleClose }) => {
                name="specialization"
                value={values.specialization}
                onChange={handleChange}
+               error={Boolean(touched.specialization && errors.specialization)}
+               placeholderColor="red"
             />
             <Error>{touched.specialization && errors.specialization}</Error>
             <BoxStyle>
-               <ButtonStyle variant="outlined" onClick={handleClose}>
+               <ButtonStyle variant="outlined" onClick={handleCloseAndReset}>
                   Отмена
                </ButtonStyle>
                <Button type="submit" variant="contained">
@@ -107,7 +150,9 @@ export const ModalTeachers = ({ open, handleClose }) => {
 
 const InputStyle = styled(Input)(() => ({
    width: '50vh',
-   padding: '1%',
+   padding: '3%',
+   text: 'red',
+   borderColor: 'red',
 }))
 
 const ButtonStyle = styled(Button)(() => ({
@@ -122,9 +167,9 @@ const BoxStyle = styled(Box)(() => ({
 }))
 
 const Error = styled('p')(() => ({
-   width: '240px',
-   height: 'auto',
-   margin: '0 0 1px 0',
+   width: '100%',
+   height: '10px',
+   margin: '-14px 0 0px 0',
    color: '#f00',
    textAlign: 'center',
 }))
