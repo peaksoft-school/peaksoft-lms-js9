@@ -1,0 +1,147 @@
+import React, { useEffect, useState } from 'react'
+import { styled } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Header } from '../../../../components/UI/header/Header'
+import { ModalAddGroupToCourse } from '../../modal/ModalAddGroupToCourse'
+import { useToggle } from '../../../../utils/hooks/general'
+import { getCard } from '../../../../store/group/groupThunk'
+import { showSnackbar } from '../../../../components/UI/snackbar/Snackbar'
+import {
+   addGroupToCourseThunk,
+   deleteGroupToCourseThunk,
+   getByIdInstructor,
+   getCoursesById,
+} from '../../../../store/courses/coursesThunk'
+import { ModalDelete } from '../../../admin/courses/courses-modal/ModalDelete'
+
+export const MyCoursesTable = () => {
+   const params = useParams()
+   const location = useLocation()
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   const { id } = useSelector((state) => state.auth)
+   const { courses, coursesGroup } = useSelector((state) => state.courses)
+   const { cards } = useSelector((state) => state.cards)
+   const [selectedOption, setSelectedOption] = useState('')
+   const { isActive, setActive } = useToggle('addgrouptocourse')
+   const { isActive: openModal, setActive: setOpenModal } = useToggle(
+      'deletegrouptocourse'
+   )
+
+   const navigateGoBackGroups = () => navigate('/instructor/mycoursesins')
+
+   useEffect(() => {
+      dispatch(getByIdInstructor(id))
+      dispatch(getCoursesById(+params.id))
+      dispatch(getCard())
+   }, [])
+
+   const getCards = courses.find((el) => el.id === +params.id)
+   const handleSelectChange = (event) => setSelectedOption(event.target.value)
+   const openAddGroupToCourse = () => setActive(!isActive)
+   const openModalDeleteGroupToCourse = () => setOpenModal(!openModal)
+
+   const createLesson = () => {
+      console.log('createLesson')
+   }
+   const deleteGroupToCourse = () => {
+      dispatch(
+         deleteGroupToCourseThunk({
+            instructorId: id,
+            showSnackbar,
+            groupId: coursesGroup.id,
+            courseId: +params.id,
+            page: 1,
+         })
+      )
+      setOpenModal('')
+   }
+   const addGroupToCourseHandler = () => {
+      dispatch(
+         addGroupToCourseThunk({
+            instructorId: id,
+            groupId: selectedOption,
+            courseId: +params.id,
+            showSnackbar,
+            page: 1,
+         })
+      )
+      setActive('')
+   }
+
+   const isStudentsPage =
+      location.pathname === `/instructor/mycoursesins/${params.id}/students`
+
+   return (
+      <>
+         <div>
+            {coursesGroup.id === null ? (
+               <Header
+                  titlePage="Инструктор"
+                  courses="Courses"
+                  labelOne="Материалы"
+                  toOne="materials"
+                  buttonContent={
+                     isStudentsPage ? 'Добавить группу в курс' : 'Создать урок'
+                  }
+                  onClick={isStudentsPage ? openAddGroupToCourse : createLesson}
+                  icon={isStudentsPage}
+               />
+            ) : (
+               <Header
+                  titlePage="Инструктор"
+                  courses="Courses"
+                  labelOne="Материалы"
+                  toOne="materials"
+                  dangerButton={
+                     isStudentsPage ? 'Удалить группу с курса' : 'Создать урок'
+                  }
+                  onClick={
+                     isStudentsPage
+                        ? openModalDeleteGroupToCourse
+                        : createLesson
+                  }
+               />
+            )}
+         </div>
+         <SpanStyled>
+            <button type="button" onClick={navigateGoBackGroups}>
+               Курсы
+            </button>
+            \ {getCards?.courseName} \
+            {isStudentsPage ? ' Студенты' : ' Материалы'}
+         </SpanStyled>
+         <ModalAddGroupToCourse
+            array={cards}
+            open={isActive}
+            onSubmit={addGroupToCourseHandler}
+            handleClose={() => setActive('')}
+            selectedOption={selectedOption}
+            handleSelectChange={handleSelectChange}
+         />
+         <ModalDelete
+            open={openModal}
+            handleClose={() => setOpenModal('')}
+            paragraph={`группу ${coursesGroup.groupName} с курса ${getCards?.courseName}`}
+            deleteCardHandler={deleteGroupToCourse}
+         />
+         <div>
+            <Outlet />
+         </div>
+      </>
+   )
+}
+
+const SpanStyled = styled('p')`
+   font-size: 0.875rem;
+   margin-bottom: 1.5rem;
+   display: flex;
+   gap: 0.3125rem;
+   align-items: center;
+   button {
+      border: none;
+      font-size: 0.875rem;
+      color: #747d74;
+   }
+`

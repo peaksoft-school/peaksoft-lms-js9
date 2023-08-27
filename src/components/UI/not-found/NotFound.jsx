@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import Search from '../../assets/image/Magnifying-Glass-search.png'
+import Search from '../../../assets/image/Magnifying-Glass-search.png'
 
 export const NotFound = ({ content }) => {
    return (

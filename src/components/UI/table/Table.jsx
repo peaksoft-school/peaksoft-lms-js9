@@ -31,8 +31,14 @@ const Table = ({ data, columns }) => {
                            return column.render(row)
                         }
                         return (
-                           <StyledTableCellForData key={column.id}>
-                              {row[column.id]}
+                           <StyledTableCellForData
+                              key={column.id}
+                              title={String(row[column.id])}
+                           >
+                              {column.id === 'password' &&
+                              row[column.id].length > 10
+                                 ? `${row[column.id].substring(0, 10)}...`
+                                 : row[column.id]}
                            </StyledTableCellForData>
                         )
                      })}
@@ -53,6 +59,8 @@ const StyledContainer = styled(TableContainer)`
    border-radius: 10px;
 `
 const StyledTableRow = styled(TableRow)`
+   /* div { */
+   /* } */
    &:nth-child(even) {
       width: 100px;
       background-color: #1a227e1a;

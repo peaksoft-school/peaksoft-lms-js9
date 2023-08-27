@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { IconButtons } from '../button/IconButtons'
 import {
    AddGroupToCourse,
+   AppointIconWhite,
    DropDownIcon,
    ExelExport,
    ExitIcon,
@@ -24,6 +25,7 @@ export const Header = ({
    labelOne,
    toOne,
    icon,
+   dangerButton,
 }) => {
    const [state, setState] = useState(false)
    const dropdownRef = useRef(null)
@@ -94,7 +96,6 @@ export const Header = ({
                            display: 'flex',
                            background: '#fff',
                            color: '#3772FF',
-                           textTransform: 'capitalize',
                            gap: '8px',
                            height: '40px',
                            fontFamily: 'Open Sans',
@@ -114,7 +115,6 @@ export const Header = ({
                         style={{
                            display: 'flex',
                            gap: '8px',
-                           textTransform: 'capitalize',
                         }}
                         onClick={onClick}
                      >
@@ -130,15 +130,35 @@ export const Header = ({
                         style={{
                            display: 'flex',
                            gap: '8px',
-                           textTransform: 'capitalize',
                         }}
                         onClick={onClick}
                      >
-                        {icon ? <AddGroupToCourse /> : <PlusIcon />}
+                        {buttonContent === 'Назначить учителя' ? (
+                           <AppointIconWhite />
+                        ) : icon ? (
+                           <AddGroupToCourse />
+                        ) : (
+                           <PlusIcon />
+                        )}
                         {buttonContent}
                      </Button>
                   )}
                </div>
+            )}
+            {dangerButton && (
+               <Button
+                  variant={
+                     dangerButton === 'Создать урок' ? 'contained' : 'danger'
+                  }
+                  style={{
+                     display: 'flex',
+                     gap: '8px',
+                  }}
+                  onClick={onClick}
+               >
+                  {dangerButton === 'Создать урок' && <PlusIcon />}
+                  {dangerButton}
+               </Button>
             )}
          </ButtonContainer>
       </Container>
@@ -186,16 +206,16 @@ const Container = styled(Box)`
       margin-top: 27px;
    }
 `
+
 const TabsStyle = styled('div')`
    display: flex;
    justify-content: end;
-   width: 80%;
-   margin-top: 1.8rem;
+   width: 60%;
 `
 const Div = styled('div')`
    display: flex;
    justify-content: end;
-   width: 20%;
+   width: 50%;
 `
 
 const ButtonContainer = styled(Box)(() => ({

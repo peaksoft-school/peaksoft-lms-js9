@@ -6,13 +6,18 @@ import Typography from '@mui/material/Typography'
 import { Link } from 'react-router-dom'
 import MeatBall from '../meatBall/MeatBall'
 
-const menuItems = []
-
-export const Card = ({ el, onClick, image, date, title, description }) => {
+export const Card = ({
+   el,
+   onClick,
+   title,
+   date,
+   image,
+   description,
+   menuItems,
+}) => {
    const getMenuIdAndSetCardId = (menuID) => {
       onClick({
          menuId: menuID,
-         cardId: el.id,
          data: el,
       })
    }
@@ -88,6 +93,9 @@ const ContainerHeader = styled(Typography)(() => ({
       fontStyle: 'normal',
       fontWeight: 600,
       lineHeight: 'normal',
+      width: '10rem',
+      height: '1.5rem',
+      overflow: 'hidden',
    },
    span: {
       color: '#1D293F',
