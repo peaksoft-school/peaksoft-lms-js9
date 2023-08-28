@@ -119,14 +119,13 @@ export const Teachers = () => {
    )
 }
 
-const BoxStyle = styled(Box)(() => ({
-   marginTop: '1.6%',
-}))
-
 const TableContainer = styled(Box)(() => ({
    width: '100%',
 }))
 
 const Container = styled(Box)(() => ({
    display: 'flex',
+}))
+const BoxStyle = styled(Box)(() => ({
+   marginTop: '1.6%',
 }))

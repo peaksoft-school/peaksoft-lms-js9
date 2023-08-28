@@ -64,8 +64,8 @@ const StyledTableRow = styled(TableRow)`
    }
 `
 const StyledTableCell = styled(TableCell)`
-   padding: 10px 8px 10px 20px;
    font-weight: 900;
+   padding: 10px 8px 10px 20px;
    color: black;
 `
 const StyledTableCellForData = styled(TableCell)`

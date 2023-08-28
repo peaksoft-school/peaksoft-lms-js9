@@ -170,6 +170,6 @@ const Error = styled('p')(() => ({
    width: '100%',
    height: '10px',
    margin: '-14px 0 0px 0',
-   color: '#f00',
    textAlign: 'center',
+   color: '#f00',
 }))

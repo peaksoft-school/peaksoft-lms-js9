@@ -50,7 +50,6 @@ export const deleteTeacherId = createAsyncThunk(
       }
    }
 )
-
 export const putTeacher = createAsyncThunk(
    'teachers/putTeachers',
    async ({ id, values, showSnackbar }, { rejectWithValue, dispatch }) => {
