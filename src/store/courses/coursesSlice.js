@@ -1,9 +1,14 @@
-/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import { getCardsCourses } from './coursesThunk'
+import {
+   getByIdInstructor,
+   getCardsCourses,
+   getCoursesById,
+} from './coursesThunk'
 
 const initialState = {
    cards: [],
+   courses: [],
+   coursesGroup: {},
    error: '',
    isLoading: false,
 }
@@ -22,6 +27,20 @@ export const coursesSlice = createSlice({
          })
          .addCase(getCardsCourses.rejected, (state) => {
             state.isLoading = false
+         })
+         // ins get by id
+         .addCase(getByIdInstructor.fulfilled, (state, action) => {
+            state.courses = action.payload
+            state.isLoading = false
+         })
+         .addCase(getByIdInstructor.pending, (state) => {
+            state.isLoading = true
+         })
+         .addCase(getByIdInstructor.rejected, (state) => {
+            state.isLoading = false
+         })
+         .addCase(getCoursesById.fulfilled, (state, action) => {
+            state.coursesGroup = action.payload
          })
    },
 })

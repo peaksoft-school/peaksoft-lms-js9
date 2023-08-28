@@ -3,9 +3,9 @@ import { axiosInstance } from '../../config/axiosInstance'
 
 export const getLesson = createAsyncThunk(
    'api/getLessons',
-   async (_, { rejectWithValue }) => {
+   async (id, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.get(`/api/lessons/1`)
+         const response = await axiosInstance.get(`/api/lessons/${id}`)
          return response.data
       } catch (error) {
          return rejectWithValue(error.message)
@@ -16,14 +16,11 @@ export const deleteCourse = createAsyncThunk(
    'api/deleteLessons',
    async (payload, { rejectWithValue, dispatch }) => {
       try {
-         const response = await axiosInstance.delete(
-            `/api/lessons/${payload.id}`
-         )
-         dispatch(getLesson())
-         payload.showSnackbar('успешно удалено', 'success')
-         return response.data
+         await axiosInstance.delete(`/api/lessons/${payload.id}`)
+         payload.showSnackbar('Урок успешно удален', 'success')
+         return dispatch(getLesson(payload.courseId))
       } catch (error) {
-         payload.showSnackbar('error', 'error')
+         payload.showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
       }
    }
@@ -35,14 +32,13 @@ export const postLessonThunk = createAsyncThunk(
       { rejectWithValue, dispatch }
    ) => {
       try {
-         const response = await axiosInstance.post(`/api/lessons/${courseId}`, {
+         await axiosInstance.post(`/api/lessons/${courseId}`, {
             lessonName,
          })
-         showSnackbar('успешно добалено', 'success')
-         dispatch(getLesson())
-         return response.data
+         showSnackbar('Урок успешно добален', 'success')
+         return dispatch(getLesson(courseId))
       } catch (error) {
-         showSnackbar('error', 'error')
+         showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
       }
    }
@@ -50,16 +46,18 @@ export const postLessonThunk = createAsyncThunk(
 
 export const updateLesson = createAsyncThunk(
    'api/updateLesson',
-   async ({ id, lessonName, showSnackbar }, { rejectWithValue, dispatch }) => {
+   async (
+      { id, lessonName, showSnackbar, courseId },
+      { rejectWithValue, dispatch }
+   ) => {
       try {
-         const response = await axiosInstance.put(`/api/lessons/${id}`, {
+         await axiosInstance.put(`/api/lessons/${id}`, {
             lessonName,
          })
-         showSnackbar('успешно изменено', 'success')
-         dispatch(getLesson())
-         return response.data
+         showSnackbar('Урок успешно редактирован', 'success')
+         return dispatch(getLesson(courseId))
       } catch (error) {
-         showSnackbar('error', 'error')
+         showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
       }
    }

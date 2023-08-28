@@ -21,7 +21,6 @@ import {
    assignInstructor,
    getAllInstructors,
    getInstructors,
-   // getInstructors,
 } from '../../../../store/instructor/instructorThunk'
 import { showSnackbar } from '../../../../components/UI/snackbar/Snackbar'
 import { Isloading } from '../../../../components/UI/snackbar/Isloading'

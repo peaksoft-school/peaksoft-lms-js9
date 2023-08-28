@@ -7,14 +7,14 @@ export const ModalDeleteGroup = ({
    open,
    handleClose,
    deleteCardHandler,
-   getGroupName,
+   paragraph,
 }) => {
    return (
       <div>
          <Modal width="315px" open={open} handleClose={handleClose}>
             <ModalStyled>
                <ParaghQuestionStyled>
-                  Вы уверены, что хотите удалить группу {getGroupName} ?
+                  Вы уверены, что хотите удалить {paragraph} ?
                </ParaghQuestionStyled>
                <div>
                   <ButtonCloseStyled variant="outlined" onClick={handleClose}>
