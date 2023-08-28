@@ -5,6 +5,7 @@ import { getAllInstructors, getInstructors } from './instructorThunk'
 const initialState = {
    instructors: [],
    getAllIns: [],
+   courses: [],
    error: '',
    isLoading: false,
 }

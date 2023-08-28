@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import Table from '../../../../components/UI/table/Table'
-// import { columnsTableCoursTeachers } from '../../../../utils/constants/constants'
 import {
    deleteTeacherCourse,
    getInstructors,
@@ -13,6 +12,7 @@ import { DeleteIconCourses } from '../../../../assets/icons'
 import { ModalDelete } from '../courses-modal/ModalDelete'
 import { useToggle } from '../../../../utils/hooks/general'
 import { IconButtons } from '../../../../components/UI/button/IconButtons'
+import { NotFound } from '../../../../components/UI/not-found/NotFound'
 
 export const TableTeachers = () => {
    const dispatch = useDispatch()
@@ -76,7 +76,7 @@ export const TableTeachers = () => {
          {instructors && instructors.length > 0 ? (
             <Table data={instructors} columns={columnsTableCoursTeachers} />
          ) : (
-            <h1>Пока что нет учителей!</h1>
+            <NotFound content="Нет учителей" />
          )}
          <ModalDelete
             open={isActive}
