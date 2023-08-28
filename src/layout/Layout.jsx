@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled } from '@mui/material'
 import { Outlet } from 'react-router-dom'
-import { Sidebar } from './sidebar/Sidebar'
+import { Sidebar } from './Sidebar'
 import { Header } from '../components/UI/header/Header'
 
 export const Layout = ({ rolesLayout }) => {

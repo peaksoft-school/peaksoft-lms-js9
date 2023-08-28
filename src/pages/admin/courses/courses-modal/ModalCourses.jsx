@@ -6,7 +6,7 @@ import { Button } from '../../../../components/UI/button/Button'
 import { Input } from '../../../../components/UI/input/Input'
 import BasicDatePicker from '../../../../components/UI/datapicker/DataPicker'
 
-export const ModalGroup = ({
+export const ModalCourses = ({
    handleClose,
    openModal,
    onSubmit,
@@ -27,7 +27,7 @@ export const ModalGroup = ({
 
    return (
       <Modal
-         title={variant ? 'Редактировать группу' : 'Создание группы'}
+         title={variant ? 'Редактировать курс' : 'Создать курс'}
          open={openModal}
          handleClose={handleClose}
       >
@@ -46,7 +46,7 @@ export const ModalGroup = ({
                   {...register(variant ? 'editTitle' : 'groupName')}
                   type="text"
                   placeholder={
-                     variant ? 'Редактировать название' : 'Название группы'
+                     variant ? 'Редактировать название' : 'Название курса'
                   }
                   error={!!errors[variant ? 'editTitle' : 'groupName']}
                />
@@ -62,7 +62,7 @@ export const ModalGroup = ({
                {...register(variant ? 'editDescription' : 'description')}
                type="text"
                placeholder={
-                  variant ? 'Редактировать описание' : 'Описание группы'
+                  variant ? 'Редактировать описание' : 'Описание курса'
                }
                multiline
                rows={4}
@@ -86,8 +86,8 @@ const StyledParagUploadImage = styled('p')`
    width: 16em;
    height: 1.5em;
    text-align: center;
-   font-size: 0.875rem;
    font-weight: 400;
+   font-size: 0.875rem;
    line-height: 130%;
 `
 
