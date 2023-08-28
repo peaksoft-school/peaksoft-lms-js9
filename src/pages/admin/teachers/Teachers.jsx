@@ -120,7 +120,7 @@ export const Teachers = () => {
 }
 
 const BoxStyle = styled(Box)(() => ({
-   marginTop: '1.5%',
+   marginTop: '1.6%',
 }))
 
 const TableContainer = styled(Box)(() => ({
