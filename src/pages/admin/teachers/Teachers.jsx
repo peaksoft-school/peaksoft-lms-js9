@@ -123,10 +123,10 @@ const BoxStyle = styled(Box)(() => ({
    marginTop: '1.5%',
 }))
 
-const Container = styled(Box)(() => ({
-   display: 'flex',
-}))
-
 const TableContainer = styled(Box)(() => ({
    width: '100%',
+}))
+
+const Container = styled(Box)(() => ({
+   display: 'flex',
 }))
