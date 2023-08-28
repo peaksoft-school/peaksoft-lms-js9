@@ -31,8 +31,14 @@ const Table = ({ data, columns }) => {
                            return column.render(row)
                         }
                         return (
-                           <StyledTableCellForData key={column.id}>
-                              {row[column.id]}
+                           <StyledTableCellForData
+                              key={column.id}
+                              title={String(row[column.id])}
+                           >
+                              {column.id === 'password' &&
+                              row[column.id].length > 10
+                                 ? `${row[column.id].substring(0, 10)}...`
+                                 : row[column.id]}
                            </StyledTableCellForData>
                         )
                      })}
@@ -44,7 +50,6 @@ const Table = ({ data, columns }) => {
    )
 }
 
-export default Table
 const StyledTable = styled(MuiTable)`
    min-width: 650px;
 `
@@ -66,3 +71,4 @@ const StyledTableCell = styled(TableCell)`
 const StyledTableCellForData = styled(TableCell)`
    padding: 8px 8px 8px 20px;
 `
+export default Table

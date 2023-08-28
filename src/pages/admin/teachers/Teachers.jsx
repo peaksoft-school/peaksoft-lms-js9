@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { Box } from '@mui/material'
 import { Header } from '../../../components/UI/header/Header'
-import { Table } from '../../../components/UI/table/Table'
+import Table from '../../../components/UI/table/Table'
 import { useToggle } from '../../../utils/hooks/general'
 import { ModalTeachers } from './ModalTeacher'
 import {
@@ -83,6 +83,14 @@ export const Teachers = () => {
          label: 'Действия',
       },
    ]
+
+   //    key={column.id}
+   // title={String(row[column.id])}
+   // >
+   // {column.id === 'password' &&
+   // row[column.id].length > 10
+   //    ? ${row[column.id].substring(0, 10)}...
+   //    : row[column.id]}
 
    return (
       <>

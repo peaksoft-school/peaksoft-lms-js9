@@ -1,9 +1,7 @@
 import axios from 'axios'
 import { BASE_URL } from '../utils/constants/constants'
 
-const logoutAction = () => {
-   console.log('402')
-}
+const logoutAction = () => {}
 const headers = {
    'Content-Type': 'application/json',
 }

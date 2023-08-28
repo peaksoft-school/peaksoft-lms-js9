@@ -11,6 +11,6 @@ export const getTeacherLMS = () => {
 export const deleteTeacherLMS = (id) => {
    return axiosInstance.delete(`/api/instructors/${id}`)
 }
-export const editTeacherLMS = (id, values) => {
-   return axiosInstance.put(`/api/instructors/${id}`, values)
+export const editTeacherLMS = (id, data) => {
+   return axiosInstance.put(`/api/instructors/${id}`, data)
 }
