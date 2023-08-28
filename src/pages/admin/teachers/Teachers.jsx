@@ -84,14 +84,6 @@ export const Teachers = () => {
       },
    ]
 
-   //    key={column.id}
-   // title={String(row[column.id])}
-   // >
-   // {column.id === 'password' &&
-   // row[column.id].length > 10
-   //    ? ${row[column.id].substring(0, 10)}...
-   //    : row[column.id]}
-
    return (
       <>
          {isLoading && <Isloading />}
