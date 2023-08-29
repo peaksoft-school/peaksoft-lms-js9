@@ -24,7 +24,7 @@ export const ModalTeachers = ({ open, handleClose, modalData }) => {
    const initialValues = {
       firstName: '',
       lastName: '',
-      phoneNumber: '',
+      phoneNumber: '+996',
       email: '',
       specialization: '',
    }

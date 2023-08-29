@@ -19,7 +19,10 @@ export const addTeacherValidation = Yup.object().shape({
       )
       .required('Фамилия обязательна'),
 
-   phoneNumber: Yup.string().required('Требуется номер телефона'),
+   phoneNumber: Yup.string()
+      .min(5, 'Требуется номер телефона')
+      .max(13, 'Номер слишком длинный')
+      .required('Требуется номер телефона'),
 
    email: Yup.string().email().required('Требуется электронная почта'),
 

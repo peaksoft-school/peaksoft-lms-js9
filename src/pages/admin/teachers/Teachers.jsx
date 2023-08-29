@@ -27,6 +27,8 @@ export const Teachers = () => {
    const [openEditModal, setOpenEditModal] = useState(false)
    const [editModalData, setEditModalData] = useState(null)
 
+   const sortedData = [...data].sort((a, b) => a.id - b.id)
+
    const openModalAddedTeacherHandler = () => {
       setActive(!isActive)
    }
@@ -95,10 +97,10 @@ export const Teachers = () => {
          <BoxStyle>
             {data && data.length > 0 ? (
                <TableContainer>
-                  <Table columns={teachersColumns} data={data} />
+                  <Table columns={teachersColumns} data={sortedData} />
                </TableContainer>
             ) : (
-               <h1>aimona</h1>
+               <h1>Пока что нет учителей</h1>
             )}
          </BoxStyle>
          <ModalTeachers open={isActive} handleClose={closeModalHandler} />
