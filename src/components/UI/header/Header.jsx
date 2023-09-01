@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
-import { Box, Select } from '@mui/material'
+import Select from 'react-select/creatable'
+import { Box } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { IconButtons } from '../button/IconButtons'
 import {
@@ -14,12 +15,20 @@ import { Button } from '../button/Button'
 import { Tabs } from '../tabs/Tabs'
 import { logout } from '../../../store/signIn/signInThunk'
 
+const optionsFormat = [
+   { value: 'ONLINE', label: 'ONLINE' },
+   { value: 'OFFLINE', label: 'OFFLINE' },
+   { value: 'ALL', label: 'ALL' },
+]
 export const Header = ({
    onClick,
    conditionButton,
    titlePage,
    courses,
    buttonContent,
+   excelClick,
+   studyFormat,
+   setStudyFormat,
 }) => {
    const [state, setState] = useState(false)
    const dropdownRef = useRef(null)
@@ -73,18 +82,19 @@ export const Header = ({
          <ButtonContainer>
             {conditionButton === 'Students' ? (
                <StudentsButtonDiv>
-                  <Select
-                     sx={{
-                        width: '15%',
-                        border: '1px solid',
-                        borderColor: '#3772FF',
+                  <StyledFormatSelect
+                     options={optionsFormat}
+                     value={studyFormat}
+                     placeholder="Формат обучения"
+                     onChange={(selectedOption) => {
+                        setStudyFormat(selectedOption)
                      }}
                   />
                   <ImportExelButton>
                      <Button
                         style={{
                            display: 'flex',
-                           background: '#fff',
+                           background: '#eff0f4 ',
                            color: '#3772FF',
                            textTransform: 'capitalize',
                            gap: '8px',
@@ -97,10 +107,10 @@ export const Header = ({
                            letterSpacing: '0.0009rem',
                            border: '1px solid',
                         }}
-                        onClick={onClick}
+                        onClick={excelClick}
                      >
                         <ExelExport />
-                        Импорт Exel
+                        Импорт Excel
                      </Button>
                      <Button
                         style={{
@@ -151,6 +161,43 @@ const StyledBox = styled(Box)(() => ({
       fontsize: '1rem',
    },
 }))
+const StyledFormatSelect = styled(Select)`
+   .css-1jqq78o-placeholder {
+      color: #3772ff;
+      font-weight: bold;
+      font-size: 1rem;
+      background-color: #eff0f4;
+   }
+   .css-1u9des2-indicatorSeparator {
+      width: 0px;
+   }
+   .css-tj5bde-Svg {
+      color: #3772ff;
+      margin-left: 0px;
+   }
+   .css-1fdsijx-ValueContainer {
+      padding-right: 0px;
+   }
+   .css-13cymwt-control {
+      width: 100%;
+      padding: 2px 8px 2px 1px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #3772ff;
+      background-color: #eff0f4;
+      gap: 2px;
+   }
+   .css-t3ipsp-control {
+      border-radius: 10px;
+      background-color: #eff0f4;
+   }
+   .css-1dimb5e-singleValue {
+      color: #3772ff;
+   }
+   .css-qbdosj-Input {
+      color: #3772ff;
+   }
+`
 const StyledDropDown = styled('h3')({
    display: 'flex',
    zIndex: 1,

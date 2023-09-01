@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Editor, EditorState, RichUtils, SelectionState } from 'draft-js'
 import styled from '@emotion/styled'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { AiOutlineUnorderedList, AiOutlineOrderedList } from 'react-icons/ai'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import {
    PiTextItalic,
    PiTextUnderline,
    PiTextB,
    PiTextAaBold,
 } from 'react-icons/pi'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { RiText } from 'react-icons/ri'
 import { IconButton } from '@mui/material'
 

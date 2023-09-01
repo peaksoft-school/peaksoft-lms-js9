@@ -8,8 +8,10 @@ import { store } from './store/index'
 import App from './App'
 import './index.css'
 import { injectStore } from './config/axiosInstance'
+import { injectFileStore } from './config/axiosInctanceExcelFile'
 
 injectStore(store)
+injectFileStore(store)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(

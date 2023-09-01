@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable no-use-before-define */
+import React, { useState } from 'react'
 import {
    styled,
    Table as MuiTable,
@@ -9,9 +10,26 @@ import {
    TableRow,
    Paper,
 } from '@mui/material'
-import { columns, data } from '../../../utils/constants/tableArray'
 
-const Table = () => {
+const Table = ({ columns, data, itemsPerPage }) => {
+   const [currentPage, setCurrentPage] = useState(0)
+   const pageCount = Math.ceil(data.length / itemsPerPage)
+
+   const handlePreviousPage = () => {
+      if (currentPage > 0) {
+         setCurrentPage(currentPage - 1)
+      }
+   }
+
+   const handleNextPage = () => {
+      if (currentPage < pageCount - 1) {
+         setCurrentPage(currentPage + 1)
+      }
+   }
+   const offset = currentPage * itemsPerPage
+
+   const currentData = data.slice(offset, offset + itemsPerPage)
+
    return (
       <StyledContainer component={Paper}>
          <StyledTable>
@@ -25,15 +43,21 @@ const Table = () => {
                </StyledTableRow>
             </TableHead>
             <TableBody>
-               {data.map((row) => (
+               {currentData.map((row) => (
                   <StyledTableRow key={row.id}>
                      {columns?.map((column) => {
                         if (column.render) {
                            return column.render(row)
                         }
                         return (
-                           <StyledTableCellForData key={column.id}>
-                              {row[column.id]}
+                           <StyledTableCellForData
+                              key={column.id}
+                              title={String(row[column.id])}
+                           >
+                              {column.id === 'password' &&
+                              row[column.id].length > 10
+                                 ? `${row[column.id].substring(0, 10)}...`
+                                 : row[column.id]}
                            </StyledTableCellForData>
                         )
                      })}
@@ -41,6 +65,22 @@ const Table = () => {
                ))}
             </TableBody>
          </StyledTable>
+         <PaginationContainer>
+            <button
+               type="submit"
+               onClick={handlePreviousPage}
+               disabled={currentPage === 0}
+            >
+               Предыдущая
+            </button>
+            <button
+               type="submit"
+               onClick={handleNextPage}
+               disabled={currentPage === pageCount - 1}
+            >
+               Следующая
+            </button>
+         </PaginationContainer>
       </StyledContainer>
    )
 }
@@ -51,9 +91,11 @@ const StyledTable = styled(MuiTable)`
 `
 const StyledContainer = styled(TableContainer)`
    width: 100%;
+   margin-top: 10px;
 `
 const StyledTableRow = styled(TableRow)`
-   &:nth-child(even) {
+   height: 10px;
+   &:nth-of-type(even) {
       background-color: #eceaea9f;
    }
 `
@@ -63,5 +105,15 @@ const StyledTableCell = styled(TableCell)`
    color: black;
 `
 const StyledTableCellForData = styled(TableCell)`
-   padding: 8px 8px 8px 20px;
+   padding: 0px 0px 0px 20px;
+   position: relative;
+   max-width: 200px;
+   white-space: nowrap;
+   /* text-overflow: ellipsis; */
+`
+const PaginationContainer = styled('div')`
+   display: flex;
+   justify-content: center;
+   margin-top: 20px;
+   gap: 10px;
 `
