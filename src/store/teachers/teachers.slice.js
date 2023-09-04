@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getTeacher } from './teachers.thunk'
+import { getTeachers } from './teachers.thunk'
 
 const initialState = {
    data: [],
@@ -13,20 +13,20 @@ export const teachersSlice = createSlice({
    reducers: {},
    extraReducers: (builder) => {
       builder
-         .addCase(getTeacher.pending, (state) => {
+         .addCase(getTeachers.pending, (state) => {
             return {
                ...state,
                isLoading: true,
             }
          })
-         .addCase(getTeacher.fulfilled, (state, action) => {
+         .addCase(getTeachers.fulfilled, (state, action) => {
             return {
                ...state,
                data: action.payload,
                isLoading: false,
             }
          })
-         .addCase(getTeacher.rejected, (state, action) => {
+         .addCase(getTeachers.rejected, (state, action) => {
             return {
                ...state,
                isLoading: false,

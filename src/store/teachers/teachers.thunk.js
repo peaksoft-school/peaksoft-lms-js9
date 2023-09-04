@@ -6,7 +6,7 @@ import {
    postTeacherLMS,
 } from '../../api/teachersResponse/teachers'
 
-export const getTeacher = createAsyncThunk(
+export const getTeachers = createAsyncThunk(
    'teacher/getTeacher',
    async (_, { rejectWithValue }) => {
       try {
@@ -24,7 +24,7 @@ export const postTeacher = createAsyncThunk(
       try {
          const { data } = await postTeacherLMS(values)
          showSnackbar('Данные успешно отправлены', 'success')
-         dispatch(getTeacher())
+         dispatch(getTeachers())
          return data
       } catch (error) {
          if (error.message === 'Request failed with status code 400') {
@@ -41,7 +41,7 @@ export const deleteTeacherId = createAsyncThunk(
    async ({ idInstructor, showSnackbar }, { rejectWithValue, dispatch }) => {
       try {
          const { data } = await deleteTeacherLMS(idInstructor)
-         dispatch(getTeacher())
+         dispatch(getTeachers())
          showSnackbar('Удалено', 'success')
          return data
       } catch (error) {
@@ -55,7 +55,7 @@ export const putTeacher = createAsyncThunk(
    async ({ id, values, showSnackbar }, { rejectWithValue, dispatch }) => {
       try {
          const { data } = await editTeacherLMS(id, values)
-         dispatch(getTeacher())
+         dispatch(getTeachers())
          showSnackbar('Данные учителя успешно обновлены', 'success')
          return data
       } catch (error) {

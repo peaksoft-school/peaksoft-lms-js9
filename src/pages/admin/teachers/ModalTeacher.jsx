@@ -70,71 +70,54 @@ export const ModalTeachers = ({ open, handleClose, modalData }) => {
       resetForm(initialValues)
    }
 
+   const fieldsForTeachers = [
+      {
+         key: 'firstName',
+         placeholder: 'Имя',
+         type: 'text',
+      },
+      {
+         key: 'lastName',
+         placeholder: 'Фамилия',
+         type: 'text',
+      },
+      {
+         key: 'phoneNumber',
+         placeholder: '+996 ___ __ __ __',
+         type: 'text',
+      },
+      {
+         key: 'email',
+         placeholder: 'Email',
+         type: 'text',
+      },
+      {
+         key: 'specialization',
+         placeholder: 'Специализация',
+         type: 'text',
+      },
+   ]
    return (
       <Modal
          title={modalData ? 'Изменение учителя' : 'Добавление учителя'}
          open={open}
          handleClose={handleCloseAndReset}
       >
-         <form
-            style={{
-               display: 'flex',
-               flexDirection: 'column',
-               alignItems: 'center',
-            }}
-            onSubmit={handleSubmit}
-         >
-            <InputStyle
-               placeholder="Имя"
-               type="text"
-               key="firstName"
-               name="firstName"
-               value={values.firstName}
-               onChange={handleChange}
-               error={touched.firstName && errors.firstName}
-            />
-            <Error>{touched.firstName && errors.firstName}</Error>
-            <InputStyle
-               placeholder="Фамилия"
-               type="text"
-               key="lastName"
-               name="lastName"
-               value={values.lastName}
-               onChange={handleChange}
-               error={Boolean(touched.lastName && errors.lastName)}
-            />
-            <Error>{touched.lastName && errors.lastName}</Error>
-            <InputStyle
-               placeholder="+996 ___ __ __ __"
-               type="tel"
-               key="phoneNumber"
-               name="phoneNumber"
-               value={values.phoneNumber}
-               onChange={handleChange}
-               error={Boolean(touched.phoneNumber && errors.phoneNumber)}
-            />
-            <Error>{touched.phoneNumber && errors.phoneNumber}</Error>
-            <InputStyle
-               placeholder="Email"
-               type="email"
-               key="email"
-               name="email"
-               value={values.email}
-               onChange={handleChange}
-               error={Boolean(touched.email && errors.email)}
-            />
-            <Error>{touched.email && errors.email}</Error>
-            <InputStyle
-               placeholder="Специализация"
-               type="text"
-               key="specialization"
-               name="specialization"
-               value={values.specialization}
-               onChange={handleChange}
-               error={Boolean(touched.specialization && errors.specialization)}
-               placeholderColor="red"
-            />
-            <Error>{touched.specialization && errors.specialization}</Error>
+         <FormStyle onSubmit={handleSubmit}>
+            {fieldsForTeachers.map((field) => (
+               <React.Fragment key={field.key}>
+                  <InputStyle
+                     placeholder={field.placeholder}
+                     type={field.type}
+                     name={field.key}
+                     value={values[field.key]}
+                     onChange={handleChange}
+                     error={touched[field.key] && errors[field.key]}
+                  />
+                  <Error>{touched[field.key] && errors[field.key]}</Error>
+               </React.Fragment>
+            ))}
+
             <BoxStyle>
                <ButtonStyle variant="outlined" onClick={handleCloseAndReset}>
                   Отмена
@@ -143,13 +126,13 @@ export const ModalTeachers = ({ open, handleClose, modalData }) => {
                   Добавить
                </Button>
             </BoxStyle>
-         </form>
+         </FormStyle>
       </Modal>
    )
 }
 
 const InputStyle = styled(Input)(() => ({
-   width: '50vh',
+   width: '62vh',
    padding: '3%',
    text: 'red',
    borderColor: 'red',
@@ -172,4 +155,9 @@ const Error = styled('p')(() => ({
    margin: '-14px 0 0px 0',
    textAlign: 'center',
    color: '#f00',
+}))
+
+const FormStyle = styled('form')(() => ({
+   display: 'flex',
+   flexDirection: 'column',
 }))

@@ -8,7 +8,7 @@ import { useToggle } from '../../../utils/hooks/general'
 import { ModalTeachers } from './ModalTeacher'
 import {
    deleteTeacherId,
-   getTeacher,
+   getTeachers,
 } from '../../../store/teachers/teachers.thunk'
 import { TrashIcon, EditTeachers } from '../../../assets/icons'
 import { IconButtons } from '../../../components/UI/button/IconButtons'
@@ -27,7 +27,7 @@ export const Teachers = () => {
    const [openEditModal, setOpenEditModal] = useState(false)
    const [editModalData, setEditModalData] = useState(null)
 
-   const sortedData = [...data].sort((a, b) => a.id - b.id)
+   // const sortedData = [...data].sort((a, b) => a.id - b.id)
 
    const openModalAddedTeacherHandler = () => {
       setActive(!isActive)
@@ -55,7 +55,7 @@ export const Teachers = () => {
    }
 
    useEffect(() => {
-      dispatch(getTeacher())
+      dispatch(getTeachers())
    }, [dispatch])
    const onClose = () => {
       setActiveDeleteModal('')
@@ -97,14 +97,14 @@ export const Teachers = () => {
          <BoxStyle>
             {data && data.length > 0 ? (
                <TableContainer>
-                  <Table columns={teachersColumns} data={sortedData} />
+                  <Table columns={teachersColumns} data={data} />
                </TableContainer>
             ) : (
                <h1>Пока что нет учителей</h1>
             )}
          </BoxStyle>
          <ModalTeachers open={isActive} handleClose={closeModalHandler} />
-         <ModalDelete
+         <ModalDeleteStyled
             open={isActiceDeleteModal}
             handleClose={onClose}
             deleteCardHandler={deleteTeacherrrr}
@@ -130,4 +130,8 @@ const Container = styled(Box)(() => ({
 }))
 const BoxStyle = styled(Box)(() => ({
    marginTop: '1.6%',
+}))
+
+const ModalDeleteStyled = styled(ModalDelete)(() => ({
+   width: '22rem',
 }))
