@@ -27,8 +27,6 @@ export const Teachers = () => {
    const [openEditModal, setOpenEditModal] = useState(false)
    const [editModalData, setEditModalData] = useState(null)
 
-   // const sortedData = [...data].sort((a, b) => a.id - b.id)
-
    const openModalAddedTeacherHandler = () => {
       setActive(!isActive)
    }

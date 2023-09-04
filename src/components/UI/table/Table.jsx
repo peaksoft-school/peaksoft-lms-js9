@@ -57,8 +57,6 @@ const StyledContainer = styled(TableContainer)`
    width: 100%;
 `
 const StyledTableRow = styled(TableRow)`
-   /* div { */
-   /* } */
    &:nth-child(even) {
       background-color: #eceaea9f;
    }
