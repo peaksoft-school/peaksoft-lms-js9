@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { FormControl, MenuItem, Select, styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { menuItem } from '../../../utils/constants/MaterialsArray'
+import {
+   menuItem,
+   reusableRoutesLesson,
+} from '../../../utils/constants/constants'
 import { Button } from '../button/Button'
-import { reusableRoutesLesson } from '../../../utils/constants/routes'
+
 import {
    LessonVideoIcon,
    TaskIcon,
@@ -14,55 +17,51 @@ import {
    EditGreenIcon,
    LinkIcon,
 } from '../../../assets/icons'
+import { IconButtons } from '../button/IconButtons'
 
-export const Material = ({
-   clickEditHandler,
-   clickDeleteHandler,
-   clickDeleteAll,
-   el,
-}) => {
+export const Material = ({ clickEditHandler, openModalDeleteHandler, el }) => {
    const navLink = [
       {
          route: reusableRoutesLesson.videolesson,
          icon: <LessonVideoIcon />,
-         title: el.lessonVideo,
+         title: 'Видеоурок',
       },
       {
          route: reusableRoutesLesson.presentation,
          icon: <PresentationIcon />,
-         title: el.presentation,
+         title: 'Презентация',
       },
       {
          route: reusableRoutesLesson.task,
          icon: <TaskIcon />,
-         title: el.task,
+         title: 'Задания',
       },
       {
          route: reusableRoutesLesson.link,
          icon: <LinkIcon />,
-         title: el.link,
+         title: 'Ссылка',
       },
       {
          route: reusableRoutesLesson.test,
          icon: <TestIcon />,
-         title: el.test,
+         title: 'Тест',
       },
    ]
    const [selectedValues, setSelectedValues] = useState({})
-
    const handleChange = (id, value) => {
       setSelectedValues((prevState) => ({
          ...prevState,
          [id]: value,
       }))
    }
-
    return (
       <Container key={el.id}>
          <div className="containerHeader">
             <div>
-               <LogoLessonIcon />
-               <h1>{el.lesson}</h1>
+               <IconButtons onClick={() => clickEditHandler(el)}>
+                  <LogoLessonIcon />
+               </IconButtons>
+               <h1>{el.lessonName}</h1>
             </div>
             <div className="containerDeleteIconButton">
                <FormControl size="small">
@@ -99,7 +98,18 @@ export const Material = ({
                      ))}
                   </Select>
                </FormControl>
-               <DeleteRedIcon onClick={() => clickDeleteAll(el.id)} />
+               <div key={el.id}>
+                  <IconButtons
+                     onClick={() =>
+                        openModalDeleteHandler({
+                           name: el.lessonName,
+                           id: el.lessonId,
+                        })
+                     }
+                  >
+                     <DeleteRedIcon />
+                  </IconButtons>
+               </div>
             </div>
          </div>
          <div className="containerItem">
@@ -114,16 +124,13 @@ export const Material = ({
                      <h2>{item.title}</h2>
                   </div>
                   <div className="buttons">
-                     <StyledButton
-                        className="button"
-                        onClick={() => clickEditHandler(el.id)}
-                     >
+                     <StyledButton className="button">
                         <EditGreenIcon />
                         Редактировать
                      </StyledButton>
                      <StyledButton
                         className="button"
-                        onClick={() => clickDeleteHandler(el.id)}
+                        onClick={() => openModalDeleteHandler(el)}
                      >
                         <DeleteRedIcon />
                         Удалить
@@ -137,7 +144,7 @@ export const Material = ({
 }
 
 const Container = styled('div')(({ theme }) => ({
-   backgroundColor: theme.palette.primary.light,
+   backgroundColor: '#ffffff',
    margin: '1.25rem',
    width: '29vw',
    height: '33.7vh',
@@ -152,8 +159,8 @@ const Container = styled('div')(({ theme }) => ({
       padding: '1.25rem',
       '& div': {
          display: 'flex',
-         alignItems: 'center',
          gap: '1.06rem',
+         alignItems: 'center',
          '& h1': {
             fontSize: '1.125rem',
             fontWeight: '600',
@@ -164,26 +171,25 @@ const Container = styled('div')(({ theme }) => ({
          alignItems: 'center',
          gap: '1.88rem',
 
-         '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
-            {
-               borderColor: '#EBEBEB',
-            },
-
-         '.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
-            {
-               border: '1px solid #EBEBEB',
-               width: '4vw',
-            },
+         // '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
+         // {
+         //    borderColor: '#EBEBEB',
+         // },
+         // '.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
+         // {
+         //    border: '1px solid #EBEBEB',
+         //    width: '4vw',
+         // },
       },
    },
    '.containerItem': {
       display: 'flex',
       flexDirection: 'column',
       '& a': {
-         padding: '0 1.25rem',
          display: 'flex',
-         alignItems: 'center',
+         padding: '0 1.25rem',
          justifyContent: 'space-between',
+         alignItems: 'center',
          height: '5vh',
          '&:hover': {
             backgroundColor: 'rgba(26, 35, 126, 0.07)',

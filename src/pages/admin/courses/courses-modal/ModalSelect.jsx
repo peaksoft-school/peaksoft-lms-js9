@@ -105,14 +105,14 @@ const ContainerButton = styled('div')`
    display: flex;
    justify-content: end;
    gap: 0.6rem;
-   margin-top: 0.2rem;
    margin-right: 0.5rem;
+   margin-top: 0.2rem;
 `
 const ButtonCloseStyled = styled(Button)`
    border-radius: 0.6rem;
+   width: 5.4vw;
    border: 0.0625rem solid var(--button, #3772ff);
    text-transform: capitalize;
-   width: 5.4vw;
    height: 4.5vh;
 `
 

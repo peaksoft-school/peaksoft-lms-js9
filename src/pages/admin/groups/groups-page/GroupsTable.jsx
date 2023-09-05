@@ -8,6 +8,7 @@ import { columnsTableGroup } from '../../../../utils/constants/constants'
 import { getGroupUsers } from '../../../../store/students/studentsThunk'
 import { Isloading } from '../../../../components/UI/snackbar/Isloading'
 import { getCard } from '../../../../store/group/groupThunk'
+import { NotFound } from '../../../../components/UI/not-found/NotFound'
 
 export const GroupsTable = () => {
    const params = useParams()
@@ -40,7 +41,7 @@ export const GroupsTable = () => {
          {students && students.length > 0 ? (
             <Table data={students} columns={columnsTableGroup} />
          ) : (
-            <h1>Пока что нет студентов!</h1>
+            <NotFound content="Нет студентов" />
          )}
       </>
    )
