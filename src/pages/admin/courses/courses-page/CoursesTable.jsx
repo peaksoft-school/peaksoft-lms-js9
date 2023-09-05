@@ -45,7 +45,6 @@ export const CoursesTable = () => {
       )
       setActive('')
    }
-   // console.log(getGroupName)
    return (
       <>
          <div>
@@ -53,6 +52,8 @@ export const CoursesTable = () => {
                titlePage="Администратор"
                courses="Courses"
                conditionButton
+               labelOne="Учителя"
+               toOne="teachers"
                buttonContent={
                   location.pathname === `/admin/courses/${params.id}/teachers`
                      ? 'Назначить учителя'
@@ -89,14 +90,13 @@ export const CoursesTable = () => {
 
 const SpanStyled = styled('p')`
    font-size: 0.875rem;
-   margin-top: 2.75rem;
    margin-bottom: 1.5rem;
    display: flex;
    gap: 0.3125rem;
    align-items: center;
    button {
-      border: none;
       font-size: 0.875rem;
+      border: none;
       color: #747d74;
    }
 `

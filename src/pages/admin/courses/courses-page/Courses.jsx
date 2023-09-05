@@ -21,7 +21,6 @@ import {
    assignInstructor,
    getAllInstructors,
    getInstructors,
-   // getInstructors,
 } from '../../../../store/instructor/instructorThunk'
 import { showSnackbar } from '../../../../components/UI/snackbar/Snackbar'
 import { Isloading } from '../../../../components/UI/snackbar/Isloading'
@@ -259,7 +258,7 @@ export const Courses = () => {
    )
 }
 const ContainerItem = styled('div')`
+   gap: 20px;
    display: flex;
    flex-wrap: wrap;
-   gap: 20px;
 `

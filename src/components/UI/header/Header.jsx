@@ -4,6 +4,7 @@ import { Box, Select } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { IconButtons } from '../button/IconButtons'
 import {
+   AddGroupToCourse,
    AppointIconWhite,
    DropDownIcon,
    ExelExport,
@@ -21,6 +22,10 @@ export const Header = ({
    titlePage,
    courses,
    buttonContent,
+   labelOne,
+   toOne,
+   icon,
+   dangerButton,
 }) => {
    const [state, setState] = useState(false)
    const dropdownRef = useRef(null)
@@ -52,9 +57,9 @@ export const Header = ({
             <TabsStyle>
                {courses === 'Courses' && (
                   <Tabs
-                     labelOne="Учителя"
+                     labelOne={labelOne}
                      labelTwo="Студенты"
-                     toOne="teachers"
+                     toOne={toOne}
                      toTwo="students"
                   />
                )}
@@ -91,7 +96,6 @@ export const Header = ({
                            display: 'flex',
                            background: '#fff',
                            color: '#3772FF',
-                           textTransform: 'capitalize',
                            gap: '8px',
                            height: '40px',
                            fontFamily: 'Open Sans',
@@ -111,7 +115,6 @@ export const Header = ({
                         style={{
                            display: 'flex',
                            gap: '8px',
-                           textTransform: 'capitalize',
                         }}
                         onClick={onClick}
                      >
@@ -127,20 +130,35 @@ export const Header = ({
                         style={{
                            display: 'flex',
                            gap: '8px',
-                           textTransform: 'capitalize',
                         }}
                         onClick={onClick}
                      >
                         {buttonContent === 'Назначить учителя' ? (
                            <AppointIconWhite />
+                        ) : icon ? (
+                           <AddGroupToCourse />
                         ) : (
                            <PlusIcon />
                         )}
-
                         {buttonContent}
                      </Button>
                   )}
                </div>
+            )}
+            {dangerButton && (
+               <Button
+                  variant={
+                     dangerButton === 'Создать урок' ? 'contained' : 'danger'
+                  }
+                  style={{
+                     display: 'flex',
+                     gap: '8px',
+                  }}
+                  onClick={onClick}
+               >
+                  {dangerButton === 'Создать урок' && <PlusIcon />}
+                  {dangerButton}
+               </Button>
             )}
          </ButtonContainer>
       </Container>

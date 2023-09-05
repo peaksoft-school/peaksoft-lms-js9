@@ -184,7 +184,7 @@ export const Groups = () => {
                open={isActiveModal1}
                handleClose={closeModalDeleteHandler}
                deleteCardHandler={deleteHandler}
-               getGroupName={getGroupName}
+               paragraph={`группу ${getGroupName}`}
             />
             <ModalGroup
                variant
