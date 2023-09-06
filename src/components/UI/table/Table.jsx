@@ -50,7 +50,6 @@ const Table = ({ data, columns }) => {
    )
 }
 
-export default Table
 const StyledTable = styled(MuiTable)`
    min-width: 650px;
 `
@@ -59,19 +58,18 @@ const StyledContainer = styled(TableContainer)`
    border-radius: 10px;
 `
 const StyledTableRow = styled(TableRow)`
-   /* div { */
-   /* } */
    &:nth-child(even) {
       width: 100px;
       background-color: #1a227e1a;
    }
 `
 const StyledTableCell = styled(TableCell)`
-   padding: 10px 8px 10px 20px;
    font-weight: 900;
+   padding: 10px 8px 10px 20px;
    color: black;
 `
 const StyledTableCellForData = styled(TableCell)`
    padding: 8px 8px 8px 20px;
    border: none;
 `
+export default Table
