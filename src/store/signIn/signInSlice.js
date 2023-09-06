@@ -14,6 +14,7 @@ const getInitialState = () => {
          isAuthorization: true,
          token: userData.token,
          email: userData.email,
+         id: userData.id,
          role: userData.role,
          isLoading: false,
          error: null,
@@ -24,6 +25,7 @@ const getInitialState = () => {
       isLoading: false,
       token: '',
       email: '',
+      id: '',
       role: USER_ROLE.GUEST,
       error: null,
    }
@@ -38,6 +40,7 @@ export const signInSlice = createSlice({
          state.isLoading = false
          state.token = ''
          state.email = ''
+         state.id = ''
          state.role = USER_ROLE.GUEST
          state.error = null
       },
@@ -49,6 +52,7 @@ export const signInSlice = createSlice({
             state.email = actions.payload.email
             state.token = actions.payload.token
             state.role = actions.payload.role
+            state.id = actions.payload.id
             state.isLoading = false
             state.error = null
          })

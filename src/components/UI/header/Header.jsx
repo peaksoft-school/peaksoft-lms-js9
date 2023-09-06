@@ -5,6 +5,8 @@ import { Box } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { IconButtons } from '../button/IconButtons'
 import {
+   AddGroupToCourse,
+   AppointIconWhite,
    DropDownIcon,
    ExelExport,
    ExitIcon,
@@ -29,6 +31,10 @@ export const Header = ({
    excelClick,
    studyFormat,
    setStudyFormat,
+   labelOne,
+   toOne,
+   icon,
+   dangerButton,
 }) => {
    const [state, setState] = useState(false)
    const dropdownRef = useRef(null)
@@ -57,27 +63,31 @@ export const Header = ({
    return (
       <Container>
          <StyledBox>
-            {courses === 'Courses' && (
-               <TabsStyle
-                  labelOne="Учителя"
-                  labelTwo="Студенты"
-                  toOne="/"
-                  toTwo="s"
-               />
-            )}
-            <BoxLogOut ref={dropdownRef} onClick={handleChange}>
-               <ProfileIcon />
-               <p>{titlePage}</p>
-               <DropDownIcon />
-               <IconButtons>
-                  {state && (
-                     <StyledDropDown onClick={logoutHandler}>
-                        <ExitIcon style={{ marginLeft: '1.20rem' }} />
-                        <span>Выйти</span>
-                     </StyledDropDown>
-                  )}
-               </IconButtons>
-            </BoxLogOut>
+            <TabsStyle>
+               {courses === 'Courses' && (
+                  <Tabs
+                     labelOne={labelOne}
+                     labelTwo="Студенты"
+                     toOne={toOne}
+                     toTwo="students"
+                  />
+               )}
+            </TabsStyle>
+            <Div>
+               <BoxLogOut ref={dropdownRef} onClick={handleChange}>
+                  <ProfileIcon />
+                  <p>{titlePage}</p>
+                  <DropDownIcon />
+                  <IconButtons>
+                     {state && (
+                        <StyledDropDown onClick={logoutHandler}>
+                           <ExitIcon style={{ marginLeft: '1.20rem' }} />
+                           <span>Выйти</span>
+                        </StyledDropDown>
+                     )}
+                  </IconButtons>
+               </BoxLogOut>
+            </Div>
          </StyledBox>
          <ButtonContainer>
             {conditionButton === 'Students' ? (
@@ -96,7 +106,6 @@ export const Header = ({
                            display: 'flex',
                            background: '#eff0f4 ',
                            color: '#3772FF',
-                           textTransform: 'capitalize',
                            gap: '8px',
                            height: '40px',
                            fontFamily: 'Open Sans',
@@ -116,7 +125,6 @@ export const Header = ({
                         style={{
                            display: 'flex',
                            gap: '8px',
-                           textTransform: 'capitalize',
                         }}
                         onClick={onClick}
                      >
@@ -132,15 +140,35 @@ export const Header = ({
                         style={{
                            display: 'flex',
                            gap: '8px',
-                           textTransform: 'capitalize',
                         }}
                         onClick={onClick}
                      >
-                        <PlusIcon />
+                        {buttonContent === 'Назначить учителя' ? (
+                           <AppointIconWhite />
+                        ) : icon ? (
+                           <AddGroupToCourse />
+                        ) : (
+                           <PlusIcon />
+                        )}
                         {buttonContent}
                      </Button>
                   )}
                </div>
+            )}
+            {dangerButton && (
+               <Button
+                  variant={
+                     dangerButton === 'Создать урок' ? 'contained' : 'danger'
+                  }
+                  style={{
+                     display: 'flex',
+                     gap: '8px',
+                  }}
+                  onClick={onClick}
+               >
+                  {dangerButton === 'Создать урок' && <PlusIcon />}
+                  {dangerButton}
+               </Button>
             )}
          </ButtonContainer>
       </Container>
@@ -226,11 +254,17 @@ const Container = styled(Box)`
    }
 `
 
-const TabsStyle = styled(Tabs)`
-   color: red;
-   margin-top: 27px;
-   margin: 0 auto;
+const TabsStyle = styled('div')`
+   display: flex;
+   justify-content: end;
+   width: 60%;
 `
+const Div = styled('div')`
+   display: flex;
+   justify-content: end;
+   width: 50%;
+`
+
 const ButtonContainer = styled(Box)(() => ({
    width: '100%',
    display: 'flex',

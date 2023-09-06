@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, { useState } from 'react'
+import React from 'react'
 import {
    styled,
    Table as MuiTable,
@@ -11,31 +11,13 @@ import {
    Paper,
 } from '@mui/material'
 
-const Table = ({ columns, data, itemsPerPage }) => {
-   const [currentPage, setCurrentPage] = useState(0)
-   const pageCount = Math.ceil(data.length / itemsPerPage)
-
-   const handlePreviousPage = () => {
-      if (currentPage > 0) {
-         setCurrentPage(currentPage - 1)
-      }
-   }
-
-   const handleNextPage = () => {
-      if (currentPage < pageCount - 1) {
-         setCurrentPage(currentPage + 1)
-      }
-   }
-   const offset = currentPage * itemsPerPage
-
-   const currentData = data.slice(offset, offset + itemsPerPage)
-
+const Table = ({ data, columns }) => {
    return (
       <StyledContainer component={Paper}>
          <StyledTable>
             <TableHead>
                <StyledTableRow>
-                  {columns.map((column) => (
+                  {columns?.map((column) => (
                      <StyledTableCell key={column.id}>
                         {column.label}
                      </StyledTableCell>
@@ -43,7 +25,7 @@ const Table = ({ columns, data, itemsPerPage }) => {
                </StyledTableRow>
             </TableHead>
             <TableBody>
-               {currentData.map((row) => (
+               {data?.map((row) => (
                   <StyledTableRow key={row.id}>
                      {columns?.map((column) => {
                         if (column.render) {
@@ -65,22 +47,6 @@ const Table = ({ columns, data, itemsPerPage }) => {
                ))}
             </TableBody>
          </StyledTable>
-         <PaginationContainer>
-            <button
-               type="submit"
-               onClick={handlePreviousPage}
-               disabled={currentPage === 0}
-            >
-               Предыдущая
-            </button>
-            <button
-               type="submit"
-               onClick={handleNextPage}
-               disabled={currentPage === pageCount - 1}
-            >
-               Следующая
-            </button>
-         </PaginationContainer>
       </StyledContainer>
    )
 }
@@ -91,12 +57,14 @@ const StyledTable = styled(MuiTable)`
 `
 const StyledContainer = styled(TableContainer)`
    width: 100%;
-   margin-top: 10px;
+   border-radius: 10px;
 `
 const StyledTableRow = styled(TableRow)`
-   height: 10px;
+   /* div { */
+   /* } */
    &:nth-of-type(even) {
-      background-color: #eceaea9f;
+      width: 100px;
+      background-color: #1a227e1a;
    }
 `
 const StyledTableCell = styled(TableCell)`
@@ -105,15 +73,6 @@ const StyledTableCell = styled(TableCell)`
    color: black;
 `
 const StyledTableCellForData = styled(TableCell)`
-   padding: 0px 0px 0px 20px;
-   position: relative;
-   max-width: 200px;
-   white-space: nowrap;
-   /* text-overflow: ellipsis; */
-`
-const PaginationContainer = styled('div')`
-   display: flex;
-   justify-content: center;
-   margin-top: 20px;
-   gap: 10px;
+   padding: 8px 8px 8px 20px;
+   border: none;
 `

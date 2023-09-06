@@ -1,6 +1,5 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import { useForm, Controller } from 'react-hook-form'
 import { Modal } from '../../../../components/UI/modal/Modal'
 import { UploadImage } from '../../../../components/UI/modal/UploadImage'
 import { Button } from '../../../../components/UI/button/Button'
@@ -12,21 +11,16 @@ export const ModalGroup = ({
    openModal,
    onSubmit,
    onDateChange,
-   description,
-   title,
-   value,
    onImageUpload,
-   editTitle,
-   editDescription,
    variant,
+   errors,
+   setValue,
+   handleSubmit,
+   register,
+   imageEditValue,
+   dateEditModal,
+   isFormEmpty,
 }) => {
-   const {
-      handleSubmit,
-      control,
-      setValue,
-      formState: { errors },
-   } = useForm()
-
    const onSubmitForm = (data) => {
       onSubmit(data)
    }
@@ -39,59 +33,46 @@ export const ModalGroup = ({
       >
          <form onSubmit={handleSubmit(onSubmitForm)}>
             <ContainerUploadImageStyled>
-               <UploadImage onImageUpload={onImageUpload} />
+               <UploadImage
+                  imageEditValue={imageEditValue || imageEditValue}
+                  onImageUpload={onImageUpload}
+               />
                <StyledParagUploadImage>
                   Нажмите на иконку чтобы загрузить или перетащите фото
                </StyledParagUploadImage>
             </ContainerUploadImageStyled>
             <ContainerInputTitleDateStyled>
-               <Controller
-                  name={variant ? 'editTitle' : 'title'}
-                  control={control}
-                  defaultValue={variant ? editTitle : title}
-                  render={({ field }) => (
-                     <InputTitleStyled
-                        {...field}
-                        type="text"
-                        placeholder="Название курса"
-                        error={!!errors[variant ? 'editTitle' : 'title']}
-                     />
-                  )}
-                  rules={{ required: 'Поле обязательно для заполнения' }}
+               <InputTitleStyled
+                  {...register(variant ? 'editTitle' : 'groupName')}
+                  type="text"
+                  placeholder={
+                     variant ? 'Редактировать название' : 'Название группы'
+                  }
+                  error={!!errors[variant ? 'editTitle' : 'groupName']}
                />
                <BasicDatePicker
                   onDateChange={(date) => {
-                     setValue('value', date)
+                     setValue('dateEditModal', date)
                      onDateChange(date)
                   }}
-                  dateValue={value}
+                  value={dateEditModal}
                />
             </ContainerInputTitleDateStyled>
-            <Controller
-               name={variant ? 'editDescription' : 'description'}
-               control={control}
-               defaultValue={variant ? editDescription : description}
-               render={({ field }) => (
-                  <div>
-                     <InputDescriptionStyled
-                        {...field}
-                        type="text"
-                        placeholder="Описание курса"
-                        multiline
-                        rows={4}
-                        error={
-                           !!errors[variant ? 'editDescription' : 'description']
-                        }
-                     />
-                  </div>
-               )}
-               rules={{ required: 'Поле обязательно для заполнения' }}
+            <InputDescriptionStyled
+               {...register(variant ? 'editDescription' : 'description')}
+               type="text"
+               placeholder={
+                  variant ? 'Редактировать описание' : 'Описание группы'
+               }
+               multiline
+               rows={4}
+               error={!!errors[variant ? 'editDescription' : 'description']}
             />
             <ContainerButtonsStyled>
                <ButtonCloseStyled variant="outlined" onClick={handleClose}>
                   Отмена
                </ButtonCloseStyled>
-               <ButtonAddedStyled type="submit">
+               <ButtonAddedStyled type="submit" disabled={isFormEmpty}>
                   {variant ? 'Сохранить' : 'Добавить'}
                </ButtonAddedStyled>
             </ContainerButtonsStyled>
@@ -102,8 +83,8 @@ export const ModalGroup = ({
 
 const StyledParagUploadImage = styled('p')`
    color: #8d949e;
-   width: 13vw;
-   height: 3vh;
+   width: 16em;
+   height: 1.5em;
    text-align: center;
    font-size: 0.875rem;
    font-weight: 400;

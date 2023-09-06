@@ -1,6 +1,7 @@
+/* eslint-disable consistent-return */
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
-import { axiosFileInstance } from '../../config/axiosInctanceExcelFile'
+import { fileAxiosInstanse } from '../../config/fileAxiosInstance'
 
 export const getAllStudents = createAsyncThunk(
    'students/getAllStudents',
@@ -23,24 +24,29 @@ export const getAllStudents = createAsyncThunk(
 )
 export const postNewStudents = createAsyncThunk(
    'students/postStudent',
-   async (data, { rejectWithValue, dispatch }) => {
+   async ({ data, showSnackbar }, { rejectWithValue, dispatch }) => {
       try {
          await axiosInstance.post(`/api/students/${data.groupId}`, data)
          dispatch(getAllStudents({ currentPage: 1, pageSize: 10 }))
-         return data
+         showSnackbar('Студент успешно добавлен!', 'success')
       } catch (error) {
+         showSnackbar(error.message, 'error')
          return rejectWithValue('error')
       }
    }
 )
 export const PutStudent = createAsyncThunk(
    'students/putStudent',
-   async ({ studentId, values }, { dispatch, rejectWithValue }) => {
+   async (
+      { studentId, values, showSnackbar },
+      { dispatch, rejectWithValue }
+   ) => {
       try {
          await axiosInstance.put(`/api/students/${studentId}`, values)
          dispatch(getAllStudents({ currentPage: 1, pageSize: 10 }))
-         return studentId
+         showSnackbar('Студент успешно изменен!', 'success')
       } catch (error) {
+         showSnackbar(error.message, 'error')
          return rejectWithValue('error')
       }
    }
@@ -48,29 +54,29 @@ export const PutStudent = createAsyncThunk(
 
 export const DeleteStudent = createAsyncThunk(
    'students/deleteStudent',
-   async (studentId, { rejectWithValue, dispatch }) => {
+   async ({ studentId, showSnackbar }, { rejectWithValue, dispatch }) => {
       try {
          await axiosInstance.delete(`/api/students/${studentId}`)
-         dispatch(getAllStudents({ currentPage: 1, pageSize: 50 }))
-         return studentId
+         dispatch(getAllStudents({ currentPage: 1, pageSize: 10 }))
+         showSnackbar('Студент успешно удален!', 'success')
       } catch (error) {
+         showSnackbar(error.message, 'error')
          return rejectWithValue('error')
       }
    }
 )
 export const postExcelFile = createAsyncThunk(
    'students/postExcelFile',
-   async ({ formData, id }, { rejectWithValue }) => {
-      console.log('post')
+   async ({ formData, id, showSnackbar }, { rejectWithValue }) => {
       try {
-         await axiosFileInstance.post(`/api/students/import`, formData, {
+         await fileAxiosInstanse.post(`/api/students/import`, formData, {
             params: {
                groupId: id,
             },
          })
-         console.log('daniel')
-         return formData
+         showSnackbar('Файл успешно отправлен!', 'success')
       } catch (error) {
+         showSnackbar(error.message, 'error')
          return rejectWithValue('error')
       }
    }

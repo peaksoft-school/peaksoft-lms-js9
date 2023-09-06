@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
-import { TableCell } from '@mui/material'
+import { Pagination, Stack, TableCell } from '@mui/material'
 import Select from 'react-select/creatable'
 import { Header } from '../../../components/UI/header/Header'
 import {
@@ -11,7 +11,6 @@ import {
    postExcelFile,
    postNewStudents,
 } from '../../../store/student/studentThunk'
-import Table from '../../../components/UI/table/Table'
 import { IconButtons } from '../../../components/UI/button/IconButtons'
 import { DeleteIcon, EditIcon } from '../../../assets/icons'
 import AddNewStudentModal from './AddNewStudentModal'
@@ -22,16 +21,20 @@ import { Modal } from '../../../components/UI/modal/Modal'
 import useGetAllGroup from '../../../utils/hooks/getAllGroup'
 import { Button } from '../../../components/UI/button/Button'
 import { Isloading } from '../../../components/UI/snackbar/Isloading'
+import Table from '../../../components/UI/table/Table'
+import { showSnackbar } from '../../../components/UI/snackbar/Snackbar'
 
 export const Students = () => {
    const dispatch = useDispatch()
    const { students, isLoading } = useSelector((state) => state.students)
+
    const [getId, setId] = useState()
    const [studentData, setStudentData] = useState()
    const [IsEdit, setIsEdit] = useState(false)
    const [excelFile, setExcelFile] = useState(false)
    const [selectedFile, setSelectedFile] = useState(null)
    const [selectedFormat, setSelectedFormat] = useState('')
+   const [page, setPage] = useState(1)
 
    const { isActive: addedModal, setActive: setAddedModal } =
       useToggle('editmodalstudent')
@@ -41,8 +44,9 @@ export const Students = () => {
       useGetAllGroup()
 
    useEffect(() => {
-      dispatch(getAllStudents({ currentPage: 1, pageSize: 100 }))
+      dispatch(getAllStudents({ currentPage: page, pageSize: 10 }))
    }, [])
+
    const showModalHandler = () => {
       setAddedModal(!addedModal)
    }
@@ -61,7 +65,7 @@ export const Students = () => {
          const id = String(selectedGroupID.value)
          const formData = new FormData()
          formData.append('file', selectedFile)
-         dispatch(postExcelFile({ formData, id }))
+         dispatch(postExcelFile({ formData, id, showSnackbar }))
       }
       setExcelFile(false)
    }
@@ -72,8 +76,8 @@ export const Students = () => {
       setExcelFile(false)
    }
 
-   const addStudent = async (data) => {
-      dispatch(postNewStudents(data))
+   const addStudent = (data) => {
+      dispatch(postNewStudents({ data, showSnackbar }))
    }
    const handleButtonClick = () => {
       document.getElementById('file-input').click()
@@ -94,25 +98,18 @@ export const Students = () => {
       setIsEdit(true)
    }
    const deleteStudentHandler = () => {
-      dispatch(DeleteStudent(getId))
+      dispatch(DeleteStudent({ studentId: getId, showSnackbar }))
       setDeleteModal('')
    }
    const updateHandler = (data) => {
-      dispatch(PutStudent({ studentId: getId, values: data }))
+      dispatch(PutStudent({ studentId: getId, values: data, showSnackbar }))
    }
-
-   // const selectedFormatStudents = () => {
-   // if (selectedFormat) {
    const filteredStudents =
       selectedFormat.label === 'ALL' || selectedFormat === ''
          ? students
          : students.filter(
               (items) => items.studyFormat === selectedFormat.label
            )
-   //    return filteredStudents
-   // }
-   // return students
-   // }
 
    const columns = [
       { id: 'id', label: 'ID' },
@@ -199,11 +196,7 @@ export const Students = () => {
                         >
                            Отмена
                         </Button>
-                        <Button
-                           variant="contained"
-                           type="submit"
-                           onClick={handleSubmit}
-                        >
+                        <Button variant="contained" onClick={handleSubmit}>
                            Добавить
                         </Button>
                      </BtnContainer>
@@ -227,20 +220,56 @@ export const Students = () => {
                studentData={studentData}
             />
          </div>
-         <div>
+         <StyledTableContainer>
             {students !== null ? (
-               <Table
-                  columns={columns}
-                  data={filteredStudents}
-                  itemsPerPage={10}
-               />
+               <div>
+                  <Table
+                     columns={columns}
+                     data={filteredStudents}
+                     itemsPerPage={10}
+                  />
+                  <StackStyled>
+                     <Stack spacing={3}>
+                        <Pagination
+                           count={Math.ceil((students.length * 2) / 10)}
+                           color="primary"
+                           page={page}
+                           onChange={(event, newPage) => {
+                              setPage(newPage)
+                              dispatch(
+                                 getAllStudents({
+                                    currentPage: newPage,
+                                    pageSize: 10,
+                                 })
+                              )
+                           }}
+                        />
+                     </Stack>
+                  </StackStyled>
+               </div>
             ) : (
                <p>some thing went wrong</p>
             )}
-         </div>
+         </StyledTableContainer>
       </div>
    )
 }
+
+const StyledTableContainer = styled('div')`
+   margin-top: 20px;
+   display: flex;
+   flex-direction: column;
+   align-content: space-between;
+   justify-content: center;
+   width: 100%;
+`
+const StackStyled = styled('div')`
+   display: flex;
+   flex-direction: column;
+   margin-top: 1rem;
+   margin-left: 40%;
+`
+
 const StyledTableCell = styled(TableCell)`
    padding: 0px;
 `

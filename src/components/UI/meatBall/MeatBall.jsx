@@ -51,7 +51,7 @@ export default function MeatBall({ onClick, menuItems }) {
             open={open}
             onClose={handleClose}
          >
-            {(menuItems.length > 1 ? menuItems : data).map((item) => (
+            {(menuItems.length > 0 ? menuItems : data).map((item) => (
                <StyledMenuItem key={item.id} onClick={() => onClick(item.id)}>
                   <div>{item.img}</div>
                   {item.title}

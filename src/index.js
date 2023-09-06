@@ -4,14 +4,14 @@ import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material'
 import { Provider } from 'react-redux'
 import { theme } from './assets/styles/theme'
-import { store } from './store/index'
+import { store } from './store'
 import App from './App'
 import './index.css'
 import { injectStore } from './config/axiosInstance'
-import { injectFileStore } from './config/axiosInctanceExcelFile'
+import { injectStoreFile } from './config/fileAxiosInstance'
 
 injectStore(store)
-injectFileStore(store)
+injectStoreFile(store)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(

@@ -54,11 +54,11 @@ export const ModalEditStudent = ({
       onClose()
    }
 
-   const isEmailValid = (values) => {
-      return (
-         values.email && values.email.length > 0 && values.email.includes('@')
-      )
-   }
+   // const isEmailValid = (values) => {
+   //    return (
+   //       values.email && values.email.length > 0 && values.email.includes('@')
+   //    )
+   // }
 
    return (
       <div>
@@ -100,7 +100,7 @@ export const ModalEditStudent = ({
                      <StyledInput
                         placeholder="Email"
                         type="email"
-                        error={() => !isEmailValid(values)}
+                        // error={() => !isEmailValid(values)}
                         value={values?.email}
                         onChange={handleChange}
                         name="email"
