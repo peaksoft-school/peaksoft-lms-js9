@@ -24,6 +24,7 @@ import {
 } from '../../../../store/instructor/instructorThunk'
 import { showSnackbar } from '../../../../components/UI/snackbar/Snackbar'
 import { Isloading } from '../../../../components/UI/snackbar/Isloading'
+import { NotFound } from '../../../../components/UI/not-found/NotFound'
 
 export const Courses = () => {
    const dispatch = useDispatch()
@@ -119,6 +120,7 @@ export const Courses = () => {
          image: imageValue,
          DateOfGraduation: formatDate,
       }
+      console.log(data)
       dispatch(postCard({ data, showSnackbar }))
       setActive('')
       setValue('groupName', '')
@@ -205,7 +207,9 @@ export const Courses = () => {
                   />
                ))
             ) : (
-               <h1>ПОКА ЧТО НЕТ КУРСОВ!</h1>
+               <ContainerNotFound>
+                  <NotFound content="Нет курсов!" />
+               </ContainerNotFound>
             )}
          </ContainerItem>
          <div>
@@ -261,4 +265,7 @@ const ContainerItem = styled('div')`
    gap: 20px;
    display: flex;
    flex-wrap: wrap;
+`
+const ContainerNotFound = styled('div')`
+   margin: 0 auto;
 `

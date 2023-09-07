@@ -6,6 +6,7 @@ import { IconButtons } from '../button/IconButtons'
 import {
    AddGroupToCourse,
    AppointIconWhite,
+   BellIcon,
    DropDownIcon,
    ExelExport,
    ExitIcon,
@@ -26,6 +27,8 @@ export const Header = ({
    toOne,
    icon,
    dangerButton,
+   clickBellStudent,
+   bellTotal,
 }) => {
    const [state, setState] = useState(false)
    const dropdownRef = useRef(null)
@@ -65,6 +68,14 @@ export const Header = ({
                )}
             </TabsStyle>
             <Div>
+               {titlePage === 'Студент' && (
+                  <ContainerNotification>
+                     <IconButtons onClick={clickBellStudent}>
+                        <BellIcon />
+                     </IconButtons>
+                     <p>{bellTotal}</p>
+                  </ContainerNotification>
+               )}
                <BoxLogOut ref={dropdownRef} onClick={handleChange}>
                   <ProfileIcon />
                   <p>{titlePage}</p>
@@ -215,6 +226,7 @@ const TabsStyle = styled('div')`
 const Div = styled('div')`
    display: flex;
    justify-content: end;
+   gap: 1rem;
    width: 50%;
 `
 
@@ -242,3 +254,16 @@ const ImportExelButton = styled('div')(() => ({
    display: 'flex',
    gap: '10px',
 }))
+const ContainerNotification = styled('div')`
+   position: relative;
+   p {
+      background-color: #fa8900;
+      position: absolute;
+      color: #fff;
+      border-radius: 12rem;
+      padding: 0 0.5rem;
+      top: -0.4rem;
+      right: 0;
+      font-size: small;
+   }
+`

@@ -14,6 +14,7 @@ export const Card = ({
    image,
    description,
    menuItems,
+   studentRole,
 }) => {
    const getMenuIdAndSetCardId = (menuID) => {
       onClick({
@@ -37,7 +38,14 @@ export const Card = ({
             </ContainerContent>
          </Link>
          <ContainerFooter>
-            <MeatBall onClick={getMenuIdAndSetCardId} menuItems={menuItems} />
+            {studentRole ? (
+               ''
+            ) : (
+               <MeatBall
+                  onClick={getMenuIdAndSetCardId}
+                  menuItems={menuItems}
+               />
+            )}
          </ContainerFooter>
       </ContainerCard>
    )
@@ -65,6 +73,7 @@ const ContainerImg = styled('div')`
    overflow: hidden;
    img {
       height: 171px;
+      width: 100%;
    }
 `
 

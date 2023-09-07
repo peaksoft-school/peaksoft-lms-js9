@@ -1,26 +1,23 @@
 import React, { useState } from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Editor, EditorState, RichUtils, SelectionState } from 'draft-js'
-import styled from '@emotion/styled'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { AiOutlineUnorderedList, AiOutlineOrderedList } from 'react-icons/ai'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import {
    PiTextItalic,
    PiTextUnderline,
    PiTextB,
    PiTextAaBold,
 } from 'react-icons/pi'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { RiText } from 'react-icons/ri'
-import { IconButton } from '@mui/material'
+import { styled } from '@mui/material'
+import { IconButtons } from '../button/IconButtons'
 
-const TextEditor = () => {
+const TextEditor = ({ onEditorChange, variant }) => {
    const [hoveredIcon, setHoveredIcon] = useState(null)
    const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
    const handleEditorStateChange = (newState) => {
       setEditorState(newState)
+      onEditorChange(newState.getCurrentContent().getPlainText())
    }
 
    const handleInlineStyleClick = (style) => {
@@ -181,10 +178,12 @@ const TextEditor = () => {
             </IconContainer>
          </IconBlock>
          <InputBlock>
-            <IconButton>
-               <IconT />
-            </IconButton>
-            <ListContainer>
+            {variant === 'teacher' && (
+               <IconButtons>
+                  <IconT />
+               </IconButtons>
+            )}
+            <ListContainer variant={variant}>
                <Editor
                   editorState={editorState}
                   onChange={handleEditorStateChange}
@@ -198,33 +197,28 @@ const TextEditor = () => {
 export default TextEditor
 
 const IconTooltip = styled('div')`
-   max-width: 300px;
    position: absolute;
-   top: -40px;
-   left: 50%;
+   width: auto;
+   bottom: 100%;
    transform: translateX(-50%);
-   background-color: #5c6064;
+   background-color: #5c6064e7;
    color: #fffefe;
    padding: 8px;
    border-radius: 8px;
    z-index: 5;
-   opacity: 0.3;
    transition: opacity 0.3s ease-in-out;
 `
 const IconContainer = styled('div')`
    position: relative;
 `
 const Container = styled('div')`
-   width: 600px;
-   margin: 30px auto;
-   padding: 20px;
+   width: 100%;
 `
 
 const IconBlock = styled('div')`
    width: 300px;
    display: flex;
    gap: 15px;
-   margin-left: 28px;
 `
 
 const IconWrapper = styled('span')`
@@ -232,10 +226,13 @@ const IconWrapper = styled('span')`
 `
 
 const ListContainer = styled('div')`
-   width: 650px;
+   width: 100%;
    border: 1px solid #ccc;
    padding: 10px;
-
+   border-radius: 10px;
+   height: ${(props) => (props.variant === 'student' ? '230px' : '')};
+   max-height: 230px;
+   overflow-y: scroll;
    ul {
       li {
          list-style: disc;

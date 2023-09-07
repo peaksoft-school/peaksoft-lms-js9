@@ -20,10 +20,12 @@ const IsLoading = styled(CircularProgress)`
 const Container = styled('div')(() => ({
    backgroundColor: '#0e09093a',
    width: '100%',
-   height: '100vh',
+   // height: '100vh',
    position: 'absolute',
    top: '0',
    left: '0',
+   bottom: '0',
+   right: '0',
    zIndex: '999',
    backdropFilter: 'blur(2px)',
 }))
