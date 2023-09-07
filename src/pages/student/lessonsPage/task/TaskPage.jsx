@@ -67,8 +67,6 @@ export const TaskPage = () => {
       )
    }
 
-   const clickSaveHandler = () => {}
-
    const db = taskResult?.point
    const getBackgroundColor = () => {
       switch (true) {
@@ -118,9 +116,7 @@ export const TaskPage = () => {
                            : 'Успешно принято'}
                      </h2>
                      {!taskResult.point ? (
-                        <Button onClick={() => clickSaveHandler(el)}>
-                           Редактировать
-                        </Button>
+                        ''
                      ) : (
                         <h2>{taskResult.point} баллов из 10</h2>
                      )}
@@ -163,7 +159,12 @@ export const TaskPage = () => {
                               placeholder="Коментарий к заданию"
                            />
                         </div>
-                        <Button onClick={submitTaskHandler}>Отправить</Button>
+                        <Button
+                           disabled={!editorContent && !fileSend}
+                           onClick={submitTaskHandler}
+                        >
+                           Отправить
+                        </Button>
                      </ContainerInputBtn>
                   </ContainerTextEditor>
                </div>

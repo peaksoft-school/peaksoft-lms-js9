@@ -8,11 +8,12 @@ import { NotFound } from '../../../components/UI/not-found/NotFound'
 import { useToggle } from '../../../utils/hooks/general'
 import { NotificationModal } from './NotificationModal'
 import { dataBell } from '../../../utils/constants/constants'
+import { Isloading } from '../../../components/UI/snackbar/Isloading'
 
 export const MyCoursesStu = () => {
    const dispatch = useDispatch()
    const { id } = useSelector((state) => state.auth)
-   const { cards } = useSelector((state) => state.studentLayout)
+   const { cards, isLoading } = useSelector((state) => state.studentLayout)
    const { isActive, setActive } = useToggle('openmodalbellstudent')
    const openModalBellStudent = () => {
       setActive(!isActive)
@@ -25,6 +26,7 @@ export const MyCoursesStu = () => {
    const menuItems = []
    return (
       <div>
+         {isLoading && <Isloading />}
          <Header
             titlePage="Студент"
             clickBellStudent={openModalBellStudent}

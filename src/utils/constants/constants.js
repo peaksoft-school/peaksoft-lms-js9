@@ -118,45 +118,4 @@ export const reusableRoutesLesson = {
    link: '/link',
    test: '/test',
 }
-export const dataBell = [
-   {
-      title: 'g=HM-1',
-      who: 'Elizar mentor',
-      date: '2023-09-01',
-   },
-   {
-      title: 'g=HM-1',
-      who: 'Elizar mentor',
-      date: '2023-09-01',
-   },
-   {
-      title: 'g=HM-1',
-      who: 'Elizar mentor',
-      date: '2023-09-01',
-   },
-   {
-      title: 'g=HM-1',
-      who: 'Elizar mentor',
-      date: '2023-09-01',
-   },
-   {
-      title: 'g=HM-1',
-      who: 'Elizar mentor',
-      date: '2023-09-01',
-   },
-   {
-      title: 'g=HM-1',
-      who: 'Elizar mentor',
-      date: '2023-09-01',
-   },
-   {
-      title: 'g=HM-1',
-      who: 'Elizar mentor',
-      date: '2023-09-01',
-   },
-   {
-      title: 'g=HM-1',
-      who: 'Elizar mentor',
-      date: '2023-09-01',
-   },
-]
+export const dataBell = []

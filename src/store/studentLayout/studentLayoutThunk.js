@@ -64,19 +64,23 @@ export const postTaskLesson = createAsyncThunk(
    'studentLayout/postTaskLesson',
    async (payload, { rejectWithValue, dispatch }) => {
       try {
-         const getFile = await dispatch(postFile(payload.data.file)).unwrap()
-         const response = await axiosInstance.post(
-            `/api/taskAnswers/save/${payload.taskId}?studentId=${payload.studentId}`,
-            {
-               ...payload.data,
-               file: getFile,
-            }
-         )
+         let response
+         if (payload?.data?.file === '') {
+            response = await axiosInstance.post(
+               `/api/taskAnswers/save/${payload.taskId}?studentId=${payload.studentId}`,
+               payload.data
+            )
+         } else {
+            const getFile = await dispatch(postFile(payload.data.file)).unwrap()
+            response = await axiosInstance.post(
+               `/api/taskAnswers/save/${payload.taskId}?studentId=${payload.studentId}`,
+               { ...payload.data, file: getFile }
+            )
+         }
+         payload.showSnackbar('Ваше домашнее задание принято!', 'success')
          dispatch(getGetResultTaskLesson(payload.taskId))
-         payload.showSnackbar('Ваше домашнее задание принята!', 'success')
          return response.data
       } catch (error) {
-         console.log(error)
          payload.showSnackbar(
             error.response.data.message
                ? 'Вы отправляете домашнее задание после дедлайна!'
