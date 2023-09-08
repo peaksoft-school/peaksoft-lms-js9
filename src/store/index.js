@@ -5,6 +5,7 @@ import { coursesSlice } from './courses/coursesSlice'
 import { instructorsSlice } from './instructor/instructorSlice'
 import { signInSlice } from './signIn/signInSlice'
 import { lessonSlice } from './lesson/lessonSlice'
+import { lessonCrudSlice } from './lessonCrud/lessonCrudSlice'
 
 export const store = configureStore({
    reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
       [instructorsSlice.name]: instructorsSlice.reducer,
       [lessonSlice.name]: lessonSlice.reducer,
       [coursesSlice.name]: coursesSlice.reducer,
+      [lessonCrudSlice.name]: lessonCrudSlice.reducer,
    },
 })

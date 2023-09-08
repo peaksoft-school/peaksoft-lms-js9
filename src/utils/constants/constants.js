@@ -29,62 +29,29 @@ export const columnsTableCourses = [
    { id: 'email', label: 'E-mail' },
 ]
 
-export const materialsLesson = [
-   {
-      id: 1,
-      lesson: 'Lesson-1',
-      lessonVideo: 'Видеоурок',
-      presentation: 'Презентация',
-      task: 'Задания',
-      link: 'Ссылка',
-      test: 'Тест',
-   },
-   {
-      id: 2,
-      lesson: 'Lesson-2',
-      lessonVideo: 'Видеоурок',
-      presentation: 'Презентация',
-      task: 'Задания',
-      link: 'Ссылка',
-      test: 'Тест',
-   },
-   {
-      id: 3,
-      lesson: 'Lesson-3',
-      lessonVideo: 'Видеоурок',
-      presentation: 'Презентация',
-      task: 'Задания',
-      link: 'Ссылка',
-      test: 'Тест',
-   },
-   {
-      id: 4,
-      lesson: 'Lesson-4',
-      lessonVideo: 'Видеоурок',
-      presentation: 'Презентация',
-      task: 'Задания',
-      link: 'Ссылка',
-      test: 'Тест',
-   },
-]
 export const menuItem = [
    {
+      id: 1,
       value: 'videolesson',
       title: 'Видеоурок',
    },
    {
+      id: 2,
       value: 'presentation',
-      title: 'Прентация',
+      title: 'Презентация',
    },
    {
+      id: 3,
       value: 'task',
       title: 'Задание',
    },
    {
+      id: 4,
       value: 'link',
       title: 'Ссылка',
    },
    {
+      id: 5,
       value: 'test',
       title: 'Тест',
    },
@@ -112,9 +79,9 @@ export const reusableRoutesRoles = [
 ]
 
 export const reusableRoutesLesson = {
-   videolesson: '/videolesson',
-   presentation: '/presentation',
-   task: '/task',
-   link: '/link',
-   test: '/test',
+   videolesson: 'videolesson',
+   presentation: 'presentation',
+   task: 'task',
+   // link: '/link',
+   test: 'test',
 }
