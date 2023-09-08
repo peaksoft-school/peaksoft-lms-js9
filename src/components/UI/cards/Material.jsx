@@ -59,7 +59,7 @@ export const Material = ({
       {
          route: reusableRoutesLesson.task,
          icon: <TaskIcon />,
-         title: 'Задания',
+         title: 'Задание',
          id: 3,
       },
       {
