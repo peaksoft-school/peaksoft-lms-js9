@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
 import { fileAxiosInstanse } from '../../config/fileAxiosInstance'
+import { getStudents } from '../students/studentsThunk'
 
 export const getCardsCourses = createAsyncThunk(
    'courses/getCardsCourses',
@@ -81,6 +82,65 @@ export const deleteGroup = createAsyncThunk(
          await axiosInstance.delete(`/api/courses/${payload.id}`)
          payload.showSnackbar('Курс успешно удален', 'success')
          return dispatch(getCardsCourses())
+      } catch (error) {
+         payload.showSnackbar(error, 'error')
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const getByIdInstructor = createAsyncThunk(
+   'instructors/getInstructor',
+   async (id, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(
+            `/api/instructors/getById/${id}`
+         )
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+export const getCoursesById = createAsyncThunk(
+   'courses/getCoursesById',
+   async (id, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(`/api/courses/${id}`)
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+export const addGroupToCourseThunk = createAsyncThunk(
+   'courses/addGroupToCourse',
+   async (payload, { rejectWithValue, dispatch }) => {
+      try {
+         await axiosInstance.post(
+            `api/courses/${payload.groupId}/${payload.courseId}`
+         )
+         payload.showSnackbar('Группа успешно добавлен в курс', 'success')
+         dispatch(getByIdInstructor(payload.instructorId))
+         dispatch(getStudents({ id: payload.courseId, page: payload.page }))
+         return dispatch(getCoursesById(payload.courseId))
+      } catch (error) {
+         payload.showSnackbar(error, 'error')
+         return rejectWithValue(error.message)
+      }
+   }
+)
+export const deleteGroupToCourseThunk = createAsyncThunk(
+   'courses/deleteGroupToCourse',
+   async (payload, { rejectWithValue, dispatch }) => {
+      try {
+         await axiosInstance.delete(
+            `/api/courses/${payload.groupId}/${payload.courseId}`
+         )
+         payload.showSnackbar('Группа успешно удалено из курса', 'success')
+         dispatch(getByIdInstructor(payload.instructorId))
+         dispatch(getStudents({ id: payload.courseId, page: payload.page }))
+         return dispatch(getCoursesById(payload.courseId))
       } catch (error) {
          payload.showSnackbar(error, 'error')
          return rejectWithValue(error.message)

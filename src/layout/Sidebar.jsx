@@ -121,7 +121,7 @@ const NavLinkStyled = styled(NavLink)(() => ({
          fill: '#1f6ed4',
       },
    },
-   '@media (max-width: 1360px)': {
+   '@media (max-width: 1480px)': {
       h2: {
          display: 'none',
       },

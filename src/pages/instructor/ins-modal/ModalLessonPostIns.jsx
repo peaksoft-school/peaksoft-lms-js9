@@ -23,7 +23,7 @@ export const ModalLessonPost = ({
             <InputTitleStyled
                value={value}
                onChange={onChangePostandler}
-               placeholder="введите имя урока"
+               placeholder="Введите имя урока"
             />
             <ContainerButtonsStyled>
                <ButtonCloseStyled variant="outlined" onClick={handleClose}>

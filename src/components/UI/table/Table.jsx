@@ -31,8 +31,14 @@ const Table = ({ data, columns }) => {
                            return column.render(row)
                         }
                         return (
-                           <StyledTableCellForData key={column.id}>
-                              {row[column.id]}
+                           <StyledTableCellForData
+                              key={column.id}
+                              title={String(row[column.id])}
+                           >
+                              {column.id === 'password' &&
+                              row[column.id].length > 10
+                                 ? `${row[column.id].substring(0, 10)}...`
+                                 : row[column.id]}
                            </StyledTableCellForData>
                         )
                      })}
@@ -44,25 +50,26 @@ const Table = ({ data, columns }) => {
    )
 }
 
-export default Table
 const StyledTable = styled(MuiTable)`
    min-width: 650px;
 `
 const StyledContainer = styled(TableContainer)`
    width: 100%;
+   border-radius: 10px;
 `
 const StyledTableRow = styled(TableRow)`
-   /* div { */
-   /* } */
    &:nth-child(even) {
-      background-color: #eceaea9f;
+      width: 100px;
+      background-color: #1a227e1a;
    }
 `
 const StyledTableCell = styled(TableCell)`
-   padding: 10px 8px 10px 20px;
    font-weight: 900;
+   padding: 10px 8px 10px 20px;
    color: black;
 `
 const StyledTableCellForData = styled(TableCell)`
    padding: 8px 8px 8px 20px;
+   border: none;
 `
+export default Table
