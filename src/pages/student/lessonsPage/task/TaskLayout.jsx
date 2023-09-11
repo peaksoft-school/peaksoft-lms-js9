@@ -24,6 +24,8 @@ export const TaskSend = () => {
 
    useEffect(() => {
       dispatch(getLesson(+params.id))
+   }, [])
+   useEffect(() => {
       dispatch(getCardsStudentLayout(id))
    }, [])
 

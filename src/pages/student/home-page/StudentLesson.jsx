@@ -25,6 +25,8 @@ export const StudentLesson = () => {
 
    useEffect(() => {
       dispatch(getLesson(+params.id))
+   }, [])
+   useEffect(() => {
       dispatch(getCardsStudentLayout(id))
    }, [])
 

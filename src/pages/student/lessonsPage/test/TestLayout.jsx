@@ -28,7 +28,11 @@ export const TestLayout = () => {
 
    useEffect(() => {
       dispatch(getLesson(+params.id))
+   }, [])
+   useEffect(() => {
       dispatch(getCardsStudentLayout(id))
+   }, [])
+   useEffect(() => {
       dispatch(getTestLesson(+params.testid))
    }, [])
 

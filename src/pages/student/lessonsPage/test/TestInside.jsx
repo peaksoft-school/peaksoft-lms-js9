@@ -26,6 +26,8 @@ export const TestInside = () => {
 
    useEffect(() => {
       dispatch(getTestLesson(+params.testid))
+   }, [])
+   useEffect(() => {
       dispatch(getTestResultLesson(+params.testid))
    }, [])
 

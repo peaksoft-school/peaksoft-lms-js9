@@ -120,7 +120,6 @@ export const Courses = () => {
          image: imageValue,
          DateOfGraduation: formatDate,
       }
-      console.log(data)
       dispatch(postCard({ data, showSnackbar }))
       setActive('')
       setValue('groupName', '')

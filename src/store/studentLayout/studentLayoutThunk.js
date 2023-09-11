@@ -81,12 +81,7 @@ export const postTaskLesson = createAsyncThunk(
          dispatch(getGetResultTaskLesson(payload.taskId))
          return response.data
       } catch (error) {
-         payload.showSnackbar(
-            error.response.data.message
-               ? 'Вы отправляете домашнее задание после дедлайна!'
-               : error.response.data.message,
-            'error'
-         )
+         payload.showSnackbar(error.response.data.message, 'error')
          return rejectWithValue(error.message)
       }
    }

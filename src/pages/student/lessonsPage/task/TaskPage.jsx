@@ -32,6 +32,8 @@ export const TaskPage = () => {
 
    useEffect(() => {
       dispatch(getGetByIdTaskLesson(+params.taskid))
+   }, [])
+   useEffect(() => {
       dispatch(getGetResultTaskLesson(+params.taskid))
    }, [])
 
@@ -86,14 +88,16 @@ export const TaskPage = () => {
          {isLoading && <Isloading />}
          <ContainerTask>
             <h2>Задание учителя</h2>
-            <h4>{el.taskName}</h4>
-            <div>
-               <h4>
-                  <big>Срок cдачи : </big>
-                  {el.deadline}
-               </h4>
-               <p>{el.text}</p>
-            </div>
+            <ContainerTaskNameAndDeadline>
+               <h4>{el.taskName}</h4>
+               <div>
+                  <h4>
+                     <big>Срок cдачи : </big>
+                     {el.deadline}
+                  </h4>
+               </div>
+            </ContainerTaskNameAndDeadline>
+            <p>{el.text}</p>
          </ContainerTask>
          <ContainerTaskSend>
             {taskResult.send ? (
@@ -189,6 +193,11 @@ const Container = styled('div')`
    background-color: #fff;
    padding: 20px;
    border-radius: 5px;
+`
+const ContainerTaskNameAndDeadline = styled('div')`
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
 `
 const ContainerSendFile = styled('div')`
    display: flex;
