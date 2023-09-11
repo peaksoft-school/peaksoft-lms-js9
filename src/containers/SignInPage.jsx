@@ -155,7 +155,7 @@ const Container = styled('div')(() => ({
 const LoginInput = styled(Input)(() => ({
    '& .MuiInputBase-root': {
       width: '28.8vw',
-      height: '42px',
+      height: '5vh',
       borderRadius: '10px',
       marginTop: '0.4rem',
    },
@@ -175,7 +175,7 @@ const ContainerTitle = styled('div')(() => ({
 const LoginSecondInput = styled(Input)(() => ({
    '& .MuiInputBase-root': {
       width: '28.8vw',
-      height: '42px',
+      height: '5vh',
       borderRadius: '10px',
       marginTop: '0.4rem',
       position: 'relative',
@@ -238,10 +238,9 @@ const ContainerButton = styled('div')(() => ({
 const FormBlock = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
-   gap: '10px',
    ' .block': {
       width: '100%',
-      height: '22.5vh',
+      height: '20.5vh',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',

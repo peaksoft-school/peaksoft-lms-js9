@@ -67,7 +67,7 @@ export const Header = ({
             <Div>
                <BoxLogOut ref={dropdownRef} onClick={handleChange}>
                   <ProfileIcon />
-                  <p>{titlePage}</p>
+                  <button type="button">{titlePage}</button>
                   <DropDownIcon />
                   <IconButtons>
                      {state && (
@@ -225,12 +225,17 @@ const ButtonContainer = styled(Box)(() => ({
    marginTop: '1.5rem',
 }))
 
-const BoxLogOut = styled(Box)(() => ({
-   display: 'flex',
-   alignItems: 'center',
-   cursor: 'pointer',
-   gap: '0.875rem',
-}))
+const BoxLogOut = styled(Box)`
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+   gap: 0.875rem;
+   button {
+      background-color: #eff0f4;
+      border: none;
+      font-size: 1rem;
+   }
+`
 
 const StudentsButtonDiv = styled('div')(() => ({
    width: '100%',

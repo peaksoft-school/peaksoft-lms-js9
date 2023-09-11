@@ -61,16 +61,26 @@ export const updateCard = createAsyncThunk(
    'courses/putCards',
    async (payload, { rejectWithValue, dispatch }) => {
       try {
-         const getFile = await dispatch(postFile(payload.data.image)).unwrap()
-         await axiosInstance.put(`/api/courses/${payload.data.id}`, {
-            ...payload.data,
-            image: getFile,
-         })
+         if (payload.data.image === '') {
+            const getFile = await dispatch(
+               postFile(payload.data.image)
+            ).unwrap()
+            await axiosInstance.put(`/api/courses/${payload.data.id}`, {
+               ...payload.data,
+               image: getFile,
+            })
+         } else {
+            await axiosInstance.put(`/api/courses/${payload.data.id}`, {
+               ...payload.data,
+               image: payload.data.delImage,
+            })
+         }
+
          payload.showSnackbar('Курс успешно редактирован!', 'success')
-         return dispatch(getCardsCourses())
+         await dispatch(getCardsCourses())
       } catch (error) {
          payload.showSnackbar(error.message, 'error')
-         return rejectWithValue(error.message)
+         rejectWithValue(error.message)
       }
    }
 )

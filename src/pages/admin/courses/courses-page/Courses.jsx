@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
 import { useForm } from 'react-hook-form'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { DateTime } from 'luxon'
 import { format, isValid } from 'date-fns'
 import { useDispatch, useSelector } from 'react-redux'
 import { Header } from '../../../../components/UI/header/Header'
@@ -10,7 +12,7 @@ import { ModalCourses } from '../courses-modal/ModalCourses'
 import { ModalDelete } from '../courses-modal/ModalDelete'
 import { AppointIcon, DeleteIcon, EditIcon } from '../../../../assets/icons'
 import {
-   deleteFile,
+   // deleteFile,
    deleteGroup,
    getCardsCourses,
    postCard,
@@ -60,7 +62,16 @@ export const Courses = () => {
          editDescription: '',
       },
    })
+   const dateString = '2023-09-08'
+   const dateTime = DateTime.fromISO(dateString)
+   const formattedDate = dateTime.toFormat(
+      "EEE LLL dd yyyy HH:mm:ss 'GMT'+0600 (Киргизия)"
+   )
+   const ddd = 'Fri Sep 08 2023 00:00:00 GMT+0600 (Киргизия)'
 
+   console.log(ddd)
+   console.log(dateValue, 'value')
+   console.log(formattedDate, 'format')
    const isFormEmpty =
       !getValues().groupName.trim() ||
       !getValues().description.trim() ||
@@ -117,7 +128,7 @@ export const Courses = () => {
          courseName: getValues().groupName,
          description: getValues().description,
          image: imageValue,
-         DateOfGraduation: formatDate,
+         dateOfGraduation: formatDate,
       }
       dispatch(postCard({ data, showSnackbar }))
       setActive('')
@@ -129,11 +140,12 @@ export const Courses = () => {
          id: getCardId,
          courseName: el.editTitle,
          description: el.editDescription,
-         DateOfGraduation: editFormatDate,
+         dateOfGraduation: editFormatDate,
          image: imageValue,
          delImage: imageEditValue,
       }
-      dispatch(deleteFile(data.delImage))
+      console.log(data)
+      // dispatch(deleteFile(data.delImage))
       dispatch(updateCard({ data, showSnackbar }))
       setActiveModal2('')
    }

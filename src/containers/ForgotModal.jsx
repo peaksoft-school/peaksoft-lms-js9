@@ -76,13 +76,14 @@ const ContentTitle = styled('div')(() => ({
 const ForgotButton = styled(Button)(() => ({
    padding: '10px 24px',
    width: '100%',
+   height: '5vh',
    display: 'flex',
    justifyContent: 'center',
    alignItems: 'center',
    borderRadius: '8px',
 }))
 const FormSubmit = styled('form')(() => ({
-   height: '16vh',
+   height: '14vh',
    display: 'flex',
    flexDirection: 'column',
    justifyContent: 'space-between',

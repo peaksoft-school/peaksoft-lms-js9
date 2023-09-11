@@ -20,6 +20,7 @@ export const ModalCourses = ({
    imageEditValue,
    dateEditModal,
    isFormEmpty,
+   getDateValue,
 }) => {
    const onSubmitForm = (data) => {
       onSubmit(data)
@@ -56,6 +57,12 @@ export const ModalCourses = ({
                      onDateChange(date)
                   }}
                   value={dateEditModal}
+               />
+               <BasicDatePicker
+                  onDateChange={(date) => {
+                     onDateChange(date)
+                  }}
+                  value={getDateValue}
                />
             </ContainerInputTitleDateStyled>
             <InputDescriptionStyled

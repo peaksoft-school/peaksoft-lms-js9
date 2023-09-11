@@ -37,12 +37,12 @@ const ModalStyled = styled('div')`
    justify-content: center;
    align-items: center;
    flex-direction: column;
-   gap: 0.5rem;
-   margin-top: 0.125rem;
+   gap: 0.7rem;
+   padding: 0 1.5rem;
    div {
       display: flex;
       justify-content: center;
-      gap: 0.625rem;
+      gap: 0.6rem;
    }
 `
 
