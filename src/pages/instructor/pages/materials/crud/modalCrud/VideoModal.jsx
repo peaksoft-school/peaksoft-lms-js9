@@ -7,7 +7,6 @@ import { Modal } from '../../../../../../components/UI/modal/Modal'
 import { Input } from '../../../../../../components/UI/input/Input'
 import { Button } from '../../../../../../components/UI/button/Button'
 import {
-   // getVideoLessonThunk,
    postVideoLessonThunk,
    putVideoLessonThunk,
 } from '../../../../../../store/lessonCrud/lessonCrudThunk'
@@ -23,7 +22,6 @@ export const VideoModal = ({
    closeHandlerModal,
    isVideoLesson,
 }) => {
-   console.log('buttonText: ', buttonText)
    const dispatch = useDispatch()
    const { videoId } = useSelector((state) => state.lessonCrud)
    const params = useParams()
@@ -33,13 +31,13 @@ export const VideoModal = ({
    }, [])
 
    const addVideoHandleSubmit = (values) => {
-      setActive(false)
       dispatch(
          postVideoLessonThunk({
             courseId: +params.id,
             values,
             lessonId,
             showSnackbar,
+            setActive,
          })
       )
    }
@@ -55,9 +53,9 @@ export const VideoModal = ({
             data,
             videoLessonId: videoId?.id,
             showSnackbar,
+            setActive,
          })
       )
-      setActive(false)
    }
    const initialValues = {
       name: videoId?.name || '',

@@ -43,13 +43,12 @@ export const PresentationModal = ({
             data,
             lessonId,
             showSnackbar,
+            setActive,
          })
       )
       values.name = ''
       values.description = ''
       values.linkFilePpt = ''
-
-      setActive(false)
    }
    const updatePresentationLesson = (values) => {
       const data = {
@@ -64,9 +63,9 @@ export const PresentationModal = ({
             lessonId,
             presentationId: presentationId?.id,
             showSnackbar,
+            setActive,
          })
       )
-      setActive(false)
    }
    const formik = useFormik({
       initialValues: {

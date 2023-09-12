@@ -22,12 +22,13 @@ export const getLinkLessonThunk = createAsyncThunk(
 export const postLinkLessonThunk = createAsyncThunk(
    'lessonCrud/postLinkLesson',
    async (
-      { courseId, lessonId, values, showSnackbar },
+      { courseId, lessonId, values, showSnackbar, setActive },
       { rejectWithValue, dispatch }
    ) => {
       try {
          await axiosInstance.post(`/api/links/${lessonId}`, values)
          showSnackbar('Ссылка успешно добавлен!', 'success')
+         setActive(false)
          return dispatch(getLesson(courseId))
       } catch (error) {
          showSnackbar(error.message, 'error')
@@ -39,10 +40,12 @@ export const postLinkLessonThunk = createAsyncThunk(
 
 export const updateLinkLessonThunk = createAsyncThunk(
    'lessonCrud/updateLinkLesson',
-   async ({ data, linkId, showSnackbar }, { rejectWithValue }) => {
+   async ({ data, linkId, showSnackbar, setActive }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.put(`/api/links/${linkId}`, data)
          showSnackbar('Ссылка успешно редактирован!', 'success')
+         setActive(false)
+
          return response
       } catch (error) {
          showSnackbar(error.message, 'error')
@@ -87,12 +90,13 @@ export const getVideoLessonThunk = createAsyncThunk(
 export const postVideoLessonThunk = createAsyncThunk(
    'lessonCrud/postVideoLesson',
    async (
-      { courseId, lessonId, values, showSnackbar },
+      { courseId, lessonId, values, showSnackbar, setActive },
       { rejectWithValue, dispatch }
    ) => {
       try {
          await axiosInstance.post(`/api/videos/${lessonId}`, values)
          showSnackbar('Видеоурок успешно добавлен!', 'success')
+         setActive(false)
          return dispatch(getLesson(courseId))
       } catch (error) {
          showSnackbar(error.message, 'error')
@@ -103,13 +107,18 @@ export const postVideoLessonThunk = createAsyncThunk(
 // putVideo
 export const putVideoLessonThunk = createAsyncThunk(
    'lessonCrud/putVideoLesson',
-   async ({ data, videoLessonId, showSnackbar }, { rejectWithValue }) => {
+   async (
+      { data, videoLessonId, showSnackbar, setActive },
+      { rejectWithValue }
+   ) => {
       try {
          const response = await axiosInstance.put(
             `/api/videos/${videoLessonId}`,
             data
          )
+
          showSnackbar('Видеоурок успешно редактирован!', 'success')
+         setActive(false)
          return response
       } catch (error) {
          showSnackbar(error.message, 'error')
@@ -155,7 +164,7 @@ export const getPresentationLessonThunk = createAsyncThunk(
 export const postPresentationLessonThunk = createAsyncThunk(
    'lessonCrud/postPresentationLesson',
    async (
-      { courseId, lessonId, data, showSnackbar },
+      { courseId, lessonId, data, showSnackbar, setActive },
       { rejectWithValue, dispatch }
    ) => {
       try {
@@ -165,11 +174,10 @@ export const postPresentationLessonThunk = createAsyncThunk(
             linkPptFile: getFile,
          })
          showSnackbar('Презентация успешно добавлен!', 'success')
-
+         setActive(false)
          return dispatch(getLesson(courseId))
       } catch (error) {
          showSnackbar(error.message, 'error')
-
          return rejectWithValue(error.message)
       }
    }
@@ -178,7 +186,7 @@ export const postPresentationLessonThunk = createAsyncThunk(
 export const putPresentationLessonThunk = createAsyncThunk(
    'lessonCrud/putPresentationLesson',
    async (
-      { lessonId, presentationId, data, showSnackbar },
+      { lessonId, presentationId, data, showSnackbar, setActive },
       { rejectWithValue, dispatch }
    ) => {
       try {
@@ -188,6 +196,7 @@ export const putPresentationLessonThunk = createAsyncThunk(
             linkPptFile: getFile,
          })
          showSnackbar('Презентация успешно редактирован!', 'success')
+         setActive(false)
          return dispatch(getPresentationLessonThunk(lessonId))
       } catch (error) {
          showSnackbar(error.message, 'error')

@@ -31,17 +31,15 @@ export const LinkModal = ({
    }, [])
 
    const addHandleSubmit = (values) => {
-      setActive(false)
       dispatch(
          postLinkLessonThunk({
             courseId: +params.id,
             values,
             lessonId,
             showSnackbar,
+            setActive,
          })
       )
-      values.text = ''
-      values.link = ''
    }
 
    const updateLinkLesson = (values) => {
@@ -56,9 +54,9 @@ export const LinkModal = ({
             data,
             linkId: linkId?.id,
             showSnackbar,
+            setActive,
          })
       )
-      setActive(false)
    }
    const initialValues = {
       text: linkId?.text || '',
