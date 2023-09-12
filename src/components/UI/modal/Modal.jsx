@@ -5,7 +5,7 @@ import { Modal as ModalUi, styled } from '@mui/material'
 export const Modal = ({ minHeight, title, children, open, handleClose }) => {
    return (
       <div>
-         <ModalUi open={open} onClose={handleClose}>
+         <ModalUiStyled open={open} onClose={handleClose}>
             <StyledModal minHeight={minHeight}>
                {title && (
                   <Header>
@@ -14,10 +14,13 @@ export const Modal = ({ minHeight, title, children, open, handleClose }) => {
                )}
                <Content>{children}</Content>
             </StyledModal>
-         </ModalUi>
+         </ModalUiStyled>
       </div>
    )
 }
+const ModalUiStyled = styled(ModalUi)`
+   backdrop-filter: blur(2px);
+`
 
 const Header = styled('div')(() => ({
    width: '100%',

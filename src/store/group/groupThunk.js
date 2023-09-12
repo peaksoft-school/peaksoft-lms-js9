@@ -36,10 +36,13 @@ export const postCard = createAsyncThunk(
             ...payload.data,
             image: getFile,
          })
+         payload.modal('')
+         payload.setValue('groupName', '')
+         payload.setValue('description', '')
          payload.showSnackbar('Группа успешно создано!', 'success')
          return dispatch(getCard())
       } catch (error) {
-         payload.showSnackbar(error.message, 'error')
+         payload.showSnackbar('Все поля должны быть заполнены!', 'error')
          return rejectWithValue(error.data.message)
       }
    }

@@ -77,12 +77,6 @@ export const Groups = () => {
       dispatch(getCard())
    }, [])
 
-   // const isFormEmpty =
-   //    !getValues().groupName.trim() ||
-   //    !getValues().description.trim() ||
-   //    !setDateAdded ||
-   //    !imageValue
-
    const deleteOpenModal = (data) => {
       setActiveModal1(!isActiveModal1)
       setCardId(data.id)
@@ -95,11 +89,9 @@ export const Groups = () => {
    }
 
    const editOpenModal = (data) => {
-      console.log('data edit >>: ', data)
       setActiveModal2(!isActiveModal2)
       setValue('editTitle', data.groupName)
       setValue('editDescription', data.description)
-      // setValue('dateEditModal', dateValue)
       setDateEdit(dateEdit)
       setImageEditValue(data.image)
       setImageValue(data.image)
@@ -107,24 +99,13 @@ export const Groups = () => {
    }
 
    const addedHandler = () => {
-      if (
-         getValues().groupName &&
-         getValues().description &&
-         formatDate &&
-         imageValue
-      ) {
-         const data = {
-            groupName: getValues().groupName,
-            description: getValues().description,
-            image: imageValue,
-            dateOfGraduation: formatDate,
-         }
-         dispatch(postCard({ data, showSnackbar })).then(setActive(''))
-      } else {
-         alert('asd')
+      const data = {
+         groupName: getValues().groupName,
+         description: getValues().description,
+         image: imageValue,
+         dateOfGraduation: formatDate,
       }
-      setValue('groupName', '')
-      setValue('description', '')
+      dispatch(postCard({ data, showSnackbar, modal: setActive, setValue }))
    }
    const saveHandler = (el) => {
       const data = {
@@ -187,7 +168,6 @@ export const Groups = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
-               // isFormEmpty={isFormEmpty}
             />
             <ModalDeleteGroup
                open={isActiveModal1}
