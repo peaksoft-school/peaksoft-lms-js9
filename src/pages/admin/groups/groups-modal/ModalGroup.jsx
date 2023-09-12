@@ -140,13 +140,13 @@ const ButtonCloseStyled = styled(Button)`
    border-radius: 0.5rem;
    border: 0.0625rem solid var(--button, #3772ff);
    text-transform: capitalize;
-   width: 5.4vw;
-   height: 4.5vh;
+   width: 6.5rem;
+   height: 2.6rem;
 `
 
 const ButtonAddedStyled = styled(Button)`
    border-radius: 0.5rem;
    text-transform: capitalize;
-   width: 5.4vw;
-   height: 4.5vh;
+   width: 6.5rem;
+   height: 2.6rem;
 `

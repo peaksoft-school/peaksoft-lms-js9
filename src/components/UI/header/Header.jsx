@@ -15,6 +15,8 @@ import {
 import { Button } from '../button/Button'
 import { Tabs } from '../tabs/Tabs'
 import { logout } from '../../../store/signIn/signInThunk'
+import { ModalLogout } from './ModalLogout'
+import { useToggle } from '../../../utils/hooks/general'
 
 export const Header = ({
    onClick,
@@ -29,6 +31,7 @@ export const Header = ({
 }) => {
    const [state, setState] = useState(false)
    const dropdownRef = useRef(null)
+   const { isActive, setActive } = useToggle('modallogout')
 
    const dispatch = useDispatch()
    const handleChange = () => {
@@ -36,6 +39,7 @@ export const Header = ({
    }
    const logoutHandler = () => {
       dispatch(logout())
+      setActive('')
    }
 
    const handleClickOutside = (event) => {
@@ -71,7 +75,7 @@ export const Header = ({
                   <DropDownIcon />
                   <IconButtons>
                      {state && (
-                        <StyledDropDown onClick={logoutHandler}>
+                        <StyledDropDown onClick={() => setActive(!isActive)}>
                            <ExitIcon style={{ marginLeft: '1.20rem' }} />
                            <span>Выйти</span>
                         </StyledDropDown>
@@ -80,6 +84,11 @@ export const Header = ({
                </BoxLogOut>
             </Div>
          </StyledBox>
+         <ModalLogout
+            open={isActive}
+            handleClose={() => setActive('')}
+            logoutHandler={logoutHandler}
+         />
          <ButtonContainer>
             {conditionButton === 'Students' ? (
                <StudentsButtonDiv>
@@ -234,6 +243,7 @@ const BoxLogOut = styled(Box)`
       background-color: #eff0f4;
       border: none;
       font-size: 1rem;
+      cursor: pointer;
    }
 `
 

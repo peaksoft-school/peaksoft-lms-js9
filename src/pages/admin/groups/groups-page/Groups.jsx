@@ -77,11 +77,11 @@ export const Groups = () => {
       dispatch(getCard())
    }, [])
 
-   const isFormEmpty =
-      !getValues().groupName.trim() ||
-      !getValues().description.trim() ||
-      !setDateAdded ||
-      !imageValue
+   // const isFormEmpty =
+   //    !getValues().groupName.trim() ||
+   //    !getValues().description.trim() ||
+   //    !setDateAdded ||
+   //    !imageValue
 
    const deleteOpenModal = (data) => {
       setActiveModal1(!isActiveModal1)
@@ -95,6 +95,7 @@ export const Groups = () => {
    }
 
    const editOpenModal = (data) => {
+      console.log('data edit >>: ', data)
       setActiveModal2(!isActiveModal2)
       setValue('editTitle', data.groupName)
       setValue('editDescription', data.description)
@@ -106,14 +107,22 @@ export const Groups = () => {
    }
 
    const addedHandler = () => {
-      const data = {
-         groupName: getValues().groupName,
-         description: getValues().description,
-         image: imageValue,
-         dateOfGraduation: formatDate,
+      if (
+         getValues().groupName &&
+         getValues().description &&
+         formatDate &&
+         imageValue
+      ) {
+         const data = {
+            groupName: getValues().groupName,
+            description: getValues().description,
+            image: imageValue,
+            dateOfGraduation: formatDate,
+         }
+         dispatch(postCard({ data, showSnackbar })).then(setActive(''))
+      } else {
+         alert('asd')
       }
-      dispatch(postCard({ data, showSnackbar }))
-      setActive('')
       setValue('groupName', '')
       setValue('description', '')
    }
@@ -155,7 +164,7 @@ export const Groups = () => {
                      el={el}
                      image={el.image}
                      title={el.groupName}
-                     date={el.create_date}
+                     date={el.dateOfGraduate}
                      description={el.description}
                      onClick={openModalDeleteAndEditHandler}
                      menuItems={menuItems}
@@ -178,7 +187,7 @@ export const Groups = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
-               isFormEmpty={isFormEmpty}
+               // isFormEmpty={isFormEmpty}
             />
             <ModalDeleteGroup
                open={isActiveModal1}

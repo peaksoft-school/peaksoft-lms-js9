@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
 import { useForm } from 'react-hook-form'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { DateTime } from 'luxon'
 import { format, isValid } from 'date-fns'
 import { useDispatch, useSelector } from 'react-redux'
 import { Header } from '../../../../components/UI/header/Header'
@@ -62,21 +60,16 @@ export const Courses = () => {
          editDescription: '',
       },
    })
-   const dateString = '2023-09-08'
-   const dateTime = DateTime.fromISO(dateString)
-   const formattedDate = dateTime.toFormat(
-      "EEE LLL dd yyyy HH:mm:ss 'GMT'+0600 (Киргизия)"
-   )
+
    const ddd = 'Fri Sep 08 2023 00:00:00 GMT+0600 (Киргизия)'
 
    console.log(ddd)
    console.log(dateValue, 'value')
-   console.log(formattedDate, 'format')
-   const isFormEmpty =
-      !getValues().groupName.trim() ||
-      !getValues().description.trim() ||
-      !dateValue ||
-      !imageValue
+   // const isFormEmpty =
+   //    !getValues().groupName.trim() ||
+   //    !getValues().description.trim() ||
+   //    !dateValue ||
+   //    !imageValue
 
    let formatDate = ''
    if (dateValue && isValid(new Date(dateValue))) {
@@ -130,10 +123,7 @@ export const Courses = () => {
          image: imageValue,
          dateOfGraduation: formatDate,
       }
-      dispatch(postCard({ data, showSnackbar }))
-      setActive('')
-      setValue('groupName', '')
-      setValue('description', '')
+      dispatch(postCard({ data, showSnackbar, modal: setActive, setValue }))
    }
    const saveHandler = (el) => {
       const data = {
@@ -243,7 +233,7 @@ export const Courses = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
-               isFormEmpty={isFormEmpty}
+               // isFormEmpty={isFormEmpty}
             />
             <ModalDelete
                open={isActiveModal1}

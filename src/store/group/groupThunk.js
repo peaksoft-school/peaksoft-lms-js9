@@ -40,7 +40,7 @@ export const postCard = createAsyncThunk(
          return dispatch(getCard())
       } catch (error) {
          payload.showSnackbar(error.message, 'error')
-         return rejectWithValue(error.message)
+         return rejectWithValue(error.data.message)
       }
    }
 )

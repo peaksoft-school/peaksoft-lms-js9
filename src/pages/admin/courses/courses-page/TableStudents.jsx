@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { Pagination, Stack, styled } from '@mui/material'
+import { Pagination, styled } from '@mui/material'
 import Table from '../../../../components/UI/table/Table'
 import { columnsTableCourses } from '../../../../utils/constants/constants'
 import { getStudents } from '../../../../store/students/studentsThunk'
@@ -16,37 +16,31 @@ export const TableStudents = () => {
    useEffect(() => {
       dispatch(getStudents({ id: +params.id, page }))
    }, [])
+   console.log(courseStudents?.length)
    return (
       <div>
          {isLoading && <Isloading />}
-         {courseStudents && courseStudents.length > 0 ? (
+         {courseStudents && courseStudents?.length > 0 ? (
             <Table data={courseStudents} columns={columnsTableCourses} />
          ) : (
             <NotFound content="Нет студентов" />
          )}
          <StackStyled>
-            <Stack spacing={2}>
-               <Pagination
-                  count={Math.ceil((courseStudents.length * 2) / 10)}
-                  color="primary"
-                  page={page}
-                  onChange={(event, newPage) => {
-                     setPage(newPage)
-                     dispatch(getStudents({ id: +params.id, page: newPage }))
-                  }}
-               />
-            </Stack>
+            <Pagination
+               count={Math.ceil((courseStudents.length * 2) / 10)}
+               color="primary"
+               page={page}
+               onChange={(event, newPage) => {
+                  setPage(newPage)
+                  dispatch(getStudents({ id: +params.id, page: newPage }))
+               }}
+            />
          </StackStyled>
       </div>
    )
 }
 const StackStyled = styled('div')`
    position: absolute;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: end;
-   margin-top: 2rem;
-   bottom: 5%;
-   left: 44%;
+   bottom: 1%;
+   left: 50%;
 `
