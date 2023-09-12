@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FormControl, MenuItem, Select, styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { menuItem, navLink } from '../../../utils/constants/constants'
 import { Button } from '../button/Button'
 
@@ -26,9 +26,6 @@ export const Material = ({
    el,
 }) => {
    const dispatch = useDispatch()
-   // const [videoIdState, setVideoIdState] = useState()
-   const { lesson } = useSelector((state) => state.lesson)
-   console.log('lesson: ', lesson)
 
    const saveLessonCrudHandler = (item) => {
       clickSaveHandlerLessons({ lesson: el, data: item })
@@ -37,7 +34,7 @@ export const Material = ({
    const editLessonCrudHandler = (item) => {
       clickEditHandlerLessons({ lesson: el, data: item })
       dispatch(getLinkLessonThunk(el.lessonId))
-      dispatch(getVideoLessonThunk(el?.lessonId))
+      dispatch(getVideoLessonThunk(el.lessonId))
    }
 
    const [selectedValues, setSelectedValues] = useState({})
@@ -47,9 +44,6 @@ export const Material = ({
          [id]: value,
       }))
    }
-   // useEffect(() => {
-   //    setVideoIdState(videoId)
-   // }, [])
 
    const submit = () => {
       dispatch(getLinkLessonThunk(el.lessonId))
@@ -129,36 +123,36 @@ export const Material = ({
                      {item.icon}
                      <h2>{item.title}</h2>
                   </div>
-                  <div className="buttons">
-                     {el.videoLesson === true ? (
+                  {((item.id === 1 && el.videoLesson) ||
+                     (item.id === 2 && el.presentation) ||
+                     (item.id === 4 && el.link)) && (
+                     <div className="buttons">
                         <StyledButton
                            key={item.lessonId}
                            className="button"
                            onClick={(e) => {
                               e.preventDefault()
-                              console.log(item, 'efeffef')
                               editLessonCrudHandler(item)
                            }}
                         >
                            <EditGreenIcon />
                            Редактировать
                         </StyledButton>
-                     ) : null}
-
-                     <StyledButton
-                        className="button"
-                        onClick={(e) => {
-                           e.preventDefault()
-                           clickDeleteHandler({
-                              data: item.title,
-                              actionType: item.id,
-                           })
-                        }}
-                     >
-                        <DeleteRedIcon />
-                        Удалить
-                     </StyledButton>
-                  </div>
+                        <StyledButton
+                           className="button"
+                           onClick={(e) => {
+                              e.preventDefault()
+                              clickDeleteHandler({
+                                 data: item.title,
+                                 actionType: item.id,
+                              })
+                           }}
+                        >
+                           <DeleteRedIcon />
+                           Удалить
+                        </StyledButton>
+                     </div>
+                  )}
                </NavLink>
             ))}
          </div>
@@ -193,16 +187,6 @@ const Container = styled('div')(({ theme }) => ({
          display: 'flex',
          alignItems: 'center',
          gap: '1.88rem',
-
-         // '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
-         // {
-         //    borderColor: '#EBEBEB',
-         // },
-         // '.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
-         // {
-         //    border: '1px solid #EBEBEB',
-         //    width: '4vw',
-         // },
       },
    },
    '.containerItem': {

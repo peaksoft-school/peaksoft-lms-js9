@@ -42,8 +42,8 @@ export const VideoModal = ({
             showSnackbar,
          })
       )
-      // dispatch(getVideoLessonThunk(lessonId))
    }
+
    const updateVideoLesson = (values) => {
       const data = {
          name: values.name,
@@ -51,7 +51,11 @@ export const VideoModal = ({
          link: values.link,
       }
       dispatch(
-         putVideoLessonThunk({ data, videoLessonId: videoId?.id, showSnackbar })
+         putVideoLessonThunk({
+            data,
+            videoLessonId: videoId?.id,
+            showSnackbar,
+         })
       )
       setActive(false)
    }

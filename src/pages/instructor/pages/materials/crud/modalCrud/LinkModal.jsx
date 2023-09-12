@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { styled } from '@mui/material'
 import { useFormik } from 'formik'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Modal } from '../../../../../../components/UI/modal/Modal'
 import { Input } from '../../../../../../components/UI/input/Input'
@@ -10,6 +11,7 @@ import {
    updateLinkLessonThunk,
 } from '../../../../../../store/lessonCrud/lessonCrudThunk'
 import { showSnackbar } from '../../../../../../components/UI/snackbar/Snackbar'
+import { getLesson } from '../../../../../../store/lesson/lessonThunk'
 
 export const LinkModal = ({
    isActive,
@@ -22,10 +24,22 @@ export const LinkModal = ({
 }) => {
    const dispatch = useDispatch()
    const { linkId } = useSelector((state) => state.lessonCrud)
+   const params = useParams()
+
+   useEffect(() => {
+      dispatch(getLesson(+params.id))
+   }, [])
 
    const addHandleSubmit = (values) => {
       setActive(false)
-      dispatch(postLinkLessonThunk({ values, lessonId, showSnackbar }))
+      dispatch(
+         postLinkLessonThunk({
+            courseId: +params.id,
+            values,
+            lessonId,
+            showSnackbar,
+         })
+      )
       values.text = ''
       values.link = ''
    }
@@ -37,6 +51,7 @@ export const LinkModal = ({
       }
       dispatch(
          updateLinkLessonThunk({
+            courseId: +params.id,
             lessonId,
             data,
             linkId: linkId?.id,

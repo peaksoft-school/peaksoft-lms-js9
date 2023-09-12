@@ -122,24 +122,24 @@ export const MyCoursesMaterial = () => {
       if (deleteAction === 1) {
          dispatch(
             deleteVideoLessonThunk({
+               courseId: +params.id,
                videoId: videoId?.id,
-               lessonid: lessonId,
                showSnackbar,
             })
          )
       } else if (deleteAction === 2) {
          dispatch(
             deletePresentationLessonThunk({
+               courseId: +params.id,
                presentationId: presentationId?.id,
-               lessonid: lessonId,
                showSnackbar,
             })
          )
       } else if (deleteAction === 4) {
          dispatch(
             deleteLinkLessonThunk({
+               courseId: +params.id,
                linkId: linkId?.id,
-               lessonid: lessonId,
                showSnackbar,
             })
          )

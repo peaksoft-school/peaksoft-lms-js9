@@ -22,13 +22,13 @@ export const getLinkLessonThunk = createAsyncThunk(
 export const postLinkLessonThunk = createAsyncThunk(
    'lessonCrud/postLinkLesson',
    async (
-      { lessonId, values, showSnackbar },
+      { courseId, lessonId, values, showSnackbar },
       { rejectWithValue, dispatch }
    ) => {
       try {
          await axiosInstance.post(`/api/links/${lessonId}`, values)
          showSnackbar('Ссылка успешно добавлен!', 'success')
-         return dispatch(getLinkLessonThunk(lessonId))
+         return dispatch(getLesson(courseId))
       } catch (error) {
          showSnackbar(error.message, 'error')
          return rejectWithValue(error.massage)
@@ -54,11 +54,14 @@ export const updateLinkLessonThunk = createAsyncThunk(
 
 export const deleteLinkLessonThunk = createAsyncThunk(
    'lessonCrud/deleteLinkLesson',
-   async ({ linkId, showSnackbar }, { rejectWithValue }) => {
+   async (
+      { courseId, linkId, showSnackbar },
+      { rejectWithValue, dispatch }
+   ) => {
       try {
-         const response = await axiosInstance.delete(`/api/links/${linkId}`)
+         await axiosInstance.delete(`/api/links/${linkId}`)
          showSnackbar('Ссылка успешно удалено!', 'success')
-         return response
+         return dispatch(getLesson(courseId))
       } catch (error) {
          showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
@@ -119,13 +122,13 @@ export const putVideoLessonThunk = createAsyncThunk(
 export const deleteVideoLessonThunk = createAsyncThunk(
    'lessonCrud/deleteVideoLesson',
    async (
-      { lessonId, videoId, showSnackbar },
+      { courseId, videoId, showSnackbar },
       { rejectWithValue, dispatch }
    ) => {
       try {
          await axiosInstance.delete(`/api/videos/${videoId}`)
          showSnackbar('Видеоурок успешно удалено!', 'success')
-         return dispatch(getLinkLessonThunk(lessonId))
+         return dispatch(getLesson(courseId))
       } catch (error) {
          showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
@@ -151,7 +154,10 @@ export const getPresentationLessonThunk = createAsyncThunk(
 
 export const postPresentationLessonThunk = createAsyncThunk(
    'lessonCrud/postPresentationLesson',
-   async ({ lessonId, data, showSnackbar }, { rejectWithValue, dispatch }) => {
+   async (
+      { courseId, lessonId, data, showSnackbar },
+      { rejectWithValue, dispatch }
+   ) => {
       try {
          const getFile = await dispatch(postFile(data.linkFilePpt)).unwrap()
          await axiosInstance.post(`/api/presentations/${lessonId}`, {
@@ -160,7 +166,7 @@ export const postPresentationLessonThunk = createAsyncThunk(
          })
          showSnackbar('Презентация успешно добавлен!', 'success')
 
-         return dispatch(getPresentationLessonThunk(lessonId))
+         return dispatch(getLesson(courseId))
       } catch (error) {
          showSnackbar(error.message, 'error')
 
@@ -194,13 +200,14 @@ export const putPresentationLessonThunk = createAsyncThunk(
 // deletePresentation
 export const deletePresentationLessonThunk = createAsyncThunk(
    'lessonCrud/deletePresentationLesson',
-   async ({ presentationId, showSnackbar }, { rejectWithValue }) => {
+   async (
+      { courseId, presentationId, showSnackbar },
+      { rejectWithValue, dispatch }
+   ) => {
       try {
-         const response = await axiosInstance.delete(
-            `/api/presentations/${presentationId}`
-         )
+         await axiosInstance.delete(`/api/presentations/${presentationId}`)
          showSnackbar('Презентация успешно удалено!', 'success')
-         return response
+         return dispatch(getLesson(courseId))
       } catch (error) {
          showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)

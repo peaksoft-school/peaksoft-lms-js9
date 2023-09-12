@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { styled } from '@mui/material'
 import { Modal } from '../../../../../../components/UI/modal/Modal'
 import { Input } from '../../../../../../components/UI/input/Input'
@@ -10,6 +11,7 @@ import {
    putPresentationLessonThunk,
 } from '../../../../../../store/lessonCrud/lessonCrudThunk'
 import { showSnackbar } from '../../../../../../components/UI/snackbar/Snackbar'
+import { getLesson } from '../../../../../../store/lesson/lessonThunk'
 
 export const PresentationModal = ({
    lessonId,
@@ -23,6 +25,11 @@ export const PresentationModal = ({
    const dispatch = useDispatch()
    const { presentationId } = useSelector((state) => state.lessonCrud)
    const [file, setFile] = useState()
+   const params = useParams()
+
+   useEffect(() => {
+      dispatch(getLesson(+params.id))
+   }, [])
 
    const addPresentationHandleSubmit = (values) => {
       const data = {
@@ -30,7 +37,14 @@ export const PresentationModal = ({
          description: values.description,
          linkFilePpt: file,
       }
-      dispatch(postPresentationLessonThunk({ data, lessonId, showSnackbar }))
+      dispatch(
+         postPresentationLessonThunk({
+            courseId: +params.id,
+            data,
+            lessonId,
+            showSnackbar,
+         })
+      )
       values.name = ''
       values.description = ''
       values.linkFilePpt = ''
@@ -45,6 +59,7 @@ export const PresentationModal = ({
       }
       dispatch(
          putPresentationLessonThunk({
+            courseId: +params.id,
             data,
             lessonId,
             presentationId: presentationId?.id,
