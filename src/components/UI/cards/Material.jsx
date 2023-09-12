@@ -1,22 +1,14 @@
 import React, { useState } from 'react'
 import { FormControl, MenuItem, Select, styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import {
-   menuItem,
-   reusableRoutesLesson,
-} from '../../../utils/constants/constants'
+import { useDispatch, useSelector } from 'react-redux'
+import { menuItem, navLink } from '../../../utils/constants/constants'
 import { Button } from '../button/Button'
 
 import {
-   LessonVideoIcon,
-   TaskIcon,
-   TestIcon,
-   PresentationIcon,
    LogoLessonIcon,
    DeleteRedIcon,
    EditGreenIcon,
-   LinkIcon,
 } from '../../../assets/icons'
 import { IconButtons } from '../button/IconButtons'
 import {
@@ -34,47 +26,20 @@ export const Material = ({
    el,
 }) => {
    const dispatch = useDispatch()
+   // const [videoIdState, setVideoIdState] = useState()
+   const { lesson } = useSelector((state) => state.lesson)
+   console.log('lesson: ', lesson)
 
    const saveLessonCrudHandler = (item) => {
       clickSaveHandlerLessons({ lesson: el, data: item })
    }
+
    const editLessonCrudHandler = (item) => {
       clickEditHandlerLessons({ lesson: el, data: item })
       dispatch(getLinkLessonThunk(el.lessonId))
-      dispatch(getVideoLessonThunk(el.lessonId))
+      dispatch(getVideoLessonThunk(el?.lessonId))
    }
-   const navLink = [
-      {
-         route: reusableRoutesLesson.videolesson,
-         icon: <LessonVideoIcon />,
-         title: 'Видеоурок',
-         id: 1,
-      },
-      {
-         route: reusableRoutesLesson.presentation,
-         icon: <PresentationIcon />,
-         title: 'Презентация',
-         id: 2,
-      },
-      {
-         route: reusableRoutesLesson.task,
-         icon: <TaskIcon />,
-         title: 'Задание',
-         id: 3,
-      },
-      {
-         route: reusableRoutesLesson.link,
-         icon: <LinkIcon />,
-         title: 'Ссылка',
-         id: 4,
-      },
-      {
-         route: reusableRoutesLesson.test,
-         icon: <TestIcon />,
-         title: 'Тест',
-         id: 5,
-      },
-   ]
+
    const [selectedValues, setSelectedValues] = useState({})
    const handleChange = (id, value) => {
       setSelectedValues((prevState) => ({
@@ -82,11 +47,16 @@ export const Material = ({
          [id]: value,
       }))
    }
+   // useEffect(() => {
+   //    setVideoIdState(videoId)
+   // }, [])
+
    const submit = () => {
       dispatch(getLinkLessonThunk(el.lessonId))
       dispatch(getVideoLessonThunk(el.lessonId))
       dispatch(getPresentationLessonThunk(el.lessonId))
    }
+
    return (
       <Container key={el.id} onClick={submit}>
          <div className="containerHeader">
@@ -117,6 +87,7 @@ export const Material = ({
                   >
                      {menuItem.map((item) => (
                         <MenuItem
+                           key={item.id}
                            value={item.value}
                            onClick={() => saveLessonCrudHandler(item)}
                            sx={{
@@ -149,6 +120,7 @@ export const Material = ({
          <div className="containerItem">
             {navLink.map((item) => (
                <NavLink
+                  key={item.id}
                   to={item.route}
                   activeClassName="active"
                   className="nav-link"
@@ -158,16 +130,21 @@ export const Material = ({
                      <h2>{item.title}</h2>
                   </div>
                   <div className="buttons">
-                     <StyledButton
-                        className="button"
-                        onClick={(e) => {
-                           e.preventDefault()
-                           editLessonCrudHandler(item)
-                        }}
-                     >
-                        <EditGreenIcon />
-                        Редактировать
-                     </StyledButton>
+                     {el.videoLesson === true ? (
+                        <StyledButton
+                           key={item.lessonId}
+                           className="button"
+                           onClick={(e) => {
+                              e.preventDefault()
+                              console.log(item, 'efeffef')
+                              editLessonCrudHandler(item)
+                           }}
+                        >
+                           <EditGreenIcon />
+                           Редактировать
+                        </StyledButton>
+                     ) : null}
+
                      <StyledButton
                         className="button"
                         onClick={(e) => {

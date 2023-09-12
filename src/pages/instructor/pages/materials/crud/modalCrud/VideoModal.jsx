@@ -2,14 +2,17 @@ import React, { useEffect } from 'react'
 import { styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { Modal } from '../../../../../../components/UI/modal/Modal'
 import { Input } from '../../../../../../components/UI/input/Input'
 import { Button } from '../../../../../../components/UI/button/Button'
 import {
+   // getVideoLessonThunk,
    postVideoLessonThunk,
    putVideoLessonThunk,
 } from '../../../../../../store/lessonCrud/lessonCrudThunk'
 import { showSnackbar } from '../../../../../../components/UI/snackbar/Snackbar'
+import { getLesson } from '../../../../../../store/lesson/lessonThunk'
 
 export const VideoModal = ({
    lessonId,
@@ -20,12 +23,26 @@ export const VideoModal = ({
    closeHandlerModal,
    isVideoLesson,
 }) => {
+   console.log('buttonText: ', buttonText)
    const dispatch = useDispatch()
    const { videoId } = useSelector((state) => state.lessonCrud)
+   const params = useParams()
+
+   useEffect(() => {
+      dispatch(getLesson(+params.id))
+   }, [])
 
    const addVideoHandleSubmit = (values) => {
       setActive(false)
-      dispatch(postVideoLessonThunk({ values, lessonId, showSnackbar }))
+      dispatch(
+         postVideoLessonThunk({
+            courseId: +params.id,
+            values,
+            lessonId,
+            showSnackbar,
+         })
+      )
+      // dispatch(getVideoLessonThunk(lessonId))
    }
    const updateVideoLesson = (values) => {
       const data = {

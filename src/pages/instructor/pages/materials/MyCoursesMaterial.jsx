@@ -28,12 +28,11 @@ export const MyCoursesMaterial = () => {
    const dispatch = useDispatch()
    const params = useParams()
 
-   const { linkId } = useSelector((state) => state.lessonCrud)
-   const { videoId } = useSelector((state) => state.lessonCrud)
-   const { presentationId } = useSelector((state) => state.lessonCrud)
+   const { linkId, presentationId, videoId, isLoadingCrud } = useSelector(
+      (state) => state.lessonCrud
+   )
 
    const { lesson, isLoading } = useSelector((state) => state.lesson)
-   const { isLoadingCrud } = useSelector((state) => state.lessonCrud)
 
    const { isActive: isActiveDel, setActive: setIsActiveDel } =
       useToggle('opendeletelesson')

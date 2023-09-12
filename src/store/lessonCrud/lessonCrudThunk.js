@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
 import { postFile } from '../courses/coursesThunk'
+import { getLesson } from '../lesson/lessonThunk'
 
 // getLinks
 
@@ -83,13 +84,13 @@ export const getVideoLessonThunk = createAsyncThunk(
 export const postVideoLessonThunk = createAsyncThunk(
    'lessonCrud/postVideoLesson',
    async (
-      { lessonId, values, showSnackbar },
+      { courseId, lessonId, values, showSnackbar },
       { rejectWithValue, dispatch }
    ) => {
       try {
          await axiosInstance.post(`/api/videos/${lessonId}`, values)
          showSnackbar('Видеоурок успешно добавлен!', 'success')
-         return dispatch(getVideoLessonThunk(lessonId))
+         return dispatch(getLesson(courseId))
       } catch (error) {
          showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
@@ -117,11 +118,14 @@ export const putVideoLessonThunk = createAsyncThunk(
 // deleteVideo
 export const deleteVideoLessonThunk = createAsyncThunk(
    'lessonCrud/deleteVideoLesson',
-   async ({ videoId, showSnackbar }, { rejectWithValue }) => {
+   async (
+      { lessonId, videoId, showSnackbar },
+      { rejectWithValue, dispatch }
+   ) => {
       try {
-         const response = await axiosInstance.delete(`/api/videos/${videoId}`)
+         await axiosInstance.delete(`/api/videos/${videoId}`)
          showSnackbar('Видеоурок успешно удалено!', 'success')
-         return response
+         return dispatch(getLinkLessonThunk(lessonId))
       } catch (error) {
          showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)

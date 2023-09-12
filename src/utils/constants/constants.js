@@ -1,3 +1,11 @@
+import {
+   LessonVideoIcon,
+   LinkIcon,
+   PresentationIcon,
+   TaskIcon,
+   TestIcon,
+} from '../../assets/icons'
+
 export const LOGIN_USER_KEY = 'PEAKSOFT_LMS_USER_KEY'
 
 export const BASE_URL = 'http://peaksoftlms.peaksoftprojects.com'
@@ -85,3 +93,36 @@ export const reusableRoutesLesson = {
    // link: '/link',
    test: 'test',
 }
+
+export const navLink = [
+   {
+      route: reusableRoutesLesson.videolesson,
+      icon: <LessonVideoIcon />,
+      title: 'Видеоурок',
+      id: 1,
+   },
+   {
+      route: reusableRoutesLesson.presentation,
+      icon: <PresentationIcon />,
+      title: 'Презентация',
+      id: 2,
+   },
+   {
+      route: reusableRoutesLesson.task,
+      icon: <TaskIcon />,
+      title: 'Задание',
+      id: 3,
+   },
+   {
+      route: reusableRoutesLesson.link,
+      icon: <LinkIcon />,
+      title: 'Ссылка',
+      id: 4,
+   },
+   {
+      route: reusableRoutesLesson.test,
+      icon: <TestIcon />,
+      title: 'Тест',
+      id: 5,
+   },
+]
