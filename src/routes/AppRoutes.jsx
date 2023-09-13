@@ -21,6 +21,7 @@ import { TableTeachers } from '../pages/admin/courses/courses-page/TableTeachers
 import { TableStudents } from '../pages/admin/courses/courses-page/TableStudents'
 import { MyCoursesIns } from '../pages/instructor/pages/homePage/MyCourses'
 import { MyCoursesTable } from '../pages/instructor/pages/homePage/MyCoursesTable'
+import { TestQuestion } from '../components/questionT/TestQuestion'
 
 export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
@@ -125,6 +126,23 @@ export const AppRoutes = ({ roles = 'admin' }) => {
             />
             <Route path="mycoursesins/:id" element={<MyCoursesTable />}>
                <Route path="materials" element={<MyCoursesMaterial />} />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/test"
+                  element={<TestQuestion />}
+               />
+
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/task"
+                  element="Task Page"
+               />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/videoLesson"
+                  element="VideoLesson Page"
+               />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/presentation"
+                  element="Presentation Page"
+               />
                <Route path="students" element={<MyCoursesStudents />} />
             </Route>
          </Route>
