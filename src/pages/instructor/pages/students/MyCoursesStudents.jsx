@@ -71,15 +71,15 @@ export const MyCoursesStudents = () => {
    return (
       <div>
          {isLoading && <Isloading />}
-         {courseStudents.length > 0 ? (
-            <Table data={courseStudents} columns={columns} />
+         {courseStudents.studentResponses?.length > 0 ? (
+            <Table data={courseStudents.studentResponses} columns={columns} />
          ) : (
             <NotFound content="Нет студентов!" />
          )}
          <StackStyled>
             <Stack spacing={2}>
                <Pagination
-                  count={Math.ceil((courseStudents.length * 2) / 10)}
+                  count={Math.ceil(courseStudents.quantityOfStudents / 10)}
                   color="primary"
                   page={page}
                   onChange={(event, newPage) => {
@@ -100,11 +100,6 @@ export const MyCoursesStudents = () => {
 }
 const StackStyled = styled('div')`
    position: absolute;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: end;
-   margin-top: 2rem;
-   bottom: 5%;
-   left: 44%;
+   bottom: 1%;
+   left: 50%;
 `

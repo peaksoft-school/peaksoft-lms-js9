@@ -34,11 +34,10 @@ export const getStudents = createAsyncThunk(
          const response = await axiosInstance.get(`/api/students/${id}`, {
             params: {
                currentPage: page,
-               pageSize: 3,
+               pageSize: 10,
             },
          })
-         console.log(response)
-         return response.data.studentResponses
+         return response.data
       } catch (error) {
          return rejectWithValue(error.message)
       }

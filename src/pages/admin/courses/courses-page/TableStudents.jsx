@@ -13,21 +13,26 @@ export const TableStudents = () => {
    const params = useParams()
    const [page, setPage] = useState(1)
    const { courseStudents, isLoading } = useSelector((state) => state.students)
+
    useEffect(() => {
       dispatch(getStudents({ id: +params.id, page }))
    }, [])
-   console.log(courseStudents?.length)
+
    return (
       <div>
          {isLoading && <Isloading />}
-         {courseStudents && courseStudents?.length > 0 ? (
-            <Table data={courseStudents} columns={columnsTableCourses} />
+         {courseStudents.studentResponses &&
+         courseStudents.studentResponses?.length > 0 ? (
+            <Table
+               data={courseStudents.studentResponses}
+               columns={columnsTableCourses}
+            />
          ) : (
             <NotFound content="Нет студентов" />
          )}
          <StackStyled>
             <Pagination
-               count={Math.ceil((courseStudents.length * 2) / 10)}
+               count={Math.ceil(courseStudents.quantityOfStudents / 10)}
                color="primary"
                page={page}
                onChange={(event, newPage) => {
