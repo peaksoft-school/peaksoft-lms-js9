@@ -215,8 +215,7 @@ const IconContainer = styled('div')`
    position: relative;
 `
 const Container = styled('div')`
-   width: 600px;
-   margin: 30px auto;
+   width: 100%;
    padding: 20px;
 `
 
@@ -232,8 +231,9 @@ const IconWrapper = styled('span')`
 `
 
 const ListContainer = styled('div')`
-   width: 650px;
+   width: 100%;
    border: 1px solid #ccc;
+   border-radius: 10px;
    padding: 10px;
 
    ul {
