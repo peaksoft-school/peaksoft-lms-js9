@@ -1,52 +1,42 @@
 import React, { useState } from 'react'
 import { FormControl, MenuItem, Select, styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import {
-   menuItem,
-   reusableRoutesLesson,
-} from '../../../utils/constants/constants'
+import { useDispatch } from 'react-redux'
+import { menuItem, navLink } from '../../../utils/constants/constants'
 import { Button } from '../button/Button'
 
 import {
-   LessonVideoIcon,
-   TaskIcon,
-   TestIcon,
-   PresentationIcon,
    LogoLessonIcon,
    DeleteRedIcon,
    EditGreenIcon,
-   LinkIcon,
 } from '../../../assets/icons'
 import { IconButtons } from '../button/IconButtons'
+import {
+   getLinkLessonThunk,
+   getPresentationLessonThunk,
+   getVideoLessonThunk,
+} from '../../../store/lessonCrud/lessonCrudThunk'
 
-export const Material = ({ clickEditHandler, openModalDeleteHandler, el }) => {
-   const navLink = [
-      {
-         route: reusableRoutesLesson.videolesson,
-         icon: <LessonVideoIcon />,
-         title: 'Видеоурок',
-      },
-      {
-         route: reusableRoutesLesson.presentation,
-         icon: <PresentationIcon />,
-         title: 'Презентация',
-      },
-      {
-         route: reusableRoutesLesson.task,
-         icon: <TaskIcon />,
-         title: 'Задания',
-      },
-      {
-         route: reusableRoutesLesson.link,
-         icon: <LinkIcon />,
-         title: 'Ссылка',
-      },
-      {
-         route: reusableRoutesLesson.test,
-         icon: <TestIcon />,
-         title: 'Тест',
-      },
-   ]
+export const Material = ({
+   clickDeleteHandler,
+   clickEditHandlerLessons,
+   clickEditHandler,
+   openModalDeleteHandler,
+   clickSaveHandlerLessons,
+   el,
+}) => {
+   const dispatch = useDispatch()
+
+   const saveLessonCrudHandler = (item) => {
+      clickSaveHandlerLessons({ lesson: el, data: item })
+   }
+
+   const editLessonCrudHandler = (item) => {
+      clickEditHandlerLessons({ lesson: el, data: item })
+      dispatch(getLinkLessonThunk(el.lessonId))
+      dispatch(getVideoLessonThunk(el.lessonId))
+   }
+
    const [selectedValues, setSelectedValues] = useState({})
    const handleChange = (id, value) => {
       setSelectedValues((prevState) => ({
@@ -54,8 +44,15 @@ export const Material = ({ clickEditHandler, openModalDeleteHandler, el }) => {
          [id]: value,
       }))
    }
+
+   const submit = () => {
+      dispatch(getLinkLessonThunk(el.lessonId))
+      dispatch(getVideoLessonThunk(el.lessonId))
+      dispatch(getPresentationLessonThunk(el.lessonId))
+   }
+
    return (
-      <Container key={el.id}>
+      <Container key={el.id} onClick={submit}>
          <div className="containerHeader">
             <div>
                <IconButtons onClick={() => clickEditHandler(el)}>
@@ -84,7 +81,9 @@ export const Material = ({ clickEditHandler, openModalDeleteHandler, el }) => {
                   >
                      {menuItem.map((item) => (
                         <MenuItem
+                           key={item.id}
                            value={item.value}
+                           onClick={() => saveLessonCrudHandler(item)}
                            sx={{
                               borderBottom: '1px solid #ECECEC',
                               '&:hover': {
@@ -115,6 +114,7 @@ export const Material = ({ clickEditHandler, openModalDeleteHandler, el }) => {
          <div className="containerItem">
             {navLink.map((item) => (
                <NavLink
+                  key={item.id}
                   to={item.route}
                   activeClassName="active"
                   className="nav-link"
@@ -123,19 +123,36 @@ export const Material = ({ clickEditHandler, openModalDeleteHandler, el }) => {
                      {item.icon}
                      <h2>{item.title}</h2>
                   </div>
-                  <div className="buttons">
-                     <StyledButton className="button">
-                        <EditGreenIcon />
-                        Редактировать
-                     </StyledButton>
-                     <StyledButton
-                        className="button"
-                        onClick={() => openModalDeleteHandler(el)}
-                     >
-                        <DeleteRedIcon />
-                        Удалить
-                     </StyledButton>
-                  </div>
+                  {((item.id === 1 && el.videoLesson) ||
+                     (item.id === 2 && el.presentation) ||
+                     (item.id === 4 && el.link)) && (
+                     <div className="buttons">
+                        <StyledButton
+                           key={item.lessonId}
+                           className="button"
+                           onClick={(e) => {
+                              e.preventDefault()
+                              editLessonCrudHandler(item)
+                           }}
+                        >
+                           <EditGreenIcon />
+                           Редактировать
+                        </StyledButton>
+                        <StyledButton
+                           className="button"
+                           onClick={(e) => {
+                              e.preventDefault()
+                              clickDeleteHandler({
+                                 data: item.title,
+                                 actionType: item.id,
+                              })
+                           }}
+                        >
+                           <DeleteRedIcon />
+                           Удалить
+                        </StyledButton>
+                     </div>
+                  )}
                </NavLink>
             ))}
          </div>
@@ -146,8 +163,8 @@ export const Material = ({ clickEditHandler, openModalDeleteHandler, el }) => {
 const Container = styled('div')(({ theme }) => ({
    backgroundColor: '#ffffff',
    margin: '1.25rem',
-   width: '29vw',
-   height: '33.7vh',
+   width: '39vw',
+   height: '34.7vh',
    borderRadius: '0.5rem',
    overflow: 'hidden',
    '.containerHeader': {
@@ -170,16 +187,6 @@ const Container = styled('div')(({ theme }) => ({
          display: 'flex',
          alignItems: 'center',
          gap: '1.88rem',
-
-         // '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
-         // {
-         //    borderColor: '#EBEBEB',
-         // },
-         // '.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
-         // {
-         //    border: '1px solid #EBEBEB',
-         //    width: '4vw',
-         // },
       },
    },
    '.containerItem': {
