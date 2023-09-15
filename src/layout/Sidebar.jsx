@@ -65,29 +65,19 @@ export const Sidebar = ({ roles }) => {
 
 const Container = styled('aside')`
    background-color: #ffffff;
-   width: 12.5vw;
+   width: 15rem;
    height: 100vh;
    display: flex;
    flex-direction: column;
    gap: 4.125rem;
-   @media (max-width: 600px) {
-      div h2 {
-         display: none;
-      }
-   }
 `
 
 const LogoPeaksoft = styled('div')`
    text-align: center;
    margin-top: 2.3rem;
    img {
-      width: 9rem;
-      height: 3rem;
-   }
-   @media (max-width: 1100px) {
-      img {
-         display: none;
-      }
+      width: 11rem;
+      height: 3.5rem;
    }
 `
 
@@ -96,22 +86,22 @@ const NavLinkStyled = styled(NavLink)(() => ({
    alignItems: 'center',
    justifyContent: 'start',
    gap: '1rem',
-   width: '11.5vw',
+   width: '14rem',
    height: '2.9rem',
    lineHeight: '2.875rem',
    svg: {
-      marginLeft: '20%',
-      width: '2rem',
+      marginLeft: '15%',
+      width: '1.7rem',
       height: '2rem',
    },
    h2: {
       fontSize: '1rem',
-      fontWeight: '700',
+      fontWeight: '600',
    },
    '&.active': {
       background:
          'linear-gradient(to left, #dde9f9 97%, #dde9f9 97%, #1f6ed4 50%)',
-      width: '11.5vw',
+      width: '14rem',
       borderTopRightRadius: '0.625em',
       borderBottomRightRadius: '0.625em',
       h2: {
@@ -119,11 +109,6 @@ const NavLinkStyled = styled(NavLink)(() => ({
       },
       path: {
          fill: '#1f6ed4',
-      },
-   },
-   '@media (max-width: 1480px)': {
-      h2: {
-         display: 'none',
       },
    },
 }))

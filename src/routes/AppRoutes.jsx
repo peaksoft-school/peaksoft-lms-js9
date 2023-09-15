@@ -11,7 +11,7 @@ import { AdminLayout } from '../layout/AdminLayout'
 import { Page } from '../containers/Page'
 import { SignInPage } from '../containers/SignInPage'
 import { Layout } from '../layout/Layout'
-import { MyCoursesStu } from '../pages/student/MyCourses'
+import { MyCoursesStu } from '../pages/student/home-page/MyCourses'
 import { USER_ROLE, reusableRoutesRoles } from '../utils/constants/constants'
 import { CreatePassword } from '../containers/CreatePassword'
 import { MyCoursesStudents } from '../pages/instructor/pages/students/MyCoursesStudents'
@@ -21,6 +21,16 @@ import { TableTeachers } from '../pages/admin/courses/courses-page/TableTeachers
 import { TableStudents } from '../pages/admin/courses/courses-page/TableStudents'
 import { MyCoursesIns } from '../pages/instructor/pages/homePage/MyCourses'
 import { MyCoursesTable } from '../pages/instructor/pages/homePage/MyCoursesTable'
+import { StudentLesson } from '../pages/student/home-page/StudentLesson'
+import { VideoLesson } from '../pages/student/lessonsPage/VideoLesson'
+import { Presentation } from '../pages/student/lessonsPage/Presentation'
+import { Task } from '../pages/student/lessonsPage/task/Task'
+import { LinkPage } from '../pages/student/lessonsPage/LinkPage'
+import { Test } from '../pages/student/lessonsPage/test/Test'
+import { LessonLayout } from '../pages/student/home-page/LessonLayout'
+import { TaskSend } from '../pages/student/lessonsPage/task/TaskLayout'
+import { TestLayout } from '../pages/student/lessonsPage/test/TestLayout'
+import { Page404 } from '../components/UI/not-found/Page404'
 import { TestQuestion } from '../components/questionT/TestQuestion'
 
 export const AppRoutes = ({ roles = 'admin' }) => {
@@ -57,7 +67,7 @@ export const AppRoutes = ({ roles = 'admin' }) => {
                />
             }
          />
-         <Route path="*" element={<h1>Такой страницы не существует!</h1>} />
+         <Route path="*" element={<Page404 />} />
          <Route
             path="/createPassword/:id"
             element={
@@ -104,6 +114,27 @@ export const AppRoutes = ({ roles = 'admin' }) => {
          >
             <Route path="/student" element={<Navigate to="mycoursesstu" />} />
             <Route path="mycoursesstu" element={<MyCoursesStu />} />
+            <Route path="mycoursesstu/:id" element={<StudentLesson />} />
+
+            <Route
+               path="mycoursesstu/:id/:lessonId"
+               element={<Navigate to="videolessonStudent" />}
+            />
+            <Route path="mycoursesstu/:id/:lessonId" element={<LessonLayout />}>
+               <Route path="videolessonStudent" element={<VideoLesson />} />
+               <Route path="presentationStudent" element={<Presentation />} />
+               <Route path="taskStudent" element={<Task />} />
+               <Route path="linkStudent" element={<LinkPage />} />
+               <Route path="testStudent" element={<Test />} />
+            </Route>
+            <Route
+               path="mycoursesstu/:id/:lessonId/taskStudent/:taskid"
+               element={<TaskSend />}
+            />
+            <Route
+               path="mycoursesstu/:id/:lessonId/testStudent/:testid"
+               element={<TestLayout />}
+            />
          </Route>
          <Route
             path="/instructor"
