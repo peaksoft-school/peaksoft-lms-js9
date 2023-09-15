@@ -5,7 +5,7 @@ import Search from '../../../assets/image/Magnifying-Glass-search.png'
 export const NotFound = ({ content }) => {
    return (
       <Container>
-         <img src={Search} alt="ddd" />
+         <img src={Search} alt="notfound" />
          <h2>{content}</h2>
       </Container>
    )
@@ -16,12 +16,12 @@ const Container = styled('div')`
    justify-content: center;
    align-items: center;
    img {
-      width: 25vw;
+      width: 20vw;
       position: relative;
    }
    h2 {
       position: absolute;
-      font-size: 2vw;
+      font-size: 1.5vw;
       margin-top: 25%;
    }
 `

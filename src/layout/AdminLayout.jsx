@@ -20,6 +20,6 @@ const SidebarStyled = styled('div')`
    position: fixed;
 `
 const Container = styled('div')`
-   margin-left: 13%;
+   margin-left: 15rem;
    padding: 0 1.2rem;
 `
