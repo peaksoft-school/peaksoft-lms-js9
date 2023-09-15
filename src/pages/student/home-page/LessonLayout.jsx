@@ -6,8 +6,6 @@ import { Header } from '../../../components/UI/header/Header'
 import { TabsStudents } from '../../../components/UI/tabs/TabsStudents'
 import { getLesson } from '../../../store/lesson/lessonThunk'
 import { getCardsStudentLayout } from '../../../store/studentLayout/studentLayoutThunk'
-import { NotificationModal } from './NotificationModal'
-import { useToggle } from '../../../utils/hooks/general'
 import { dataBell } from '../../../utils/constants/constants'
 
 export const LessonLayout = () => {
@@ -17,10 +15,6 @@ export const LessonLayout = () => {
    const { id } = useSelector((state) => state.auth)
    const { lesson } = useSelector((state) => state.lesson)
    const { cards } = useSelector((state) => state.studentLayout)
-   const { isActive, setActive } = useToggle('openmodalbellstudent')
-   const openModalBellStudent = () => {
-      setActive(!isActive)
-   }
 
    useEffect(() => {
       dispatch(getLesson(+params.id))
@@ -37,7 +31,7 @@ export const LessonLayout = () => {
          <div>
             <Header
                titlePage="Студент"
-               clickBellStudent={openModalBellStudent}
+               dataBell={dataBell}
                bellTotal={dataBell?.length}
             />
             <SpanStyled>
@@ -60,11 +54,6 @@ export const LessonLayout = () => {
                </div>
             </SpanStyled>
          </div>
-         <NotificationModal
-            open={isActive}
-            handleClose={() => setActive('')}
-            data={dataBell}
-         />
          <Container>
             <div>
                <TabsStudents />

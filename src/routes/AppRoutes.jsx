@@ -31,6 +31,7 @@ import { LessonLayout } from '../pages/student/home-page/LessonLayout'
 import { TaskSend } from '../pages/student/lessonsPage/task/TaskLayout'
 import { TestLayout } from '../pages/student/lessonsPage/test/TestLayout'
 import { Page404 } from '../components/UI/not-found/Page404'
+import { TestQuestion } from '../components/questionT/TestQuestion'
 
 export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
@@ -156,6 +157,23 @@ export const AppRoutes = ({ roles = 'admin' }) => {
             />
             <Route path="mycoursesins/:id" element={<MyCoursesTable />}>
                <Route path="materials" element={<MyCoursesMaterial />} />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/test"
+                  element={<TestQuestion />}
+               />
+
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/task"
+                  element="Task Page"
+               />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/videoLesson"
+                  element="VideoLesson Page"
+               />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/presentation"
+                  element="Presentation Page"
+               />
                <Route path="students" element={<MyCoursesStudents />} />
             </Route>
          </Route>

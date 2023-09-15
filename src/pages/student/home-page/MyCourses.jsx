@@ -5,8 +5,6 @@ import { Header } from '../../../components/UI/header/Header'
 import { Card } from '../../../components/UI/cards/Card'
 import { getCardsStudentLayout } from '../../../store/studentLayout/studentLayoutThunk'
 import { NotFound } from '../../../components/UI/not-found/NotFound'
-import { useToggle } from '../../../utils/hooks/general'
-import { NotificationModal } from './NotificationModal'
 import { dataBell } from '../../../utils/constants/constants'
 import { Isloading } from '../../../components/UI/snackbar/Isloading'
 
@@ -14,10 +12,6 @@ export const MyCoursesStu = () => {
    const dispatch = useDispatch()
    const { id } = useSelector((state) => state.auth)
    const { cards, isLoading } = useSelector((state) => state.studentLayout)
-   const { isActive, setActive } = useToggle('openmodalbellstudent')
-   const openModalBellStudent = () => {
-      setActive(!isActive)
-   }
 
    useEffect(() => {
       dispatch(getCardsStudentLayout(id))
@@ -29,7 +23,7 @@ export const MyCoursesStu = () => {
          {isLoading && <Isloading />}
          <Header
             titlePage="Студент"
-            clickBellStudent={openModalBellStudent}
+            dataBell={dataBell}
             bellTotal={dataBell?.length}
          />
          <ContainerItem>
@@ -52,11 +46,6 @@ export const MyCoursesStu = () => {
                </ContainerNotFound>
             )}
          </ContainerItem>
-         <NotificationModal
-            open={isActive}
-            handleClose={() => setActive('')}
-            data={dataBell}
-         />
       </div>
    )
 }

@@ -1,3 +1,11 @@
+import {
+   LessonVideoIcon,
+   LinkIcon,
+   PresentationIcon,
+   TaskIcon,
+   TestIcon,
+} from '../../assets/icons'
+
 export const LOGIN_USER_KEY = 'PEAKSOFT_LMS_USER_KEY'
 
 export const BASE_URL = 'http://peaksoftlms.peaksoftprojects.com'
@@ -29,62 +37,29 @@ export const columnsTableCourses = [
    { id: 'email', label: 'E-mail' },
 ]
 
-export const materialsLesson = [
-   {
-      id: 1,
-      lesson: 'Lesson-1',
-      lessonVideo: 'Видеоурок',
-      presentation: 'Презентация',
-      task: 'Задания',
-      link: 'Ссылка',
-      test: 'Тест',
-   },
-   {
-      id: 2,
-      lesson: 'Lesson-2',
-      lessonVideo: 'Видеоурок',
-      presentation: 'Презентация',
-      task: 'Задания',
-      link: 'Ссылка',
-      test: 'Тест',
-   },
-   {
-      id: 3,
-      lesson: 'Lesson-3',
-      lessonVideo: 'Видеоурок',
-      presentation: 'Презентация',
-      task: 'Задания',
-      link: 'Ссылка',
-      test: 'Тест',
-   },
-   {
-      id: 4,
-      lesson: 'Lesson-4',
-      lessonVideo: 'Видеоурок',
-      presentation: 'Презентация',
-      task: 'Задания',
-      link: 'Ссылка',
-      test: 'Тест',
-   },
-]
 export const menuItem = [
    {
+      id: 1,
       value: 'videolesson',
       title: 'Видеоурок',
    },
    {
+      id: 2,
       value: 'presentation',
-      title: 'Прентация',
+      title: 'Презентация',
    },
    {
+      id: 3,
       value: 'task',
       title: 'Задание',
    },
    {
+      id: 4,
       value: 'link',
       title: 'Ссылка',
    },
    {
+      id: 5,
       value: 'test',
       title: 'Тест',
    },
@@ -112,10 +87,43 @@ export const reusableRoutesRoles = [
 ]
 
 export const reusableRoutesLesson = {
-   videolesson: '/videolesson',
-   presentation: '/presentation',
-   task: '/task',
-   link: '/link',
-   test: '/test',
+   videolesson: 'videolesson',
+   presentation: 'presentation',
+   task: 'task',
+   // link: '/link',
+   test: 'test',
 }
 export const dataBell = []
+
+export const navLink = [
+   {
+      route: reusableRoutesLesson.videolesson,
+      icon: <LessonVideoIcon />,
+      title: 'Видеоурок',
+      id: 1,
+   },
+   {
+      route: reusableRoutesLesson.presentation,
+      icon: <PresentationIcon />,
+      title: 'Презентация',
+      id: 2,
+   },
+   {
+      route: reusableRoutesLesson.task,
+      icon: <TaskIcon />,
+      title: 'Задание',
+      id: 3,
+   },
+   {
+      route: reusableRoutesLesson.link,
+      icon: <LinkIcon />,
+      title: 'Ссылка',
+      id: 4,
+   },
+   {
+      route: reusableRoutesLesson.test,
+      icon: <TestIcon />,
+      title: 'Тест',
+      id: 5,
+   },
+]

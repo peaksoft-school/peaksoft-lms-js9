@@ -9,8 +9,6 @@ import {
    getCardsStudentLayout,
    getTestLesson,
 } from '../../../../store/studentLayout/studentLayoutThunk'
-import { useToggle } from '../../../../utils/hooks/general'
-import { NotificationModal } from '../../home-page/NotificationModal'
 import { dataBell } from '../../../../utils/constants/constants'
 
 export const TestLayout = () => {
@@ -21,10 +19,6 @@ export const TestLayout = () => {
    const { cards } = useSelector((state) => state.studentLayout)
    const { id } = useSelector((state) => state.auth)
    const { tests } = useSelector((state) => state.studentLayout)
-   const { isActive, setActive } = useToggle('openmodalbellstudent')
-   const openModalBellStudent = () => {
-      setActive(!isActive)
-   }
 
    useEffect(() => {
       dispatch(getLesson(+params.id))
@@ -43,7 +37,7 @@ export const TestLayout = () => {
       <div>
          <Header
             titlePage="Студент"
-            clickBellStudent={openModalBellStudent}
+            dataBell={dataBell}
             bellTotal={dataBell?.length}
          />
          <SpanStyled>
@@ -81,11 +75,6 @@ export const TestLayout = () => {
          <div>
             <TestInside />
          </div>
-         <NotificationModal
-            open={isActive}
-            handleClose={() => setActive('')}
-            data={dataBell}
-         />
       </div>
    )
 }

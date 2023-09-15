@@ -7,8 +7,6 @@ import { getLesson } from '../../../store/lesson/lessonThunk'
 import { Isloading } from '../../../components/UI/snackbar/Isloading'
 import { NotFound } from '../../../components/UI/not-found/NotFound'
 import { getCardsStudentLayout } from '../../../store/studentLayout/studentLayoutThunk'
-import { NotificationModal } from './NotificationModal'
-import { useToggle } from '../../../utils/hooks/general'
 import { dataBell } from '../../../utils/constants/constants'
 
 export const StudentLesson = () => {
@@ -18,10 +16,6 @@ export const StudentLesson = () => {
    const { id } = useSelector((state) => state.auth)
    const { lesson, isLoading } = useSelector((state) => state.lesson)
    const { cards } = useSelector((state) => state.studentLayout)
-   const { isActive, setActive } = useToggle('openmodalbellstudent')
-   const openModalBellStudent = () => {
-      setActive(!isActive)
-   }
 
    useEffect(() => {
       dispatch(getLesson(+params.id))
@@ -46,7 +40,7 @@ export const StudentLesson = () => {
       <div>
          <Header
             titlePage="Студент"
-            clickBellStudent={openModalBellStudent}
+            dataBell={dataBell}
             bellTotal={dataBell?.length}
          />
          {isLoading && <Isloading />}
@@ -86,11 +80,6 @@ export const StudentLesson = () => {
                onChange={handlePageChange}
             />
          </PaginationContainer>
-         <NotificationModal
-            open={isActive}
-            handleClose={() => setActive('')}
-            data={dataBell}
-         />
       </div>
    )
 }

@@ -16,6 +16,8 @@ import {
 import { Button } from '../button/Button'
 import { Tabs } from '../tabs/Tabs'
 import { logout } from '../../../store/signIn/signInThunk'
+import { NotificationModal } from '../../../pages/student/home-page/NotificationModal'
+import { useToggle } from '../../../utils/hooks/general'
 
 export const Header = ({
    onClick,
@@ -27,11 +29,15 @@ export const Header = ({
    toOne,
    icon,
    dangerButton,
-   clickBellStudent,
    bellTotal,
+   dataBell,
 }) => {
    const [state, setState] = useState(false)
    const dropdownRef = useRef(null)
+   const { isActive, setActive } = useToggle('openmodalbellstudent')
+   const openModalBellStudent = () => {
+      setActive(!isActive)
+   }
 
    const dispatch = useDispatch()
    const handleChange = () => {
@@ -70,7 +76,7 @@ export const Header = ({
             <Div>
                {titlePage === 'Студент' && (
                   <ContainerNotification>
-                     <IconButtons onClick={clickBellStudent}>
+                     <IconButtons onClick={openModalBellStudent}>
                         <BellIcon />
                      </IconButtons>
                      <p>{bellTotal}</p>
@@ -172,6 +178,11 @@ export const Header = ({
                </Button>
             )}
          </ButtonContainer>
+         <NotificationModal
+            open={isActive}
+            handleClose={() => setActive('')}
+            data={dataBell}
+         />
       </Container>
    )
 }
