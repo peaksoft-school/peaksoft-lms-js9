@@ -166,7 +166,7 @@ const StyledSelect = styled(Select)`
    }
    .css-13cymwt-control {
       width: 100%;
-      padding: 2px 8px 2px 1px;
+      /* padding: 2px 0px 2px 1px; */
       font-size: 16px;
       border-radius: 10px;
       margin-top: 10px;

@@ -28,6 +28,8 @@ export const Students = () => {
    const dispatch = useDispatch()
    const { students, isLoading } = useSelector((state) => state.students)
 
+   console.log(students)
+
    const [getId, setId] = useState()
    const [studentData, setStudentData] = useState()
    const [IsEdit, setIsEdit] = useState(false)
@@ -77,7 +79,7 @@ export const Students = () => {
    }
 
    const addStudent = (data) => {
-      dispatch(postNewStudents({ data, showSnackbar }))
+      dispatch(postNewStudents({ page, data, showSnackbar }))
    }
    const handleButtonClick = () => {
       document.getElementById('file-input').click()
@@ -106,8 +108,8 @@ export const Students = () => {
    }
    const filteredStudents =
       selectedFormat.label === 'ALL' || selectedFormat === ''
-         ? students
-         : students.filter(
+         ? students.studentResponses
+         : students.studentResponses.filter(
               (items) => items.studyFormat === selectedFormat.label
            )
 
@@ -221,7 +223,7 @@ export const Students = () => {
             />
          </div>
          <StyledTableContainer>
-            {students !== null ? (
+            {students.studentResponses !== null ? (
                <div>
                   <Table
                      columns={columns}
@@ -229,19 +231,21 @@ export const Students = () => {
                      itemsPerPage={10}
                   />
                   <StackStyled>
-                     <Stack spacing={3}>
+                     <Stack spacing={10}>
                         <Pagination
-                           count={Math.ceil((students.length * 2) / 10)}
+                           count={Math.ceil(students.quantityOfStudents / 10)}
                            color="primary"
                            page={page}
                            onChange={(event, newPage) => {
-                              setPage(newPage)
-                              dispatch(
-                                 getAllStudents({
-                                    currentPage: newPage,
-                                    pageSize: 10,
-                                 })
-                              )
+                              if (typeof newPage === 'number') {
+                                 setPage(newPage)
+                                 dispatch(
+                                    getAllStudents({
+                                       currentPage: newPage,
+                                       pageSize: 10,
+                                    })
+                                 )
+                              }
                            }}
                         />
                      </Stack>
@@ -264,10 +268,9 @@ const StyledTableContainer = styled('div')`
    width: 100%;
 `
 const StackStyled = styled('div')`
-   display: flex;
-   flex-direction: column;
-   margin-top: 1rem;
-   margin-left: 40%;
+   position: absolute;
+   left: 50%;
+   bottom: 1%;
 `
 
 const StyledTableCell = styled(TableCell)`

@@ -134,7 +134,7 @@ export const ModalEditStudent = ({
                            Отмена
                         </Button>
                         <Button variant="contained" type="submit">
-                           Добавить
+                           Сохранить
                         </Button>
                      </BtnContainer>
                   </Container>

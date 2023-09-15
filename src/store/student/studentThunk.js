@@ -16,7 +16,7 @@ export const getAllStudents = createAsyncThunk(
                },
             }
          )
-         return response.data.studentResponses
+         return response.data
       } catch (error) {
          return rejectWithValue('error')
       }
@@ -24,10 +24,10 @@ export const getAllStudents = createAsyncThunk(
 )
 export const postNewStudents = createAsyncThunk(
    'students/postStudent',
-   async ({ data, showSnackbar }, { rejectWithValue, dispatch }) => {
+   async ({ page, data, showSnackbar }, { rejectWithValue, dispatch }) => {
       try {
          await axiosInstance.post(`/api/students/${data.groupId}`, data)
-         dispatch(getAllStudents({ currentPage: 1, pageSize: 10 }))
+         dispatch(getAllStudents({ currentPage: page, pageSize: 10 }))
          showSnackbar('Студент успешно добавлен!', 'success')
       } catch (error) {
          showSnackbar(error.message, 'error')
