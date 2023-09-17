@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { getStudentsSlice } from './student/studentSlice'
 import { groupSlice } from './group/groupSlice'
 import { studentsSlice } from './students/studentsSlice'
 import { coursesSlice } from './courses/coursesSlice'
@@ -13,6 +14,7 @@ export const store = configureStore({
    reducer: {
       [studentsSlice.name]: studentsSlice.reducer,
       [signInSlice.name]: signInSlice.reducer,
+      [getStudentsSlice.name]: getStudentsSlice.reducer,
       [groupSlice.name]: groupSlice.reducer,
       [instructorsSlice.name]: instructorsSlice.reducer,
       [teachersSlice.name]: teachersSlice.reducer,
