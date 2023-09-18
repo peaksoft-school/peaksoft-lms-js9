@@ -34,7 +34,6 @@ fileAxiosInstanse.interceptors.response.use(
    },
    (error) => {
       if (error.response?.status === 401) {
-         //  store.dispatch(postFiles())
          throw new Error('401 unauthotized')
       }
       return Promise.reject(error)

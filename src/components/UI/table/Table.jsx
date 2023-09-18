@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import React from 'react'
 import {
    styled,
@@ -63,7 +64,7 @@ const StyledTableRowOne = styled(TableRow)`
    }
 `
 const StyledTableRow = styled(TableRow)`
-   &:nth-child(even) {
+   &:nth-of-type(even) {
       width: 100px;
       background-color: #1a227e1a;
    }

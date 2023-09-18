@@ -1,12 +1,3 @@
-export const columns = [
-   { id: 'id', label: 'ID' },
-   { id: 'name', label: 'Имя Фамилия' },
-   { id: 'group', label: 'Группа' },
-   { id: 'format', label: 'Формат' },
-   { id: 'numberPhone', label: 'Номер телефона' },
-   { id: 'email', label: 'E-mail' },
-]
-
 export const data = [
    {
       id: 1,
