@@ -93,6 +93,7 @@ export const reusableRoutesLesson = {
    // link: '/link',
    test: 'test',
 }
+export const dataBell = []
 
 export const navLink = [
    {

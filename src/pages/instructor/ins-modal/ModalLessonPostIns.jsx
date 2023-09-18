@@ -38,7 +38,7 @@ export const ModalLessonPost = ({
    )
 }
 const InputTitleStyled = styled(Input)`
-   width: 17vw;
+   width: 27vw;
    .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
       padding: 0px 1.125rem;
       height: 4.5vh;
@@ -55,12 +55,12 @@ const ButtonCloseStyled = styled(Button)`
    border-radius: 0.5rem;
    border: 0.0625rem solid var(--button, #3772ff);
    text-transform: capitalize;
-   width: 5.4vw;
-   height: 4.5vh;
+   width: 6.5rem;
+   height: 2.6rem;
 `
 const ButtonAddedStyled = styled(Button)`
    border-radius: 0.5rem;
    text-transform: capitalize;
-   width: 5.4vw;
-   height: 4.5vh;
+   width: 6.5rem;
+   height: 2.6rem;
 `

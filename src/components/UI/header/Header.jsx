@@ -6,6 +6,7 @@ import { IconButtons } from '../button/IconButtons'
 import {
    AddGroupToCourse,
    AppointIconWhite,
+   BellIcon,
    DropDownIcon,
    ExelExport,
    ExitIcon,
@@ -16,6 +17,7 @@ import { Button } from '../button/Button'
 import { Tabs } from '../tabs/Tabs'
 import { logout } from '../../../store/signIn/signInThunk'
 import { ModalLogout } from './ModalLogout'
+import { NotificationModal } from '../../../pages/student/home-page/NotificationModal'
 import { useToggle } from '../../../utils/hooks/general'
 
 export const Header = ({
@@ -28,10 +30,17 @@ export const Header = ({
    toOne,
    icon,
    dangerButton,
+   bellTotal,
+   dataBell,
 }) => {
    const [state, setState] = useState(false)
    const dropdownRef = useRef(null)
-   const { isActive, setActive } = useToggle('modallogout')
+   const { isActive: open, setActive: close } = useToggle('modallogout')
+   const { isActive, setActive } = useToggle('openmodalbellstudent')
+
+   const openModalBellStudent = () => {
+      setActive(!isActive)
+   }
 
    const dispatch = useDispatch()
    const handleChange = () => {
@@ -39,7 +48,7 @@ export const Header = ({
    }
    const logoutHandler = () => {
       dispatch(logout())
-      setActive('')
+      close('')
    }
 
    const handleClickOutside = (event) => {
@@ -69,24 +78,30 @@ export const Header = ({
                )}
             </TabsStyle>
             <Div>
+               {titlePage === 'Студент' && (
+                  <ContainerNotification>
+                     <IconButtons onClick={openModalBellStudent}>
+                        <BellIcon />
+                     </IconButtons>
+                     <p>{bellTotal}</p>
+                  </ContainerNotification>
+               )}
                <BoxLogOut ref={dropdownRef} onClick={handleChange}>
                   <ProfileIcon />
                   <button type="button">{titlePage}</button>
                   <DropDownIcon />
-                  <IconButtons>
-                     {state && (
-                        <StyledDropDown onClick={() => setActive(!isActive)}>
-                           <ExitIcon style={{ marginLeft: '1.20rem' }} />
-                           <span>Выйти</span>
-                        </StyledDropDown>
-                     )}
-                  </IconButtons>
+                  {state && (
+                     <StyledDropDown onClick={() => close(!open)}>
+                        <ExitIcon style={{ marginLeft: '1.20rem' }} />
+                        <span>Выйти</span>
+                     </StyledDropDown>
+                  )}
                </BoxLogOut>
             </Div>
          </StyledBox>
          <ModalLogout
-            open={isActive}
-            handleClose={() => setActive('')}
+            open={open}
+            handleClose={() => close('')}
             logoutHandler={logoutHandler}
          />
          <ButtonContainer>
@@ -170,6 +185,11 @@ export const Header = ({
                </Button>
             )}
          </ButtonContainer>
+         <NotificationModal
+            open={isActive}
+            handleClose={() => setActive('')}
+            data={dataBell}
+         />
       </Container>
    )
 }
@@ -192,8 +212,8 @@ const StyledDropDown = styled('h3')({
    display: 'flex',
    zIndex: 1,
    position: 'absolute',
-   top: '40px',
-   right: '10px',
+   top: '65px',
+   right: '40px',
    width: '13.31rem',
    height: '3.5rem',
    background: '#DDE9F9',
@@ -224,6 +244,7 @@ const TabsStyle = styled('div')`
 const Div = styled('div')`
    display: flex;
    justify-content: end;
+   gap: 1rem;
    width: 50%;
 `
 
@@ -257,3 +278,16 @@ const ImportExelButton = styled('div')(() => ({
    display: 'flex',
    gap: '10px',
 }))
+const ContainerNotification = styled('div')`
+   position: relative;
+   p {
+      background-color: #fa8900;
+      position: absolute;
+      color: #fff;
+      border-radius: 12rem;
+      padding: 0 0.5rem;
+      top: -0.4rem;
+      right: 0;
+      font-size: small;
+   }
+`

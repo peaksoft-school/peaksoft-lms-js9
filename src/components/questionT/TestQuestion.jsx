@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { styled } from '@mui/material'
 import { Input } from '../UI/input/Input'
 import { QuetionSection } from './Question'
+import { Button } from '../UI/button/Button'
+import { IconButtons } from '../UI/button/IconButtons'
+import { LargePlusIcon } from '../../assets/icons'
 
 export const TestQuestion = () => {
    const [quizItemSections, setQuizItemSections] = useState([
@@ -53,23 +56,42 @@ export const TestQuestion = () => {
                />
             ))}
          </>
+         <ContainerButtonsStyled>
+            <div>
+               <Button variant="outlined">Отмена</Button>
+               <Button>Сохранить</Button>
+            </div>
+            <IconButtonsStyled variant="round">
+               <LargePlusIcon />
+            </IconButtonsStyled>
+         </ContainerButtonsStyled>
       </>
    )
 }
+const ContainerButtonsStyled = styled('div')`
+   display: flex;
+   flex-direction: column;
+   align-items: end;
+   div {
+      margin-top: 24px;
+      display: flex;
+      gap: 10px;
+   }
+`
+const IconButtonsStyled = styled(IconButtons)`
+   margin-top: 150px;
+   margin-bottom: 20px;
+`
 
 const TitleContainer = styled('div')(() => ({
-   marginTop: '60px',
-   width: '59.3vw',
-   height: '124px',
    borderRadius: '10px',
    border: '1px solid #D4D4D4',
    background: ' #FFF',
+   padding: '2rem',
    h2: {
       color: 'var(--blue, #1F6ED4)',
       fontSize: '18px',
       fontWeight: '600',
-      marginTop: '20px',
-      marginLeft: '32px',
    },
    '&& :focus': {
       border: 'none',
@@ -77,11 +99,11 @@ const TitleContainer = styled('div')(() => ({
 }))
 
 const InputFirst = styled(Input)(() => ({
+   width: '100%',
    '& .MuiInputBase-root': {
-      width: '56.5vw',
+      width: '100%',
       height: '42px',
       padding: '0px',
-      marginLeft: '30px',
       marginTop: '16px',
    },
 }))

@@ -10,7 +10,7 @@ export const ModalLogout = ({ open, handleClose, logoutHandler }) => {
             <ModalStyled>
                <h2>Выйти</h2>
                <ParaghQuestionStyled>
-                  Вы уверены, что хотите выйти аккаунта?
+                  Вы уверены, что хотите выйти из аккаунта?
                </ParaghQuestionStyled>
                <div>
                   <ButtonCloseStyled variant="outlined" onClick={handleClose}>

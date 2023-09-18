@@ -21,8 +21,8 @@ const CustomSnackbar = styled('div')`
    background: ${({ status }) =>
       status === 'success' ? '#36AC0C' : '#C91E1E'};
    color: white;
-   min-width: 250px;
    display: flex;
+   padding-left: 1rem;
    flex-direction: row-reverse;
    justify-content: end;
    align-items: center;

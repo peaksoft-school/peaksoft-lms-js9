@@ -6,6 +6,7 @@ import { instructorsSlice } from './instructor/instructorSlice'
 import { signInSlice } from './signIn/signInSlice'
 import { teachersSlice } from './teachers/teachers.slice'
 import { lessonSlice } from './lesson/lessonSlice'
+import { studentLayoutSlice } from './studentLayout/studentLayoutSlice'
 import { lessonCrudSlice } from './lessonCrud/lessonCrudSlice'
 
 export const store = configureStore({
@@ -17,6 +18,7 @@ export const store = configureStore({
       [teachersSlice.name]: teachersSlice.reducer,
       [lessonSlice.name]: lessonSlice.reducer,
       [coursesSlice.name]: coursesSlice.reducer,
+      [studentLayoutSlice.name]: studentLayoutSlice.reducer,
       [lessonCrudSlice.name]: lessonCrudSlice.reducer,
    },
 })

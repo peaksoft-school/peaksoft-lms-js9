@@ -192,7 +192,7 @@ const ContainertConfirmLogin = styled('div')`
 `
 
 const ContainertConfirmPassword = styled('div')`
-   height: 10vh;
+   height: 8vh;
    display: flex;
    flex-direction: column;
    align-items: end;
@@ -240,7 +240,7 @@ const FormBlock = styled('div')(() => ({
    flexDirection: 'column',
    ' .block': {
       width: '100%',
-      height: '20.5vh',
+      height: '18.5vh',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',

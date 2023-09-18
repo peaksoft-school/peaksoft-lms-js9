@@ -2,7 +2,14 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import { Modal as ModalUi, styled } from '@mui/material'
 
-export const Modal = ({ minHeight, title, children, open, handleClose }) => {
+export const Modal = ({
+   minHeight,
+   title,
+   children,
+   open,
+   handleClose,
+   video,
+}) => {
    return (
       <div>
          <ModalUiStyled open={open} onClose={handleClose}>
@@ -12,7 +19,15 @@ export const Modal = ({ minHeight, title, children, open, handleClose }) => {
                      <p>{title}</p>
                   </Header>
                )}
-               <Content>{children}</Content>
+               <Content
+                  style={
+                     video
+                        ? { padding: '0' }
+                        : { padding: '1rem 1.56rem 1.56rem 1.56rem' }
+                  }
+               >
+                  {children}
+               </Content>
             </StyledModal>
          </ModalUiStyled>
       </div>

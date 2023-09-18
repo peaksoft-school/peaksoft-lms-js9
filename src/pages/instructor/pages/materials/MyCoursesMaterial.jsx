@@ -268,6 +268,7 @@ export const MyCoursesMaterial = () => {
 const DivMap = styled('div')(() => ({
    display: 'flex',
    flexWrap: 'wrap',
+   gap: '2rem',
 }))
 const ContainerNotFound = styled('div')`
    margin: 0 auto;

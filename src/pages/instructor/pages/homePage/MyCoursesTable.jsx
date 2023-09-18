@@ -163,10 +163,11 @@ const SpanStyled = styled('p')`
    margin-bottom: 1.5rem;
    display: flex;
    gap: 0.3125rem;
-   align-items: center;
+   align-items: end;
    button {
+      cursor: pointer;
       border: none;
-      font-size: 0.875rem;
+      font-size: 1rem;
       color: #747d74;
    }
 `
