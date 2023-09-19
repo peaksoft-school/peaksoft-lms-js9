@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -12,7 +13,7 @@ export const TableStudents = () => {
    const dispatch = useDispatch()
    const params = useParams()
    const [page, setPage] = useState(1)
-   const { courseStudents, isLoading } = useSelector((state) => state.students)
+   const { courseStudents, isLoading } = useSelector((state) => state.stud)
 
    useEffect(() => {
       dispatch(getStudents({ id: +params.id, page }))
@@ -21,10 +22,10 @@ export const TableStudents = () => {
    return (
       <div>
          {isLoading && <Isloading />}
-         {courseStudents.studentResponses &&
-         courseStudents.studentResponses?.length > 0 ? (
+         {courseStudents?.studentResponses &&
+         courseStudents?.studentResponses?.length > 0 ? (
             <Table
-               data={courseStudents.studentResponses}
+               data={courseStudents?.studentResponses}
                columns={columnsTableCourses}
             />
          ) : (
@@ -32,7 +33,7 @@ export const TableStudents = () => {
          )}
          <StackStyled>
             <Pagination
-               count={Math.ceil(courseStudents.quantityOfStudents / 10)}
+               count={Math.ceil(courseStudents?.quantityOfStudents / 10)}
                color="primary"
                page={page}
                onChange={(event, newPage) => {

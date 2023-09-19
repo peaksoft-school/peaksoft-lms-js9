@@ -93,6 +93,15 @@ export const Material = ({
                            <MenuItem
                               key={item.id}
                               value={item.value}
+                              disabled={
+                                 item.id === 1
+                                    ? el.videoLesson
+                                    : item.id === 2
+                                    ? el.presentation
+                                    : item.id === 4
+                                    ? el.link
+                                    : ''
+                              }
                               onClick={() => saveLessonCrudHandler(item)}
                               sx={{
                                  borderBottom: '1px solid #ECECEC',

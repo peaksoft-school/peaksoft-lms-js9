@@ -1,16 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import {
-   deleteTeacherLMS,
-   editTeacherLMS,
-   getTeacherLMS,
-   postTeacherLMS,
-} from '../../api/teachersResponse/teachers'
+import { axiosInstance } from '../../config/axiosInstance'
 
 export const getTeachers = createAsyncThunk(
    'teacher/getTeacher',
    async (_, { rejectWithValue }) => {
       try {
-         const { data } = await getTeacherLMS()
+         const { data } = await axiosInstance.get('/api/instructors')
          return data
       } catch (error) {
          return rejectWithValue(error.response?.data.message)
@@ -22,7 +17,7 @@ export const postTeacher = createAsyncThunk(
    'teachers/postTeachers',
    async ({ values, showSnackbar }, { rejectWithValue, dispatch }) => {
       try {
-         const { data } = await postTeacherLMS(values)
+         const { data } = await axiosInstance.post('/api/instructors', values)
          showSnackbar('Данные успешно отправлены', 'success')
          dispatch(getTeachers())
          return data
@@ -40,7 +35,9 @@ export const deleteTeacherId = createAsyncThunk(
    'deleteTeacher',
    async ({ idInstructor, showSnackbar }, { rejectWithValue, dispatch }) => {
       try {
-         const { data } = await deleteTeacherLMS(idInstructor)
+         const { data } = await axiosInstance.delete(
+            `/api/instructors/${idInstructor}`
+         )
          dispatch(getTeachers())
          showSnackbar('Удалено', 'success')
          return data
@@ -54,7 +51,10 @@ export const putTeacher = createAsyncThunk(
    'teachers/putTeachers',
    async ({ id, values, showSnackbar }, { rejectWithValue, dispatch }) => {
       try {
-         const { data } = await editTeacherLMS(id, values)
+         const { data } = await axiosInstance.put(
+            `/api/instructors/${id}`,
+            values
+         )
          dispatch(getTeachers())
          showSnackbar('Данные учителя успешно обновлены', 'success')
          return data

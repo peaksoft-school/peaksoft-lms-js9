@@ -9,7 +9,6 @@ import { Header } from '../../../../components/UI/header/Header'
 import { ModalGroup } from '../groups-modal/ModalGroup'
 import { useToggle } from '../../../../utils/hooks/general'
 import {
-   deleteFile,
    deleteGroup,
    getCard,
    postCard,
@@ -28,9 +27,12 @@ export const Groups = () => {
 
    const [dateAdded, setDateAdded] = useState('')
    const [dateEdit, setDateEdit] = useState('')
+   const [getValueDate, setValueDate] = useState('')
 
    const [imageValue, setImageValue] = useState('')
    const [imageEditValue, setImageEditValue] = useState('')
+
+   const [status, setStatus] = useState(false)
 
    const { isActive, setActive } = useToggle('addedgroupmodal')
    const { setActive: setActiveModal1, isActive: isActiveModal1 } =
@@ -66,7 +68,10 @@ export const Groups = () => {
    const closeModalDeleteHandler = () => setActiveModal1('')
    const openModalAddedNewGroupHandler = () => setActive(!isActive)
 
-   const onImageUpload = (img) => setImageValue(img)
+   const onImageUpload = (img) => {
+      setImageValue(img)
+      setStatus(true)
+   }
    const dateChangeHandler = (date) => setDateAdded(date)
    const closeModalAddedNewGroupHandler = () => {
       setActive('')
@@ -97,6 +102,7 @@ export const Groups = () => {
       setImageEditValue(data.image)
       setImageValue(data.image)
       setCardId(data.id)
+      setValueDate(data.dateOfGraduate)
    }
 
    const addedHandler = () => {
@@ -113,13 +119,12 @@ export const Groups = () => {
          id: getCardId,
          groupName: el.editTitle,
          description: el.editDescription,
-         dateOfGraduation: editFormatDate,
+         dateOfGraduation:
+            editFormatDate === '' ? getValueDate : editFormatDate,
          image: imageValue,
-         delImage: imageEditValue,
       }
-      dispatch(deleteFile(data.delImage))
-      dispatch(updateCard({ data, showSnackbar }))
-      setActiveModal2('')
+      dispatch(updateCard({ data, setActiveModal2, status, showSnackbar }))
+      setStatus(false)
    }
 
    const openModalDeleteAndEditHandler = ({ menuId, data }) => {
@@ -191,6 +196,7 @@ export const Groups = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
+               getValueDate={getValueDate}
             />
          </>
       </>

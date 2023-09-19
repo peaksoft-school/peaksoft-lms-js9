@@ -153,9 +153,11 @@ const Container = styled('div')(() => ({
 }))
 
 const LoginInput = styled(Input)(() => ({
+   '& .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input': {
+      height: '3.2vh',
+   },
    '& .MuiInputBase-root': {
       width: '28.8vw',
-      height: '5vh',
       borderRadius: '10px',
       marginTop: '0.4rem',
    },

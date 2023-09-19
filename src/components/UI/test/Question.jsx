@@ -1,10 +1,14 @@
 import { styled } from '@mui/material'
 import React, { useState } from 'react'
-import { CancelIcon, DeleteIcon, DuplicateIcon } from '../../assets/icons/index'
-import { Input } from '../UI/input/Input'
-import { Radio } from '../UI/checkbox-radio/Radio'
-import { Button } from '../UI/button/Button'
-import { CheckBox } from '../UI/checkbox-radio/CheckBox'
+import {
+   CancelIcon,
+   DeleteIcon,
+   DuplicateIcon,
+} from '../../../assets/icons/index'
+import { Input } from '../input/Input'
+import { Radio } from '../checkbox-radio/Radio'
+import { Button } from '../button/Button'
+import { CheckBox } from '../checkbox-radio/CheckBox'
 
 const selectedIdFromLocalStorage = localStorage.getItem('selectedId')
 const selectedId = selectedIdFromLocalStorage

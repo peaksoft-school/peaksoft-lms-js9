@@ -10,7 +10,6 @@ import { ModalCourses } from '../courses-modal/ModalCourses'
 import { ModalDelete } from '../courses-modal/ModalDelete'
 import { AppointIcon, DeleteIcon, EditIcon } from '../../../../assets/icons'
 import {
-   // deleteFile,
    deleteGroup,
    getCardsCourses,
    postCard,
@@ -28,9 +27,11 @@ import { NotFound } from '../../../../components/UI/not-found/NotFound'
 
 export const Courses = () => {
    const dispatch = useDispatch()
+   const [status, setStatus] = useState(false)
    const { cards, isLoading } = useSelector((state) => state.courses)
    const { getAllIns, instructors } = useSelector((state) => state.instructors)
    const [getCardId, setCardId] = useState('')
+   const [getValueDate, setValueDate] = useState('')
    const [getCourseName, setCourseName] = useState('')
    const [dateEditModal, setDateEditModal] = useState('')
    const [dateValue, setDateValue] = useState('')
@@ -62,16 +63,6 @@ export const Courses = () => {
       },
    })
 
-   const ddd = 'Fri Sep 08 2023 00:00:00 GMT+0600 (Киргизия)'
-
-   console.log(ddd)
-   console.log(dateValue, 'value')
-   // const isFormEmpty =
-   //    !getValues().groupName.trim() ||
-   //    !getValues().description.trim() ||
-   //    !dateValue ||
-   //    !imageValue
-
    let formatDate = ''
    if (dateValue && isValid(new Date(dateValue))) {
       formatDate = format(new Date(dateValue), 'yyyy-MM-dd')
@@ -84,7 +75,10 @@ export const Courses = () => {
    const closeModalEditHandler = () => setActiveModal2('')
    const closeModalDeleteHandler = () => setActiveModal1('')
    const openModalAddedNewGroupHandler = () => setActive(!isActive)
-   const onImageUpload = (img) => setImageValue(img)
+   const onImageUpload = (img) => {
+      setImageValue(img)
+      setStatus(true)
+   }
    const dateChangeHandler = (date) => setDateValue(date)
    const closeModalAddedNewGroupHandler = () => {
       setActive('')
@@ -115,6 +109,7 @@ export const Courses = () => {
       setImageEditValue(data.image)
       setImageValue(data.image)
       setCardId(data.id)
+      setValueDate(data.dateOfGraduation)
    }
 
    const addedHandler = () => {
@@ -131,16 +126,13 @@ export const Courses = () => {
          id: getCardId,
          courseName: el.editTitle,
          description: el.editDescription,
-         dateOfGraduation: editFormatDate,
+         dateOfGraduation:
+            editFormatDate === '' ? getValueDate : editFormatDate,
          image: imageValue,
-         delImage: imageEditValue,
       }
-      console.log(data)
-      // dispatch(deleteFile(data.delImage))
-      dispatch(updateCard({ data, showSnackbar }))
-      setActiveModal2('')
+      dispatch(updateCard({ data, status, showSnackbar, setActiveModal2 }))
+      setStatus(false)
    }
-
    const appointHandler = () => {
       dispatch(
          assignInstructor({
@@ -236,7 +228,6 @@ export const Courses = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
-               // isFormEmpty={isFormEmpty}
             />
             <ModalDelete
                open={isActiveModal1}
@@ -257,6 +248,7 @@ export const Courses = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
+               getValueDate={getValueDate}
             />
          </div>
       </div>

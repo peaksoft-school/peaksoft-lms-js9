@@ -9,7 +9,7 @@ import {
    updateLesson,
 } from '../../../../store/lesson/lessonThunk'
 import { useToggle } from '../../../../utils/hooks/general'
-import { ModalEditLesson } from '../../ins-modal/ModalLessonEditIns'
+import { ModalEditLesson } from '../../modal/ModalLessonEditIns'
 import { Isloading } from '../../../../components/UI/snackbar/Isloading'
 import { showSnackbar } from '../../../../components/UI/snackbar/Snackbar'
 import { NotFound } from '../../../../components/UI/not-found/NotFound'
@@ -50,8 +50,6 @@ export const MyCoursesMaterial = () => {
    useEffect(() => {
       dispatch(getLesson(+params.id))
    }, [])
-
-   //
 
    const { isActive: video, setActive: setVideo } = useToggle('video')
    const { isActive: presentation, setActive: setPresentation } =
@@ -148,8 +146,6 @@ export const MyCoursesMaterial = () => {
       setDeletee(false)
    }
 
-   //
-
    const changeUpdateTitle = (e) => setChangePutValue(e.target.value)
 
    const openModalDeleteHandler = (data) => {
@@ -189,7 +185,6 @@ export const MyCoursesMaterial = () => {
    return (
       <>
          {isLoadingCrud || isLoading ? <Isloading /> : null}
-
          <DivMap>
             {lesson && lesson.length > 0 ? (
                lesson.map((el) => (

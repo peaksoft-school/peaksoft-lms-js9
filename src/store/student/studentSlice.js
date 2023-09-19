@@ -18,5 +18,8 @@ export const getStudentsSlice = createSlice({
       builder.addCase(getAllStudents.pending, (state) => {
          state.isLoading = true
       })
+      builder.addCase(getAllStudents.rejected, (state) => {
+         state.isLoading = false
+      })
    },
 })

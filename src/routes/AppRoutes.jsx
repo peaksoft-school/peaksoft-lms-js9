@@ -165,6 +165,7 @@ export const AppRoutes = ({ roles = 'admin' }) => {
             />
             <Route path="mycoursesins/:id" element={<MyCoursesTable />}>
                <Route path="materials" element={<MyCoursesMaterial />} />
+               <Route path="students" element={<MyCoursesStudents />} />
             </Route>
             <Route
                path="/instructor/mycoursesins/:id"

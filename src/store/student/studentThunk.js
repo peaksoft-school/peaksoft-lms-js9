@@ -67,13 +67,17 @@ export const DeleteStudent = createAsyncThunk(
 )
 export const postExcelFile = createAsyncThunk(
    'students/postExcelFile',
-   async ({ formData, id, showSnackbar }, { rejectWithValue }) => {
+   async (
+      { formData, id, showSnackbar, setExcelFile },
+      { rejectWithValue }
+   ) => {
       try {
          await fileAxiosInstanse.post(`/api/students/import`, formData, {
             params: {
                groupId: id,
             },
          })
+         setExcelFile('')
          showSnackbar('Файл успешно отправлен!', 'success')
       } catch (error) {
          showSnackbar(error.message, 'error')

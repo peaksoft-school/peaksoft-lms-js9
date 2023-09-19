@@ -22,7 +22,7 @@ const CustomSnackbar = styled('div')`
       status === 'success' ? '#36AC0C' : '#C91E1E'};
    color: white;
    display: flex;
-   padding-left: 1rem;
+   padding-left: 10px;
    flex-direction: row-reverse;
    justify-content: end;
    align-items: center;
@@ -43,6 +43,7 @@ export const showSnackbar = (message, status) => {
       ),
       {
          style: {
+            marginTop: '0.7rem',
             borderRadius: '8px',
             background: status === 'success' ? '#36AC0C' : '#C91E1E',
             color: 'white',
@@ -50,7 +51,7 @@ export const showSnackbar = (message, status) => {
             height: '60px',
          },
          position: 'top-right',
-         duration: 3000,
+         duration: 2000,
       }
    )
 }

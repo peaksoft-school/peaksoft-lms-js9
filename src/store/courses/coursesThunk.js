@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
 import { fileAxiosInstanse } from '../../config/fileAxiosInstance'
@@ -54,8 +55,19 @@ export const postCard = createAsyncThunk(
          payload.showSnackbar('Курс успешно создан!', 'success')
          return dispatch(getCardsCourses())
       } catch (error) {
-         console.log(error)
-         payload.showSnackbar('Все поля должны быть заполнены!', 'error')
+         switch (error.response?.status) {
+            case 409:
+               payload.showSnackbar('Все поля должны быть заполнены!', 'error')
+               break
+            case 400:
+               payload.showSnackbar(
+                  'С таким названием курс уже существует !',
+                  'error'
+               )
+               break
+            default:
+               payload.showSnackbar(error, 'error')
+         }
          return rejectWithValue(error.message)
       }
    }
@@ -65,7 +77,7 @@ export const updateCard = createAsyncThunk(
    'courses/putCards',
    async (payload, { rejectWithValue, dispatch }) => {
       try {
-         if (payload.data.image === '') {
+         if (payload.status) {
             const getFile = await dispatch(
                postFile(payload.data.image)
             ).unwrap()
@@ -74,16 +86,16 @@ export const updateCard = createAsyncThunk(
                image: getFile,
             })
          } else {
-            await axiosInstance.put(`/api/courses/${payload.data.id}`, {
-               ...payload.data,
-               image: payload.data.delImage,
-            })
+            await axiosInstance.put(
+               `/api/courses/${payload.data.id}`,
+               payload.data
+            )
          }
-
          payload.showSnackbar('Курс успешно редактирован!', 'success')
+         payload.setActiveModal2('')
          await dispatch(getCardsCourses())
       } catch (error) {
-         payload.showSnackbar(error.message, 'error')
+         payload.showSnackbar(error, 'error')
          rejectWithValue(error.message)
       }
    }
@@ -137,6 +149,7 @@ export const addGroupToCourseThunk = createAsyncThunk(
          payload.showSnackbar('Группа успешно добавлен в курс', 'success')
          dispatch(getByIdInstructor(payload.instructorId))
          dispatch(getStudents({ id: payload.courseId, page: payload.page }))
+         dispatch(getCoursesById())
          return dispatch(getCoursesById(payload.courseId))
       } catch (error) {
          payload.showSnackbar(error, 'error')

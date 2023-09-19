@@ -20,6 +20,7 @@ export const ModalGroup = ({
    imageEditValue,
    dateEditModal,
    isFormEmpty,
+   getValueDate,
 }) => {
    const onSubmitForm = (data) => {
       onSubmit(data)
@@ -55,7 +56,7 @@ export const ModalGroup = ({
                      setValue('dateEditModal', date)
                      onDateChange(date)
                   }}
-                  value={dateEditModal}
+                  value={variant ? new Date(getValueDate) : dateEditModal}
                />
             </ContainerInputTitleDateStyled>
             <InputDescriptionStyled

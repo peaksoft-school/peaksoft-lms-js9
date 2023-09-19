@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material'
-import { Input } from '../UI/input/Input'
+import { Input } from '../input/Input'
 import { QuetionSection } from './Question'
-import { Button } from '../UI/button/Button'
-import { IconButtons } from '../UI/button/IconButtons'
-import { LargePlusIcon } from '../../assets/icons'
+import { Button } from '../button/Button'
+import { IconButtons } from '../button/IconButtons'
+import { LargePlusIcon } from '../../../assets/icons'
 
 export const TestQuestion = () => {
    const [quizItemSections, setQuizItemSections] = useState([

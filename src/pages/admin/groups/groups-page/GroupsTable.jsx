@@ -15,7 +15,7 @@ export const GroupsTable = () => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const { cards } = useSelector((state) => state.cards)
-   const { students, isLoading } = useSelector((state) => state.students)
+   const { students, isLoading } = useSelector((state) => state.stud)
    const getGroupName = cards.find((item) => item.id === +params.details)
 
    const navigateGoBackGroups = () => {

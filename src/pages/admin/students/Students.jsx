@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
-import { Pagination, Stack, TableCell } from '@mui/material'
 import Select from 'react-select/creatable'
+import { Pagination, Stack } from '@mui/material'
 import { Header } from '../../../components/UI/header/Header'
 import {
    DeleteStudent,
@@ -12,32 +12,32 @@ import {
    postNewStudents,
 } from '../../../store/student/studentThunk'
 import { IconButtons } from '../../../components/UI/button/IconButtons'
-import { DeleteIcon, EditIcon } from '../../../assets/icons'
+import { EditTeachers, TrashIcon } from '../../../assets/icons'
 import AddNewStudentModal from './AddNewStudentModal'
-import { ModalDeleteStudent } from './ModalDeleteStudent'
 import { useToggle } from '../../../utils/hooks/general'
 import { ModalEditStudent } from './ModalEditStudent'
 import { Modal } from '../../../components/UI/modal/Modal'
-import useGetAllGroup from '../../../utils/hooks/getAllGroup'
+import useGetAllGroup from '../../../api/getAllGroup'
 import { Button } from '../../../components/UI/button/Button'
 import { Isloading } from '../../../components/UI/snackbar/Isloading'
 import Table from '../../../components/UI/table/Table'
 import { showSnackbar } from '../../../components/UI/snackbar/Snackbar'
+import { NotFound } from '../../../components/UI/not-found/NotFound'
+import { ModalDelete } from '../courses/courses-modal/ModalDelete'
 
 export const Students = () => {
    const dispatch = useDispatch()
    const { students, isLoading } = useSelector((state) => state.students)
-
-   console.log(students)
-
    const [getId, setId] = useState()
+   const [getName, setGetName] = useState(null)
    const [studentData, setStudentData] = useState()
    const [IsEdit, setIsEdit] = useState(false)
-   const [excelFile, setExcelFile] = useState(false)
    const [selectedFile, setSelectedFile] = useState(null)
    const [selectedFormat, setSelectedFormat] = useState('')
    const [page, setPage] = useState(1)
 
+   const { isActive: excelFile, setActive: setExcelFile } =
+      useToggle('excelfileset')
    const { isActive: addedModal, setActive: setAddedModal } =
       useToggle('editmodalstudent')
    const { isActive: deleteModal, setActive: setDeleteModal } =
@@ -55,9 +55,10 @@ export const Students = () => {
    const closeModalHandler = () => setAddedModal('')
    const closeDeleteModalHandler = () => setDeleteModal('')
 
-   const openModalDelete = (id) => {
+   const openModalDelete = (data) => {
       setDeleteModal(!deleteModal)
-      setId(id)
+      setId(data.id)
+      setGetName(data.fullName)
    }
    const handleFileChange = (event) => {
       setSelectedFile(event.target.files[0])
@@ -67,15 +68,14 @@ export const Students = () => {
          const id = String(selectedGroupID.value)
          const formData = new FormData()
          formData.append('file', selectedFile)
-         dispatch(postExcelFile({ formData, id, showSnackbar }))
+         dispatch(postExcelFile({ formData, id, showSnackbar, setExcelFile }))
       }
-      setExcelFile(false)
    }
    const openExcelFileModal = () => {
-      setExcelFile(true)
+      setExcelFile(!excelFile)
    }
    const closeExcelFileModal = () => {
-      setExcelFile(false)
+      setExcelFile('')
    }
 
    const addStudent = (data) => {
@@ -125,22 +125,18 @@ export const Students = () => {
          id: 'action',
          label: 'Действия',
          render: (student) => (
-            <StyledTableCell key={student.id}>
-               <ButtonContainer>
-                  <StyledIconContainer
-                     onClick={() =>
-                        openEditModal({ id: student.id, data: student })
-                     }
-                  >
-                     <IconEditStyled />
-                  </StyledIconContainer>
-                  <StyledIconContainer
-                     onClick={() => openModalDelete(student.id)}
-                  >
-                     <IconDeleteStyled />
-                  </StyledIconContainer>
-               </ButtonContainer>
-            </StyledTableCell>
+            <ButtonContainer>
+               <IconButtons
+                  onClick={() =>
+                     openEditModal({ id: student.id, data: student })
+                  }
+               >
+                  <EditTeachers />
+               </IconButtons>
+               <IconButtons onClick={() => openModalDelete(student)}>
+                  <TrashIcon />
+               </IconButtons>
+            </ButtonContainer>
          ),
       },
    ]
@@ -157,63 +153,63 @@ export const Students = () => {
                studyFormat={selectedFormat}
                setStudyFormat={setSelectedFormat}
             />
-            {excelFile && (
-               <Modal
-                  title="Импорт Excel в БД"
-                  open={excelFile}
-                  onClose={closeExcelFileModal}
-               >
-                  <Container>
-                     <StyledSelect
-                        options={groupOptions}
-                        value={selectedGroupID}
-                        placeholder="Группа"
-                        onChange={(selectedOption) => {
-                           setSelectedGroupID(selectedOption)
-                        }}
+            <Modal
+               title="Импорт Excel в БД"
+               open={excelFile}
+               handleClose={closeExcelFileModal}
+            >
+               <Container>
+                  <StyledSelect
+                     options={groupOptions}
+                     value={selectedGroupID}
+                     placeholder="Группа"
+                     onChange={(selectedOption) => {
+                        setSelectedGroupID(selectedOption)
+                     }}
+                  />
+                  <FileUpload>
+                     <input
+                        id="file-input"
+                        type="file"
+                        accept=".xlsx, .xls"
+                        style={{ display: 'none' }}
+                        onChange={handleFileChange}
                      />
-                     <FileUpload>
-                        <input
-                           id="file-input"
-                           type="file"
-                           accept=".xlsx, .xls"
-                           style={{ display: 'none' }}
-                           onChange={handleFileChange}
-                        />
-                        <input
-                           type="text"
-                           value={selectedFile ? selectedFile.name : ''}
-                           placeholder="Выберите Excel файл для импорта"
-                           readOnly
-                        />
+                     <input
+                        type="text"
+                        value={selectedFile ? selectedFile.name : ''}
+                        placeholder="Выберите Excel файл для импорта"
+                        readOnly
+                     />
 
-                        <Button variant="outlined" onClick={handleButtonClick}>
-                           Обзор...
-                        </Button>
-                     </FileUpload>
-                     <BtnContainer>
-                        <Button
-                           variant="outlined"
-                           onClick={closeExcelFileModal}
-                        >
-                           Отмена
-                        </Button>
-                        <Button variant="contained" onClick={handleSubmit}>
-                           Добавить
-                        </Button>
-                     </BtnContainer>
-                  </Container>
-               </Modal>
-            )}
+                     <Button variant="outlined" onClick={handleButtonClick}>
+                        Обзор...
+                     </Button>
+                  </FileUpload>
+                  <BtnContainer>
+                     <Button variant="outlined" onClick={closeExcelFileModal}>
+                        Отмена
+                     </Button>
+                     <Button
+                        disabled={!selectedGroupID || !selectedFile}
+                        variant="contained"
+                        onClick={handleSubmit}
+                     >
+                        Добавить
+                     </Button>
+                  </BtnContainer>
+               </Container>
+            </Modal>
             <AddNewStudentModal
                open={addedModal === true}
                onClose={closeModalHandler}
                addNewData={addStudent}
             />
-            <ModalDeleteStudent
+            <ModalDelete
                open={deleteModal === true}
+               paragraph={`студента ${getName}`}
                handleClose={closeDeleteModalHandler}
-               deleteStudentHandler={deleteStudentHandler}
+               deleteCardHandler={deleteStudentHandler}
             />
             <ModalEditStudent
                open={IsEdit}
@@ -223,12 +219,13 @@ export const Students = () => {
             />
          </div>
          <StyledTableContainer>
-            {students.studentResponses !== null ? (
+            {students.studentResponses &&
+            students.studentResponses.length > 0 ? (
                <div>
                   <Table
                      columns={columns}
                      data={filteredStudents}
-                     itemsPerPage={10}
+                     // itemsPerPage={10}
                   />
                   <StackStyled>
                      <Stack spacing={10}>
@@ -252,13 +249,17 @@ export const Students = () => {
                   </StackStyled>
                </div>
             ) : (
-               <p>some thing went wrong</p>
+               <ContainerNotFound>
+                  <NotFound content="Нет студентов!" />
+               </ContainerNotFound>
             )}
          </StyledTableContainer>
       </div>
    )
 }
-
+const ContainerNotFound = styled('div')`
+   margin: 0 auto;
+`
 const StyledTableContainer = styled('div')`
    margin-top: 20px;
    display: flex;
@@ -273,23 +274,9 @@ const StackStyled = styled('div')`
    bottom: 1%;
 `
 
-const StyledTableCell = styled(TableCell)`
-   padding: 0px;
-`
-const StyledIconContainer = styled(IconButtons)`
-   padding-left: 2px;
-   padding-right: 2px;
-`
 const ButtonContainer = styled('div')`
    display: flex;
    padding-left: 17px;
-`
-const IconDeleteStyled = styled(DeleteIcon)`
-   width: 18px;
-`
-const IconEditStyled = styled(EditIcon)`
-   color: blue;
-   width: 18px;
 `
 const BtnContainer = styled('div')`
    display: flex;

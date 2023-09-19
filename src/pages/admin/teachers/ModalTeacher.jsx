@@ -7,7 +7,7 @@ import { Modal } from '../../../components/UI/modal/Modal'
 import { Input } from '../../../components/UI/input/Input'
 import { Button } from '../../../components/UI/button/Button'
 import { postTeacher, putTeacher } from '../../../store/teachers/teachers.thunk'
-import { addTeacherValidation } from '../../../utils/constants/addTeacherModalValidation'
+import { addTeacherValidation } from '../../../utils/helpers/addTeacherModalValidation'
 import { showSnackbar } from '../../../components/UI/snackbar/Snackbar'
 
 export const ModalTeachers = ({ open, handleClose, modalData }) => {
@@ -132,8 +132,8 @@ export const ModalTeachers = ({ open, handleClose, modalData }) => {
 }
 
 const InputStyle = styled(Input)(() => ({
-   width: '62vh',
-   padding: '3%',
+   width: '25vw',
+   padding: '2% 0',
    text: 'red',
    borderColor: 'red',
 }))
@@ -152,7 +152,8 @@ const BoxStyle = styled(Box)(() => ({
 const Error = styled('p')(() => ({
    width: '100%',
    height: '10px',
-   margin: '-14px 0 0px 0',
+   fontSize: '12px',
+   margin: '-11px 0 0px 0',
    textAlign: 'center',
    color: '#f00',
 }))
@@ -160,4 +161,7 @@ const Error = styled('p')(() => ({
 const FormStyle = styled('form')(() => ({
    display: 'flex',
    flexDirection: 'column',
+   '& .MuiOutlinedInput-input': {
+      height: '32px',
+   },
 }))
