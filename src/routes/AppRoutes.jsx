@@ -31,7 +31,15 @@ import { LessonLayout } from '../pages/student/home-page/LessonLayout'
 import { TaskSend } from '../pages/student/lessonsPage/task/TaskLayout'
 import { TestLayout } from '../pages/student/lessonsPage/test/TestLayout'
 import { Page404 } from '../components/UI/not-found/Page404'
-import { TestQuestion } from '../components/questionT/TestQuestion'
+import { CreateTaskPage } from '../pages/instructor/pages/materials/createTaskTest/CreateTaskPage'
+import { CreateTestPage } from '../pages/instructor/pages/materials/createTaskTest/CreateTestPage'
+import { Video } from '../pages/instructor/pages/materials/pages/Video'
+import { LinkPageIns } from '../pages/instructor/pages/materials/pages/Link'
+import { PresentationIns } from '../pages/instructor/pages/materials/pages/Presentation'
+import { TaskIns } from '../pages/instructor/pages/materials/pages/Task'
+import { LessonLayoutInstrutor } from '../pages/instructor/pages/materials/pages/LessonLayoutInstrutor'
+import { TaskInside } from '../pages/instructor/pages/materials/pages/TaskInside'
+import { TaskTestLayout } from '../pages/instructor/pages/materials/createTaskTest/TaskTestLayout'
 
 export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
@@ -157,25 +165,51 @@ export const AppRoutes = ({ roles = 'admin' }) => {
             />
             <Route path="mycoursesins/:id" element={<MyCoursesTable />}>
                <Route path="materials" element={<MyCoursesMaterial />} />
-               <Route
-                  path="/instructor/mycoursesins/:id/materials/test"
-                  element={<TestQuestion />}
-               />
-
-               <Route
-                  path="/instructor/mycoursesins/:id/materials/task"
-                  element="Task Page"
-               />
-               <Route
-                  path="/instructor/mycoursesins/:id/materials/videoLesson"
-                  element="VideoLesson Page"
-               />
-               <Route
-                  path="/instructor/mycoursesins/:id/materials/presentation"
-                  element="Presentation Page"
-               />
                <Route path="students" element={<MyCoursesStudents />} />
             </Route>
+            <Route
+               path="/instructor/mycoursesins/:id"
+               element={<TaskTestLayout />}
+            >
+               <Route
+                  path="materials/createtest/:lessonid"
+                  element={<CreateTestPage />}
+               />
+               <Route
+                  path="materials/createtask/:lessonid"
+                  element={<CreateTaskPage />}
+               />
+            </Route>
+            <Route
+               path="/instructor/mycoursesins/:id"
+               element={<LessonLayoutInstrutor />}
+            >
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/1/:lessonid"
+                  element={<Video />}
+               />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/2/:lessonid"
+                  element={<PresentationIns />}
+               />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/3/:lessonid"
+                  element={<TaskIns />}
+               />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/3/:lessonid/:taskid"
+                  element={<TaskInside />}
+               />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/4/:lessonid"
+                  element={<LinkPageIns />}
+               />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/5/:lessonid"
+                  element={<h1>test inside</h1>}
+               />
+            </Route>
+            <Route path="students" element={<MyCoursesStudents />} />
          </Route>
       </Routes>
    )

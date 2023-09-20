@@ -8,6 +8,8 @@ import { NotFound } from '../../../components/UI/not-found/NotFound'
 import { Button } from '../../../components/UI/button/Button'
 import { useToggle } from '../../../utils/hooks/general'
 import { Modal } from '../../../components/UI/modal/Modal'
+import { CancelWhiteIcon } from '../../../assets/icons'
+import { IconButtons } from '../../../components/UI/button/IconButtons'
 
 export const Presentation = () => {
    const params = useParams()
@@ -32,14 +34,19 @@ export const Presentation = () => {
                               open={isActive}
                               handleClose={() => setActive('')}
                            >
-                              <iframe
-                                 width="960px"
-                                 height="510px"
-                                 src={el.linkFilePpt}
-                                 title="presentation"
-                              >
-                                 #document
-                              </iframe>
+                              <ModalStyled>
+                                 <IconButtons onClick={() => setActive('')}>
+                                    <CancelWhiteIcon />
+                                 </IconButtons>
+                                 <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src={el.linkFilePpt}
+                                    title="presentation"
+                                 >
+                                    #document
+                                 </iframe>
+                              </ModalStyled>
                            </Modal>
                         )}
                         <ContainerPpt>
@@ -110,5 +117,23 @@ const ContainerContent = styled('div')`
    border-radius: 10px;
    main {
       margin-top: 1rem;
+   }
+   h1 {
+      position: absolute;
+   }
+`
+
+const ModalStyled = styled('div')`
+   position: relative;
+   width: 50vw;
+   height: 60vh;
+   button {
+      position: absolute;
+      top: -20%;
+      right: -15%;
+      svg {
+         width: 24px;
+         height: 24px;
+      }
    }
 `

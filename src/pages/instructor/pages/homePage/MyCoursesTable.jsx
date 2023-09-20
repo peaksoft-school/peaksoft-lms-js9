@@ -14,7 +14,7 @@ import {
    getCoursesById,
 } from '../../../../store/courses/coursesThunk'
 import { ModalDelete } from '../../../admin/courses/courses-modal/ModalDelete'
-import { ModalLessonPost } from '../../ins-modal/ModalLessonPostIns'
+import { ModalLessonPost } from '../../modal/ModalLessonPostIns'
 import { postLessonThunk } from '../../../../store/lesson/lessonThunk'
 
 export const MyCoursesTable = () => {
@@ -163,10 +163,11 @@ const SpanStyled = styled('p')`
    margin-bottom: 1.5rem;
    display: flex;
    gap: 0.3125rem;
-   align-items: center;
+   align-items: end;
    button {
+      cursor: pointer;
       border: none;
-      font-size: 0.875rem;
+      font-size: 1rem;
       color: #747d74;
    }
 `

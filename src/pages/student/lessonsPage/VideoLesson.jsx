@@ -25,34 +25,36 @@ export const VideoLesson = () => {
             {video.length > 0 ? (
                video?.map((el) => (
                   <ContainerContent key={el.id}>
-                     {!isActive ? (
-                        <СontainerPlayer>
-                           <ReactPlayer
-                              url={el.link}
-                              controls={Boolean(true)}
-                              width="360px"
-                              height="210px"
-                           />
-                           <div>
-                              <Button onClick={() => setActive(!isActive)}>
-                                 Смотреть
-                              </Button>
-                           </div>
-                        </СontainerPlayer>
-                     ) : (
-                        <Modal
-                           video
-                           open={isActive}
-                           handleClose={() => setActive('')}
-                        >
-                           <ReactPlayer
-                              url={el.link}
-                              controls={Boolean(true)}
-                              width="65.5vw"
-                              height="76.5vh"
-                           />
-                        </Modal>
-                     )}
+                     <header>
+                        {!isActive ? (
+                           <СontainerPlayer>
+                              <ReactPlayer
+                                 url={el.link}
+                                 controls={Boolean(true)}
+                                 width="360px"
+                                 height="210px"
+                              />
+                              <div>
+                                 <Button onClick={() => setActive(!isActive)}>
+                                    Смотреть
+                                 </Button>
+                              </div>
+                           </СontainerPlayer>
+                        ) : (
+                           <Modal
+                              video
+                              open={isActive}
+                              handleClose={() => setActive('')}
+                           >
+                              <ReactPlayer
+                                 url={el.link}
+                                 controls={Boolean(true)}
+                                 width="65.5vw"
+                                 height="76.5vh"
+                              />
+                           </Modal>
+                        )}
+                     </header>
                      <main>
                         <h2>{el.name}</h2>
                         <p>{el.description}</p>

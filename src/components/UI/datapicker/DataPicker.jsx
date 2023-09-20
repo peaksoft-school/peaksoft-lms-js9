@@ -19,7 +19,12 @@ const StyledDatePicker = styled(DatePicker)(({ theme, value }) => ({
    '& .MuiOutlinedInput-root': {
       borderRadius: '10px',
       height: '2.5rem',
+      borderColor: 'blue',
    },
+   '& .css-r28ubj-MuiInputBase-root-MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline':
+      {
+         borderColor: 'rgba(0, 0, 0, 0.23)',
+      },
    '& .MuiInputBase-input': {
       padding: theme.spacing(1),
       fontStyle: 'normal',
@@ -30,6 +35,5 @@ const StyledDatePicker = styled(DatePicker)(({ theme, value }) => ({
    },
    '&& :': {
       border: 'none',
-      color: 'red',
    },
 }))

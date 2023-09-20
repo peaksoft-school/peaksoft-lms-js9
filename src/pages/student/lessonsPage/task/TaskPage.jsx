@@ -114,11 +114,7 @@ export const TaskPage = () => {
                      </a>
                   </ContainerYourTask>
                   <ContainerReviewed backgroundColor={backgroundColor}>
-                     <h2>
-                        {taskResult.taskAnswerStatus === 'REVIEWED'
-                           ? 'Расматиравется'
-                           : 'Успешно принято'}
-                     </h2>
+                     <h2>Успешно принято</h2>
                      {!taskResult.point ? (
                         ''
                      ) : (

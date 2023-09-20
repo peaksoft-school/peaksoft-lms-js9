@@ -16,13 +16,13 @@ const Table = ({ data, columns }) => {
       <StyledContainer component={Paper}>
          <StyledTable>
             <TableHead>
-               <StyledTableRow>
+               <StyledTableRowOne>
                   {columns?.map((column) => (
                      <StyledTableCell key={column.id}>
                         {column.label}
                      </StyledTableCell>
                   ))}
-               </StyledTableRow>
+               </StyledTableRowOne>
             </TableHead>
             <TableBody>
                {data?.map((row) => (
@@ -36,9 +36,8 @@ const Table = ({ data, columns }) => {
                               key={column.id}
                               title={String(row[column.id])}
                            >
-                              {column.id === 'password' &&
-                              row[column.id].length > 10
-                                 ? `${row[column.id].substring(0, 10)}...`
+                              {row[column.id].length > 15
+                                 ? `${row[column.id].substring(0, 15)}...`
                                  : row[column.id]}
                            </StyledTableCellForData>
                         )
@@ -58,10 +57,19 @@ const StyledContainer = styled(TableContainer)`
    width: 100%;
    border-radius: 10px;
 `
+const StyledTableRowOne = styled(TableRow)`
+   &:nth-child(even) {
+      width: 100px;
+      background-color: #1a227e1a;
+   }
+`
 const StyledTableRow = styled(TableRow)`
    &:nth-of-type(even) {
       width: 100px;
       background-color: #1a227e1a;
+   }
+   :hover {
+      background: rgba(26, 35, 126, 0.3);
    }
 `
 const StyledTableCell = styled(TableCell)`

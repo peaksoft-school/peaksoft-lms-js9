@@ -7,7 +7,7 @@ import PhoneInput from 'react-phone-input-2'
 import { Modal } from '../../../components/UI/modal/Modal'
 import { Input } from '../../../components/UI/input/Input'
 import { Button } from '../../../components/UI/button/Button'
-import useGetAllGroup from '../../../utils/hooks/getAllGroup'
+import useGetAllGroup from '../../../api/getAllGroup'
 
 const onlyCountries = ['kg', 'ru', 'kz']
 
@@ -72,6 +72,7 @@ const AddNewStudentModal = ({ open, onClose, addNewData }) => {
                />
                <StyledPhoneInput
                   specialLabel=""
+                  placeholder="9943"
                   country="kg"
                   onlyCountries={onlyCountries}
                   value={values.phoneNumber}
@@ -136,16 +137,15 @@ const Container = styled('form')`
    display: flex;
    flex-direction: column;
    align-items: space-between;
-   width: 400px;
+   width: 25vw;
 `
 const StyledPhoneInput = styled(PhoneInput)`
    .react-tel-input.form-control:active {
       color: #bdb6b6;
       border: 1px solid #c2bcbc;
    }
-
    .form-control {
-      color: #bdb6b6;
+      color: #000000;
       padding: 10px 8px 10px 10px;
       border-radius: 10px;
       font-size: 1rem;

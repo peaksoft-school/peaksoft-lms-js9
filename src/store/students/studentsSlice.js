@@ -4,12 +4,12 @@ import { getGroupUsers, getStudents } from './studentsThunk'
 
 const initialState = {
    students: [],
-   courseStudents: [],
+   courseStudents: {},
    error: '',
    isLoading: false,
 }
 export const studentsSlice = createSlice({
-   name: 'students',
+   name: 'stud',
    initialState,
    reducers: {},
    extraReducers: (builder) => {

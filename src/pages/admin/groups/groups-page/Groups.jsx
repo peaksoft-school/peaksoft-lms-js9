@@ -9,7 +9,6 @@ import { Header } from '../../../../components/UI/header/Header'
 import { ModalGroup } from '../groups-modal/ModalGroup'
 import { useToggle } from '../../../../utils/hooks/general'
 import {
-   deleteFile,
    deleteGroup,
    getCard,
    postCard,
@@ -28,9 +27,12 @@ export const Groups = () => {
 
    const [dateAdded, setDateAdded] = useState('')
    const [dateEdit, setDateEdit] = useState('')
+   const [getValueDate, setValueDate] = useState('')
 
    const [imageValue, setImageValue] = useState('')
    const [imageEditValue, setImageEditValue] = useState('')
+
+   const [status, setStatus] = useState(false)
 
    const { isActive, setActive } = useToggle('addedgroupmodal')
    const { setActive: setActiveModal1, isActive: isActiveModal1 } =
@@ -66,7 +68,10 @@ export const Groups = () => {
    const closeModalDeleteHandler = () => setActiveModal1('')
    const openModalAddedNewGroupHandler = () => setActive(!isActive)
 
-   const onImageUpload = (img) => setImageValue(img)
+   const onImageUpload = (img) => {
+      setImageValue(img)
+      setStatus(true)
+   }
    const dateChangeHandler = (date) => setDateAdded(date)
    const closeModalAddedNewGroupHandler = () => {
       setActive('')
@@ -77,12 +82,6 @@ export const Groups = () => {
    useEffect(() => {
       dispatch(getCard())
    }, [])
-
-   const isFormEmpty =
-      !getValues().groupName.trim() ||
-      !getValues().description.trim() ||
-      !setDateAdded ||
-      !imageValue
 
    const deleteOpenModal = (data) => {
       setActiveModal1(!isActiveModal1)
@@ -99,11 +98,11 @@ export const Groups = () => {
       setActiveModal2(!isActiveModal2)
       setValue('editTitle', data.groupName)
       setValue('editDescription', data.description)
-      // setValue('dateEditModal', dateValue)
       setDateEdit(dateEdit)
       setImageEditValue(data.image)
       setImageValue(data.image)
       setCardId(data.id)
+      setValueDate(data.dateOfGraduate)
    }
 
    const addedHandler = () => {
@@ -113,23 +112,19 @@ export const Groups = () => {
          image: imageValue,
          dateOfGraduation: formatDate,
       }
-      dispatch(postCard({ data, showSnackbar }))
-      setActive('')
-      setValue('groupName', '')
-      setValue('description', '')
+      dispatch(postCard({ data, showSnackbar, modal: setActive, setValue }))
    }
    const saveHandler = (el) => {
       const data = {
          id: getCardId,
          groupName: el.editTitle,
          description: el.editDescription,
-         dateOfGraduation: editFormatDate,
+         dateOfGraduation:
+            editFormatDate === '' ? getValueDate : editFormatDate,
          image: imageValue,
-         delImage: imageEditValue,
       }
-      dispatch(deleteFile(data.delImage))
-      dispatch(updateCard({ data, showSnackbar }))
-      setActiveModal2('')
+      dispatch(updateCard({ data, setActiveModal2, status, showSnackbar }))
+      setStatus(false)
    }
 
    const openModalDeleteAndEditHandler = ({ menuId, data }) => {
@@ -156,7 +151,7 @@ export const Groups = () => {
                      el={el}
                      image={el.image}
                      title={el.groupName}
-                     date={el.create_date}
+                     date={el.dateOfGraduate}
                      description={el.description}
                      onClick={openModalDeleteAndEditHandler}
                      menuItems={menuItems}
@@ -181,7 +176,6 @@ export const Groups = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
-               isFormEmpty={isFormEmpty}
             />
             <ModalDeleteGroup
                open={isActiveModal1}
@@ -202,6 +196,7 @@ export const Groups = () => {
                errors={errors}
                handleSubmit={handleSubmit}
                setValue={setValue}
+               getValueDate={getValueDate}
             />
          </>
       </>

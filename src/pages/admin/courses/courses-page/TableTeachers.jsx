@@ -73,7 +73,7 @@ export const TableTeachers = () => {
    return (
       <div>
          {isLoading && <Isloading />}
-         {instructors && instructors.length > 0 ? (
+         {instructors && instructors?.length > 0 ? (
             <Table data={instructors} columns={columnsTableCoursTeachers} />
          ) : (
             <NotFound content="Нет учителей" />

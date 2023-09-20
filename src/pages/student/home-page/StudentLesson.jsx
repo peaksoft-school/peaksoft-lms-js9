@@ -60,7 +60,11 @@ export const StudentLesson = () => {
                      <ContentContainer key={el.lessonId}>
                         <Link to={`${el.lessonId}`}>
                            <h3>Урок: {i + 1}</h3>
-                           <h4>{el.lessonName}</h4>
+                           <h4>
+                              {el.lessonName?.length > 25
+                                 ? `${el.lessonName.substring(0, 25)}...`
+                                 : el.lessonName}
+                           </h4>
                         </Link>
                      </ContentContainer>
                   ))}

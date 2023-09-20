@@ -14,18 +14,21 @@ import {
    getStudents,
 } from '../../../../store/students/studentsThunk'
 import { showSnackbar } from '../../../../components/UI/snackbar/Snackbar'
+import { getCoursesById } from '../../../../store/courses/coursesThunk'
 
 export const MyCoursesStudents = () => {
    const dispatch = useDispatch()
    const params = useParams()
    const [getName, setGetName] = useState()
    const [getId, setGetId] = useState()
-   const { courseStudents, isLoading } = useSelector((state) => state.students)
+   const { courseStudents, isLoading } = useSelector((state) => state.stud)
+   const { coursesGroup } = useSelector((state) => state.courses)
    const { isActive, setActive } = useToggle('modaldeleteteachers')
    const [page, setPage] = useState(1)
 
    useEffect(() => {
       dispatch(getStudents({ id: +params.id, page }))
+      dispatch(getCoursesById(+params.id))
    }, [])
 
    const openModalDelete = (data) => {
@@ -60,7 +63,7 @@ export const MyCoursesStudents = () => {
                onClick={() =>
                   openModalDelete({ name: row.fullName, id: row.id })
                }
-               style={{ margin: '0 0 0 20%' }}
+               style={{ marginLeft: '32px' }}
             >
                <Trash />
             </IconButtons>
@@ -71,15 +74,15 @@ export const MyCoursesStudents = () => {
    return (
       <div>
          {isLoading && <Isloading />}
-         {courseStudents.length > 0 ? (
-            <Table data={courseStudents} columns={columns} />
-         ) : (
+         {coursesGroup.groupName === null ? (
             <NotFound content="Нет студентов!" />
+         ) : (
+            <Table data={courseStudents?.studentResponses} columns={columns} />
          )}
          <StackStyled>
             <Stack spacing={2}>
                <Pagination
-                  count={Math.ceil((courseStudents.length * 2) / 10)}
+                  count={Math.ceil(courseStudents.quantityOfStudents / 10)}
                   color="primary"
                   page={page}
                   onChange={(event, newPage) => {
@@ -100,11 +103,6 @@ export const MyCoursesStudents = () => {
 }
 const StackStyled = styled('div')`
    position: absolute;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: end;
-   margin-top: 2rem;
-   bottom: 5%;
-   left: 44%;
+   bottom: 1%;
+   left: 50%;
 `

@@ -15,6 +15,7 @@ import { IconButtons } from '../../../components/UI/button/IconButtons'
 import { ModalDelete } from '../courses/courses-modal/ModalDelete'
 import { Isloading } from '../../../components/UI/snackbar/Isloading'
 import { showSnackbar } from '../../../components/UI/snackbar/Snackbar'
+import { NotFound } from '../../../components/UI/not-found/NotFound'
 
 export const Teachers = () => {
    const dispatch = useDispatch()
@@ -98,7 +99,9 @@ export const Teachers = () => {
                   <Table columns={teachersColumns} data={data} />
                </TableContainer>
             ) : (
-               <h1>Пока что нет учителей</h1>
+               <ContainerNotFound>
+                  <NotFound content="Нет учителей!" />
+               </ContainerNotFound>
             )}
          </BoxStyle>
          <ModalTeachers open={isActive} handleClose={closeModalHandler} />
@@ -118,6 +121,9 @@ export const Teachers = () => {
       </>
    )
 }
+const ContainerNotFound = styled('div')`
+   margin: 0 auto;
+`
 
 const TableContainer = styled(Box)(() => ({
    width: '100%',
@@ -125,6 +131,7 @@ const TableContainer = styled(Box)(() => ({
 
 const Container = styled(Box)(() => ({
    display: 'flex',
+   marginLeft: '17px',
 }))
 const BoxStyle = styled(Box)(() => ({
    marginTop: '1.6%',
