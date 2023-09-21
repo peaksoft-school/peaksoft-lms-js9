@@ -17,6 +17,7 @@ import {
 } from '../../../../store/group/groupThunk'
 import { showSnackbar } from '../../../../components/UI/snackbar/Snackbar'
 import { Isloading } from '../../../../components/UI/snackbar/Isloading'
+import { NotFound } from '../../../../components/UI/not-found/NotFound'
 
 export const Groups = () => {
    const dispatch = useDispatch()
@@ -162,7 +163,9 @@ export const Groups = () => {
                   />
                ))
             ) : (
-               <h1>ПОКА ЧТО НЕТ ГРУПП!</h1>
+               <ContainerNotFound>
+                  <NotFound content="Нет групп!" />
+               </ContainerNotFound>
             )}
          </ContainerItem>
          <>
@@ -208,4 +211,7 @@ const ContainerItem = styled('div')`
    display: flex;
    flex-wrap: wrap;
    gap: 20px;
+`
+const ContainerNotFound = styled('div')`
+   margin: 0 auto;
 `
