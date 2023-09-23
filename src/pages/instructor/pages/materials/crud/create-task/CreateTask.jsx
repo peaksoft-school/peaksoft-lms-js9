@@ -76,7 +76,6 @@ const CreateTask = () => {
          code: formattedCode,
          deadLine: formatDate,
       }
-      console.log(newTask)
       dispatch(
          postNewTask({ newTask, lessonId: params.lessonid, showSnackbar })
       )

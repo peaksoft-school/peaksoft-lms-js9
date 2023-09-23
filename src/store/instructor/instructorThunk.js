@@ -98,8 +98,7 @@ export const postNewTask = createAsyncThunk(
          showSnackbar('Задание успешно создано !', 'success')
          return 'hello'
       } catch (error) {
-         console.log('TASK', newTask)
-         showSnackbar('Задание успешно не создано !', 'error')
+         showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
       }
    }
