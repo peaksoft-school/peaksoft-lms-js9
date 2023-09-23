@@ -39,23 +39,11 @@ export const postCard = createAsyncThunk(
          payload.modal('')
          payload.setValue('groupName', '')
          payload.setValue('description', '')
-         payload.showSnackbar('Группа успешно создано!', 'success')
+         payload.showSnackbar('Группа успешно создан!', 'success')
          return dispatch(getCard())
       } catch (error) {
-         switch (error.response?.status) {
-            case 409:
-               payload.showSnackbar('Все поля должны быть заполнены!', 'error')
-               break
-            case 400:
-               payload.showSnackbar(
-                  'С таким названием группа уже существует!',
-                  'error'
-               )
-               break
-            default:
-               payload.showSnackbar(error, 'error')
-         }
-         return rejectWithValue(error.data.message)
+         payload.showSnackbar(error.response.data.message, 'error')
+         return rejectWithValue(error)
       }
    }
 )
@@ -89,7 +77,7 @@ export const updateCard = createAsyncThunk(
                payload.data
             )
          }
-         payload.showSnackbar('Группа успешно редактировано!', 'success')
+         payload.showSnackbar('Группа успешно редактирован!', 'success')
          payload.setActiveModal2('')
          return dispatch(getCard())
       } catch (error) {
@@ -104,7 +92,7 @@ export const deleteGroup = createAsyncThunk(
    async (payload, { rejectWithValue, dispatch }) => {
       try {
          await axiosInstance.delete(`/api/groups/${payload.getCardId}`)
-         payload.showSnackbar('Группа успешно удалено!', 'success')
+         payload.showSnackbar('Группа успешно удален!', 'success')
          return dispatch(getCard())
       } catch (error) {
          payload.showSnackbar(error.message, 'error')

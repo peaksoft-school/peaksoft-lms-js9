@@ -125,7 +125,7 @@ export const MyCoursesTable = () => {
          </div>
          <SpanStyled>
             <button type="button" onClick={navigateGoBackGroups}>
-               Курсы
+               Мои курсы
             </button>
             \ {getCards?.courseName} \
             {isStudentsPage ? ' Студенты' : ' Материалы'}
@@ -167,7 +167,7 @@ const SpanStyled = styled('p')`
    button {
       cursor: pointer;
       border: none;
-      font-size: 1rem;
+      font-size: large;
       color: #747d74;
    }
 `

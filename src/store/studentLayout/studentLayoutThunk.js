@@ -166,7 +166,12 @@ export const postTestLesson = createAsyncThunk(
          payload.showSnackbar('Ваши ответы приняты!', 'success')
          return response.data
       } catch (error) {
-         payload.showSnackbar(error.message, 'error')
+         payload.showSnackbar(
+            error.response.data.message === 'Answers no longer accepted!'
+               ? 'Ответы больше не принимаются!'
+               : error,
+            'error'
+         )
          return rejectWithValue(error.message)
       }
    }

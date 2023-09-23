@@ -36,7 +36,7 @@ const Table = ({ data, columns }) => {
                               key={column.id}
                               title={String(row[column.id])}
                            >
-                              {row[column.id].length > 15
+                              {row[column.id]?.length > 15
                                  ? `${row[column.id].substring(0, 15)}...`
                                  : row[column.id]}
                            </StyledTableCellForData>

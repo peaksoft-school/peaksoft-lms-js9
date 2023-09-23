@@ -59,7 +59,11 @@ export const Material = ({
                <IconButtons onClick={() => clickEditHandler(el)}>
                   <LogoLessonIcon />
                </IconButtons>
-               <h1>{el.lessonName}</h1>
+               <h1>
+                  {el.lessonName?.length > 25
+                     ? `${el.lessonName.substring(0, 25)}...`
+                     : el.lessonName}
+               </h1>
             </div>
             <div className="containerDeleteIconButton">
                <FormControl size="small">

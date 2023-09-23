@@ -18,7 +18,7 @@ export const postTeacher = createAsyncThunk(
    async ({ values, showSnackbar }, { rejectWithValue, dispatch }) => {
       try {
          const { data } = await axiosInstance.post('/api/instructors', values)
-         showSnackbar('Данные успешно отправлены', 'success')
+         showSnackbar('Данные успешно отправлены!', 'success')
          dispatch(getTeachers())
          return data
       } catch (error) {
@@ -39,7 +39,7 @@ export const deleteTeacherId = createAsyncThunk(
             `/api/instructors/${idInstructor}`
          )
          dispatch(getTeachers())
-         showSnackbar('Удалено', 'success')
+         showSnackbar('Учитель успешно удален', 'success')
          return data
       } catch (error) {
          showSnackbar('Не удалено', error.message)
@@ -56,7 +56,7 @@ export const putTeacher = createAsyncThunk(
             values
          )
          dispatch(getTeachers())
-         showSnackbar('Данные учителя успешно обновлены', 'success')
+         showSnackbar('Данные учителя успешно обновлены!', 'success')
          return data
       } catch (error) {
          if (error.message === 'Request failed with status code 400') {

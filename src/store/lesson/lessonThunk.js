@@ -17,7 +17,7 @@ export const deleteCourse = createAsyncThunk(
    async (payload, { rejectWithValue, dispatch }) => {
       try {
          await axiosInstance.delete(`/api/lessons/${payload.id}`)
-         payload.showSnackbar('Урок успешно удален', 'success')
+         payload.showSnackbar('Урок успешно удален!', 'success')
          return dispatch(getLesson(payload.courseId))
       } catch (error) {
          payload.showSnackbar(error.message, 'error')
@@ -35,7 +35,7 @@ export const postLessonThunk = createAsyncThunk(
          await axiosInstance.post(`/api/lessons/${courseId}`, {
             lessonName,
          })
-         showSnackbar('Урок успешно добален', 'success')
+         showSnackbar('Урок успешно добален!', 'success')
          return dispatch(getLesson(courseId))
       } catch (error) {
          showSnackbar(error.message, 'error')
@@ -54,7 +54,7 @@ export const updateLesson = createAsyncThunk(
          await axiosInstance.put(`/api/lessons/${id}`, {
             lessonName,
          })
-         showSnackbar('Урок успешно редактирован', 'success')
+         showSnackbar('Урок успешно редактирован!', 'success')
          return dispatch(getLesson(courseId))
       } catch (error) {
          showSnackbar(error.message, 'error')

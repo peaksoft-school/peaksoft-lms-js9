@@ -80,7 +80,7 @@ export const postExcelFile = createAsyncThunk(
          setExcelFile('')
          showSnackbar('Файл успешно отправлен!', 'success')
       } catch (error) {
-         showSnackbar(error.message, 'error')
+         showSnackbar(error.response.data.message, 'error')
          return rejectWithValue('error')
       }
    }

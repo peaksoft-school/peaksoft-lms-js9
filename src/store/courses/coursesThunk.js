@@ -164,7 +164,7 @@ export const deleteGroupToCourseThunk = createAsyncThunk(
          await axiosInstance.delete(
             `/api/courses/${payload.groupId}/${payload.courseId}`
          )
-         payload.showSnackbar('Группа успешно удалено из курса', 'success')
+         payload.showSnackbar('Группа успешно удален из курса', 'success')
          dispatch(getByIdInstructor(payload.instructorId))
          dispatch(getStudents({ id: payload.courseId, page: payload.page }))
          return dispatch(getCoursesById(payload.courseId))

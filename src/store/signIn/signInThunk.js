@@ -14,7 +14,7 @@ export const signInThunk = createAsyncThunk(
             STORAGE_KEY.AUTH_KEY,
             JSON.stringify(response.data)
          )
-         payload.showSnackbar('Вы успешно зашли!', 'success')
+         payload.showSnackbar('Добро пожаловать!', 'success')
          return response.data
       } catch (error) {
          payload.showSnackbar(`${error.response.data.message}`, 'error')
