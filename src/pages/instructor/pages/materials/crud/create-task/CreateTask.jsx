@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react'
 import styled from '@emotion/styled'
+import { isValid, format } from 'date-fns'
+import { useParams } from 'react-router-dom'
 import { RiText } from 'react-icons/ri'
-import { useDispatch, useSelector } from 'react-redux'
-import { v4 as uuidv4 } from 'uuid'
+import { useDispatch } from 'react-redux'
 import TaskCreate from '../../../../../../components/UI/task-creator/TaskCreator'
 import { Button } from '../../../../../../components/UI/button/Button'
 import { Input } from '../../../../../../components/UI/input/Input'
@@ -14,33 +15,49 @@ import {
 } from '../../../../../../assets/icons'
 import { postNewTask } from '../../../../../../store/instructor/instructorThunk'
 import { showSnackbar } from '../../../../../../components/UI/snackbar/Snackbar'
+import BasicDatePicker from '../../../../../../components/UI/datapicker/DataPicker'
 
-const CreateTask = ({ lessonId }) => {
+const CreateTask = () => {
+   const params = useParams()
    const [hoveredIcon, setHoveredIcon] = useState(null)
    const [isModalOpen, setIsModalOpen] = useState(false)
    const [editorContent, setEditorContent] = useState('')
    const [taskName, setTaskName] = useState('')
    const [code, setCode] = useState('')
-   const [links, setLinks] = useState([])
-   const [images, setImages] = useState([])
-   const [selectedFile, setSelectedFiles] = useState([])
+   const [links, setLinks] = useState({
+      name: '',
+      link: '',
+   })
+   const [image, setImages] = useState(null)
+   const [imageFile, setImagesFile] = useState(null)
+   const [selectedFile, setSelectedFiles] = useState(null)
+   const [dateValue, setDateValue] = useState(null)
    const documentFile = useRef(null)
    const fileInputRef = useRef(null)
    const dispatch = useDispatch()
-   const { lesson } = useSelector((state) => state.lesson)
+
+   const disableButton = taskName === ''
+
+   let formatDate = ''
+   if (dateValue && isValid(new Date(dateValue))) {
+      formatDate = format(new Date(dateValue), 'yyyy-MM-dd')
+   }
 
    const handleFileChange = (event) => {
       const file = event.target.files[0]
+      setImagesFile(file)
       if (file) {
          const imageUrl = URL.createObjectURL(file)
-         setImages([...images, imageUrl])
-         localStorage.setItem('image', JSON.stringify([...images, imageUrl]))
-
+         setImages(imageUrl)
          fileInputRef.current.value = ''
       }
    }
    const handleEditorChange = (newContent) => {
       setEditorContent(newContent)
+   }
+   const handleFileInputChange = (event) => {
+      const file = event.target.files[0]
+      setSelectedFiles(file)
    }
    const handleTaskNameChange = (e) => {
       setTaskName(e.target.value)
@@ -50,29 +67,26 @@ const CreateTask = ({ lessonId }) => {
 
       const newTask = {
          TaskName: taskName,
-         name: editorContent,
-         text: formattedCode,
-         deadLine: `'2023-09-21',`,
+         text: editorContent,
+         fileName: selectedFile?.name || '',
+         fileLink: selectedFile || '',
+         linkName: links.name,
+         link: links.link,
+         image: imageFile || '',
+         code: formattedCode,
+         deadLine: formatDate,
       }
-      dispatch(postNewTask({ newTask, lessonId, showSnackbar }))
-      console.log('lessonId: ', lessonId)
-      console.log('lesson: ', lesson)
+      console.log(newTask)
+      dispatch(
+         postNewTask({ newTask, lessonId: params.lessonid, showSnackbar })
+      )
    }
 
-   const removeImage = (index) => {
-      const updatedImages = images.filter((_, i) => i !== index)
-      setImages(updatedImages)
+   const removeImage = () => {
+      setImages(null)
    }
    const handleFileInputClick = () => {
       documentFile.current.click()
-   }
-   const handleFileInputChange = (event) => {
-      const file = event.target.files[0]
-      if (file) {
-         const fileId = uuidv4()
-         file.id = fileId
-         setSelectedFiles([...selectedFile, file])
-      }
    }
    const openModal = () => {
       setIsModalOpen(true)
@@ -81,11 +95,14 @@ const CreateTask = ({ lessonId }) => {
       <Container>
          <Title>Cоздать задание</Title>
          <InputContainer>
-            <TitleInput
-               value={taskName}
-               onChange={handleTaskNameChange}
-               placeholder="Название задание"
-            />
+            <InputContainerSecond>
+               <TitleInput
+                  style={{ width: '100%' }}
+                  value={taskName}
+                  onChange={handleTaskNameChange}
+                  placeholder="Название задание"
+               />
+            </InputContainerSecond>
             <IconBlock>
                <IconContainer
                   onMouseEnter={() => setHoveredIcon('heading')}
@@ -110,7 +127,6 @@ const CreateTask = ({ lessonId }) => {
                      ref={documentFile}
                      style={{ display: 'none' }}
                      onChange={handleFileInputChange}
-                     multiple
                   />
                   {hoveredIcon === 'italic' && (
                      <IconTooltip>Прикрепить файл</IconTooltip>
@@ -160,7 +176,7 @@ const CreateTask = ({ lessonId }) => {
          </InputContainer>
          <TaskCreate
             removeImage={removeImage}
-            images={images}
+            image={image}
             handleEditorChange={handleEditorChange}
             selectedFiles={selectedFile}
             arraylinks={links}
@@ -171,18 +187,25 @@ const CreateTask = ({ lessonId }) => {
             code={code}
             setCode={setCode}
          />
-         <BtnContainer>
-            <Button variant="outlined" onClick={() => {}}>
-               Отмена
-            </Button>
-            <Button
-               onClick={postNewTaskForStudent}
-               variant="contained"
-               type="submit"
-            >
-               Сохранить
-            </Button>
-         </BtnContainer>
+         <ButtonAndDataPicerContainer>
+            <DataBlockBlock
+               onDateChange={(date) => setDateValue(date)}
+               value={dateValue}
+            />
+            <BtnContainer>
+               <Button variant="outlined" onClick={() => {}}>
+                  Отмена
+               </Button>
+               <Button
+                  disabled={disableButton}
+                  onClick={postNewTaskForStudent}
+                  variant="contained"
+                  type="submit"
+               >
+                  Сохранить
+               </Button>
+            </BtnContainer>
+         </ButtonAndDataPicerContainer>
       </Container>
    )
 }
@@ -197,16 +220,23 @@ const Container = styled('div')`
    border: 2px solid #d4d4d4;
    border-radius: 6px;
    margin-bottom: 50px;
-   width: 78.5vw;
+   width: 100%;
 `
 const Title = styled('h3')`
    color: #0a06f7;
 `
+const InputContainerSecond = styled('div')`
+   width: 82%;
+`
 const InputContainer = styled('div')`
    display: flex;
-   justify-content: space-between;
    align-items: center;
-   width: 87%;
+   width: 100%;
+`
+const ButtonAndDataPicerContainer = styled('div')`
+   display: flex;
+   justify-content: space-between;
+   align-items: flex-end;
 `
 const BtnContainer = styled('div')`
    display: flex;
@@ -216,20 +246,26 @@ const BtnContainer = styled('div')`
 `
 const TitleInput = styled(Input)`
    & .MuiInputBase-root {
-      width: 60.5vw;
       height: 37px;
       border-radius: 10px;
       margin: 20px 0px 20px 0px;
    }
 `
 const IconBlock = styled('div')`
-   width: 30vw;
+   width: 18%;
    display: flex;
    gap: 15px;
    margin-left: 10px;
 `
+const DataBlockBlock = styled(BasicDatePicker)`
+   height: 42px;
+   .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root {
+      padding: 8px 8px 8px 0px;
+   }
+`
 const IconContainer = styled('div')`
-   position: relative;
+   /* position: relative; */
+   width: 100%;
 `
 const IconWrapper = styled('span')`
    cursor: pointer;

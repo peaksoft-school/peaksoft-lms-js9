@@ -12,7 +12,7 @@ export const Modal = ({
 }) => {
    return (
       <div>
-         <ModalUi open={open} onClose={handleClose}>
+         <ModalUiStyled open={open} onClose={handleClose}>
             <StyledModal minHeight={minHeight}>
                {title && (
                   <Header>
@@ -29,10 +29,13 @@ export const Modal = ({
                   {children}
                </Content>
             </StyledModal>
-         </ModalUi>
+         </ModalUiStyled>
       </div>
    )
 }
+const ModalUiStyled = styled(ModalUi)`
+   backdrop-filter: blur(2px);
+`
 
 const Header = styled('div')(() => ({
    width: '100%',

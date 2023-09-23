@@ -15,7 +15,7 @@ const TaskCreate = ({
    removeImage,
    setIsModalOpen,
    isModalOpen,
-   images,
+   image,
    setSelectedFile,
    handleEditorChange,
    setCode,
@@ -24,34 +24,19 @@ const TaskCreate = ({
    const handleTextareaChange = (event) => {
       setCode(event.target.value)
    }
-   const deleteDocumentFile = (id) => {
-      const fileToDelete = selectedFiles.find((file) => file.id === id)
-      if (fileToDelete) {
-         const updatedFiles = selectedFiles.filter((file) => file.id !== id)
-         setSelectedFile(updatedFiles)
-      }
+   const deleteDocumentFile = () => {
+      setSelectedFile(null)
    }
    return (
       <Block>
          <TextEditor variant="teacher" onEditorChange={handleEditorChange} />
          <LinkBlock>
-            {selectedFiles.length > 0 && (
-               <ul>
-                  {selectedFiles.map((files, index) => {
-                     return (
-                        <DocumentName>
-                           <TaskIcon />
-                           <DocumentListName key={index}>
-                              {files.name}
-                           </DocumentListName>
-                           <Delete
-                              onClick={() => deleteDocumentFile(files.id)}
-                           />
-                        </DocumentName>
-                     )
-                  })}
-                  <br />
-               </ul>
+            {selectedFiles !== null && (
+               <DocumentName>
+                  <TaskIcon />
+                  <DocumentListName>{selectedFiles.name}</DocumentListName>
+                  <Delete onClick={deleteDocumentFile} />
+               </DocumentName>
             )}
          </LinkBlock>
          <LinkComponent
@@ -61,7 +46,7 @@ const TaskCreate = ({
             setLinks={setArrayLinks}
          />
          <div>
-            <PhotoGallery removeImage={removeImage} images={images} />
+            <PhotoGallery removeImage={removeImage} image={image} />
          </div>
          <IconWithLink>
             <CodeTagIcon />
@@ -82,7 +67,7 @@ const IconWithLink = styled('div')`
    display: flex;
    align-items: center;
    gap: 8px;
-   /* width: 70vw; */
+   width: 100%;
 `
 const DocumentName = styled('div')`
    display: flex;
@@ -92,16 +77,14 @@ const DocumentListName = styled('li')`
    margin-left: 8px;
 `
 const StyledCodeInput = styled(TextareaAutosize)`
-   width: 69.5vw;
+   width: 100%;
    border-radius: 10px;
    min-height: 42px;
    max-height: 200px;
    border: 2px solid #d4d4d4;
    padding-left: 10px;
-   ::placeholder {
-      padding: 6px 0px 0px 10px;
-      font-size: 1.2rem;
-   }
+   padding: 6px 0px 0px 10px;
+   font-size: 1.2rem;
 `
 
 const Block = styled('div')`
@@ -112,7 +95,7 @@ const Block = styled('div')`
    background-color: #fff;
    border: 2px solid #d4d4d4;
    border-radius: 6px;
-   width: 75vw;
+   width: 100%;
 `
 const LinkBlock = styled('div')`
    display: flex;

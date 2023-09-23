@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { TiDeleteOutline } from 'react-icons/ti'
-import { v4 as uuidv4 } from 'uuid'
 import { Input } from '../input/Input'
 import { Button } from '../button/Button'
 import { Modal } from '../modal/Modal'
 import { LinkIcon } from '../../../assets/icons/index'
 
 const LinkComponent = ({ isModalOpen, setIsModalOpen, links, setLinks }) => {
-   const [linkText, setLinkText] = useState('')
    const [displayedText, setDisplayText] = useState('')
-
+   const [linkText, setLinkText] = useState('')
    const closeModal = () => {
       setIsModalOpen(false)
       setLinkText('')
@@ -19,22 +17,18 @@ const LinkComponent = ({ isModalOpen, setIsModalOpen, links, setLinks }) => {
 
    const addLink = () => {
       if (linkText && displayedText) {
-         const newLink = {
-            id: uuidv4(),
-            linkText,
-            displayText: displayedText,
-         }
-         setLinks([...links, newLink])
-         localStorage.setItem('links', JSON.stringify([...links, newLink]))
+         setLinks({
+            name: displayedText,
+            link: linkText,
+         })
          closeModal()
       }
    }
-   const deleteLink = (id) => {
-      const linkToDelete = links.find((link) => link.id === id)
-      if (linkToDelete) {
-         const updatedLinks = links.filter((link) => link.id !== id)
-         setLinks(updatedLinks)
-      }
+   const deleteLink = () => {
+      setLinks({
+         name: '',
+         link: '',
+      })
    }
    return (
       <Container id="links">
@@ -76,20 +70,15 @@ const LinkComponent = ({ isModalOpen, setIsModalOpen, links, setLinks }) => {
                </Modal>
             )}
          </div>
-
-         {links?.map((link) => (
-            <LinkContainer key={link.id}>
+         {links?.name !== '' && links.link !== '' && (
+            <LinkContainer>
                <LinkIcon />
-               <LinkStyled
-                  href={link.linkText}
-                  target="_blank"
-                  rel="noreferrer"
-               >
-                  {link.displayText}
+               <LinkStyled href={links.link} target="_blank" rel="noreferrer">
+                  {links?.name}
                </LinkStyled>
-               <Delete onClick={() => deleteLink(link.id)} />
+               <Delete onClick={() => deleteLink()} />
             </LinkContainer>
-         ))}
+         )}
       </Container>
    )
 }

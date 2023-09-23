@@ -2,29 +2,23 @@ import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { Button } from '../button/Button'
 
-const PhotoGallery = ({ removeImage, images }) => {
+const PhotoGallery = ({ image, removeImage }) => {
    const [showDeleteButton, setShowDeleteButton] = useState(false)
    return (
       <div>
          <GalleryContainer>
-            {images?.map((image, index) => (
-               <ImageContainer
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={index}
-                  onMouseEnter={() => setShowDeleteButton(true)}
-                  onMouseLeave={() => setShowDeleteButton(false)}
-               >
-                  <Image src={image} alt={`Image ${index}`} />
-                  {showDeleteButton && (
-                     <StyledButton
-                        onClick={() => removeImage(index)}
-                        variant="danger"
-                     >
-                        Удалить
-                     </StyledButton>
-                  )}
-               </ImageContainer>
-            ))}
+            <ImageContainer
+               onMouseEnter={() => setShowDeleteButton(true)}
+               onMouseLeave={() => setShowDeleteButton(false)}
+            >
+               {image !== null && <Image src={image} alt="Image" />}
+
+               {showDeleteButton && (
+                  <StyledButton onClick={removeImage} variant="danger">
+                     Удалить
+                  </StyledButton>
+               )}
+            </ImageContainer>
          </GalleryContainer>
       </div>
    )

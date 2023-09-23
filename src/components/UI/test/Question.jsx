@@ -1,10 +1,14 @@
 import { styled } from '@mui/material'
 import React, { useState } from 'react'
-import { CancelIcon, DeleteIcon, DuplicateIcon } from '../../assets/icons/index'
-import { Input } from '../UI/input/Input'
-import { Radio } from '../UI/checkbox-radio/Radio'
-import { Button } from '../UI/button/Button'
-import { CheckBox } from '../UI/checkbox-radio/CheckBox'
+import {
+   CancelIcon,
+   DeleteIcon,
+   DuplicateIcon,
+} from '../../../assets/icons/index'
+import { Input } from '../input/Input'
+import { Radio } from '../checkbox-radio/Radio'
+import { Button } from '../button/Button'
+import { CheckBox } from '../checkbox-radio/CheckBox'
 
 const selectedIdFromLocalStorage = localStorage.getItem('selectedId')
 const selectedId = selectedIdFromLocalStorage
@@ -127,7 +131,7 @@ export const QuetionSection = ({
          <QuizItemContent>
             <div className="block">
                <QuizItemNumber>{section.id}</QuizItemNumber>
-               <QuizItemQuestionInput placeholder="вопрос" />
+               <QuizItemQuestionInput placeholder="Вопрос" />
             </div>
             <QuizItemOptions>
                <DupBtn type="submit" onClick={radioFunc}>
@@ -247,8 +251,8 @@ const AdditionalOptions = styled('div')(() => ({
    },
 }))
 const StyledCancelIcon = styled(CancelIcon)(() => ({
-   marginLeft: '54.7vw',
    position: 'absolute',
+   right: '5rem',
    cursor: 'pointer',
 }))
 const QuizItemOptions = styled('div')(() => ({
@@ -270,7 +274,11 @@ const QuizItemContent = styled('div')(() => ({
    display: 'flex',
    alignItems: 'center',
    gap: '0.9vw',
+   width: '100%',
    '.block': {
+      Input: {
+         width: '100%',
+      },
       display: 'flex',
       aliginItems: 'center',
       gap: '0.69vw',
@@ -284,7 +292,6 @@ const QuizItemNumber = styled('span')(() => ({
 }))
 
 const QuizItemSection = styled('div')(() => ({
-   width: '59.3vw',
    height: 'auto',
    border: '1px solid #D4D4D4',
    background: '#FFF',
@@ -296,10 +303,9 @@ const QuizItemSection = styled('div')(() => ({
 }))
 const QuizItemQuestionInput = styled(Input)(() => ({
    '& .MuiInputBase-root': {
-      width: '32vw',
+      width: '45vw',
       height: '42px',
-      // borderRadius: '10v7w',
-      marginTop: '1.7vw',
+      marginTop: '1.5rem',
       paddingTop: '0.7vw',
       paddingBottom: '10px',
       marginLeft: '3px',
@@ -311,7 +317,15 @@ const QuizItemAnswers = styled('div')(({ checkboxAndRadio }) => ({
    alignItems: 'center',
    justifyContent: 'flex-start',
    marginBottom: '1.5vw',
-
+   width: '100%',
+   paddingRight: '50px',
+   '& .css-dmmspl-MuiFormGroup-root': {
+      marginRight: '23px',
+      width: '1.5rem',
+   },
+   div: {
+      width: '100%',
+   },
    label: {
       marginRight: checkboxAndRadio ? '1.5rem' : '0.3rem',
       marginLeft: checkboxAndRadio ? '10px' : '0vw',
@@ -321,7 +335,7 @@ const QuizItemAnswers = styled('div')(({ checkboxAndRadio }) => ({
 const StyledCheckBox = styled(CheckBox)(() => ({}))
 
 const QuizItemAnswerInput = styled(Input)(() => ({
-   width: '54.30vw',
+   width: '100%',
    height: '42px',
 }))
 const DupBtn = styled('button')(() => ({

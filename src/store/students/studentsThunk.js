@@ -1,5 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
+// eslint-disable-next-line import/no-cycle
+import { getCoursesById } from '../courses/coursesThunk'
 
 export const getGroupUsers = createAsyncThunk(
    'students/getGroupUsers',
@@ -37,7 +39,7 @@ export const getStudents = createAsyncThunk(
                pageSize: 10,
             },
          })
-         return response.data.studentResponses
+         return response.data
       } catch (error) {
          return rejectWithValue(error.message)
       }
@@ -52,8 +54,9 @@ export const deleteStudent = createAsyncThunk(
    ) => {
       try {
          await axiosInstance.delete(`/api/students/${id}`)
-         showSnackbar('Студент успешно удален', 'success')
-         return dispatch(getStudents({ id: courseId, page }))
+         dispatch(getStudents({ id: courseId, page }))
+         dispatch(getCoursesById(courseId))
+         return showSnackbar('Студент успешно удален', 'success')
       } catch (error) {
          showSnackbar(error, 'error')
          return rejectWithValue(error.message)

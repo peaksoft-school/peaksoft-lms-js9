@@ -74,7 +74,7 @@ export const CoursesTable = () => {
          />
          <SpanStyled>
             <button type="button" onClick={navigateGoBackGroups}>
-               Группы
+               Курсы
             </button>
             \ {getGroupName?.courseName} \{' '}
             {location.pathname === `/admin/courses/${params.id}/students`
@@ -93,9 +93,10 @@ const SpanStyled = styled('p')`
    margin-bottom: 1.5rem;
    display: flex;
    gap: 0.3125rem;
-   align-items: center;
+   align-items: end;
    button {
-      font-size: 0.875rem;
+      cursor: pointer;
+      font-size: 1rem;
       border: none;
       color: #747d74;
    }

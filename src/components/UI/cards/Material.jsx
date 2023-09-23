@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react'
 import { FormControl, MenuItem, Select, styled } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { menuItem, navLink } from '../../../utils/constants/constants'
 import { Button } from '../button/Button'
@@ -80,20 +81,39 @@ export const Material = ({
                      placeholder="Добавить"
                   >
                      {menuItem.map((item) => (
-                        <MenuItem
-                           key={item.id}
-                           value={item.value}
-                           onClick={() => saveLessonCrudHandler(item)}
-                           sx={{
-                              borderBottom: '1px solid #ECECEC',
-                              '&:hover': {
-                                 backgroundColor: '#1a227e11',
-                                 color: '#3772FF',
-                              },
-                           }}
+                        <Link
+                           to={
+                              item.id === 3
+                                 ? `createtask/${el.lessonId}`
+                                 : item.id === 5
+                                 ? `createtest/${el.lessonId}`
+                                 : '#'
+                           }
                         >
-                           {item.title}
-                        </MenuItem>
+                           <MenuItem
+                              key={item.id}
+                              value={item.value}
+                              disabled={
+                                 item.id === 1
+                                    ? el.videoLesson
+                                    : item.id === 2
+                                    ? el.presentation
+                                    : item.id === 4
+                                    ? el.link
+                                    : ''
+                              }
+                              onClick={() => saveLessonCrudHandler(item)}
+                              sx={{
+                                 borderBottom: '1px solid #ECECEC',
+                                 '&:hover': {
+                                    backgroundColor: '#1a227e11',
+                                    color: '#3772FF',
+                                 },
+                              }}
+                           >
+                              {item.title}
+                           </MenuItem>
+                        </Link>
                      ))}
                   </Select>
                </FormControl>
@@ -115,7 +135,7 @@ export const Material = ({
             {navLink.map((item) => (
                <NavLink
                   key={item.id}
-                  to={item.route}
+                  to={`${item.id}/${el.lessonId}`}
                   activeClassName="active"
                   className="nav-link"
                >
@@ -162,7 +182,6 @@ export const Material = ({
 
 const Container = styled('div')(({ theme }) => ({
    backgroundColor: '#ffffff',
-   margin: '1.25rem',
    width: '39vw',
    height: '34.7vh',
    borderRadius: '0.5rem',

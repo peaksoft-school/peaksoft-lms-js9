@@ -41,7 +41,7 @@ const ContainerMap = styled('div')`
 
 const ContentContainer = styled('a')`
    flex-basis: calc(50% - 10px);
-   height: 4rem;
+   /* height: 4rem; */
    background-color: #bfd3f86e;
    border-radius: 5px;
    padding: 20px;

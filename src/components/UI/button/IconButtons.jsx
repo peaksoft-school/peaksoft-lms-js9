@@ -28,8 +28,8 @@ const StyledButton = styled(IconButton)(({ variant }) => {
             '&.MuiIconButton-root': {
                backgroundColor: '#FA2B56',
                color: 'white',
-               borderRadius: '50%',
-               padding: '22px 30px',
+               borderRadius: '99%',
+               padding: '15px',
                '&:hover': {
                   backgroundColor: '#EF0B3B',
                },

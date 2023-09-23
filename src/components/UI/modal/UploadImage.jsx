@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material'
+import { useDropzone } from 'react-dropzone'
 import uploadImage from '../../../assets/image/uploadimage.png'
 
 export const UploadImage = ({ onImageUpload, imageEditValue }) => {
@@ -11,8 +12,18 @@ export const UploadImage = ({ onImageUpload, imageEditValue }) => {
       onImageUpload(file)
    }
 
+   const handleDrop = (acceptedFiles) => {
+      setImage(acceptedFiles[0])
+      onImageUpload(acceptedFiles[0])
+   }
+
+   const { getRootProps, getInputProps } = useDropzone({
+      onDrop: handleDrop,
+      accept: 'image/*',
+   })
+
    return (
-      <Container>
+      <Container {...getRootProps()} onClick={(e) => e.stopPropagation()}>
          <label htmlFor="file">
             {image ? (
                <Img
@@ -31,11 +42,13 @@ export const UploadImage = ({ onImageUpload, imageEditValue }) => {
                style={{ display: 'none' }}
                type="file"
                onChange={handleChange}
+               {...getInputProps()}
             />
          </label>
       </Container>
    )
 }
+
 const Container = styled('div')`
    width: 9vw;
    height: 15vh;
@@ -43,6 +56,7 @@ const Container = styled('div')`
    display: flex;
    justify-content: center;
    overflow: hidden;
+   cursor: pointer;
 `
 
 const Img = styled('img')`

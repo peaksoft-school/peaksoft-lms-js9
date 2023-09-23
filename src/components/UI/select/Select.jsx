@@ -4,6 +4,7 @@ import ListItemText from '@mui/material/ListItemText'
 import Select from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
 import styled from '@emotion/styled'
+import { InputLabel } from '@mui/material'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -24,9 +25,12 @@ const MultiSelect = ({ array, value = [], onChange, ...rest }) => {
 
    return (
       <FormControl sx={{ m: 1 }}>
+         <InputLabel id="select-label">Назначить учителя</InputLabel>
          <Select
-            sx={{ paddingRight: '2rem' }}
+            sx={{ padding: '1.5rem 0' }}
             multiple
+            id="select-label"
+            label="Назначить учителя"
             value={value}
             onChange={handleChange}
             renderValue={(selected) => (
