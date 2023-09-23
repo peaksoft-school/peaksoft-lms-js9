@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
+import { postFile } from '../group/groupThunk'
 
 export const getInstructors = createAsyncThunk(
    'instructors/getInstructor',
@@ -66,6 +67,38 @@ export const deleteAllTeacherCourse = createAsyncThunk(
          return dispatch(getInstructors(payload.id))
       } catch (error) {
          payload.showSnackbar(error.message, 'error')
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const postNewTask = createAsyncThunk(
+   'instructors/postTask',
+   async (
+      { newTask, lessonId, showSnackbar },
+      { rejectWithValue, dispatch }
+   ) => {
+      try {
+         let getFile = null
+         let getDoc = null
+
+         if (newTask.image !== '') {
+            getFile = await dispatch(postFile(newTask.image)).unwrap()
+         }
+
+         if (newTask.fileLink !== '') {
+            getDoc = await dispatch(postFile(newTask.fileLink)).unwrap()
+         }
+
+         await axiosInstance.post(`/api/tasks/${lessonId}`, {
+            ...newTask,
+            image: getFile,
+            fileLink: getDoc,
+         })
+         showSnackbar('Задание успешно создано !', 'success')
+         return 'hello'
+      } catch (error) {
+         showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)
       }
    }

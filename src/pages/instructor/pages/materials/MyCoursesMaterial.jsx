@@ -85,6 +85,8 @@ export const MyCoursesMaterial = () => {
             setLessonId(lesson.lessonId)
             setSelectPresentation(!selectPresentation)
             break
+         case 3:
+            break
          case 4:
             setLessonId(lesson.lessonId)
             setSelectLink(!selectLink)

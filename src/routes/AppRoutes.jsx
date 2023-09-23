@@ -31,7 +31,6 @@ import { LessonLayout } from '../pages/student/home-page/LessonLayout'
 import { TaskSend } from '../pages/student/lessonsPage/task/TaskLayout'
 import { TestLayout } from '../pages/student/lessonsPage/test/TestLayout'
 import { Page404 } from '../components/UI/not-found/Page404'
-import { CreateTaskPage } from '../pages/instructor/pages/materials/createTaskTest/CreateTaskPage'
 import { CreateTestPage } from '../pages/instructor/pages/materials/createTaskTest/CreateTestPage'
 import { Video } from '../pages/instructor/pages/materials/pages/Video'
 import { LinkPageIns } from '../pages/instructor/pages/materials/pages/Link'
@@ -40,6 +39,7 @@ import { TaskIns } from '../pages/instructor/pages/materials/pages/Task'
 import { LessonLayoutInstrutor } from '../pages/instructor/pages/materials/pages/LessonLayoutInstrutor'
 import { TaskInside } from '../pages/instructor/pages/materials/pages/TaskInside'
 import { TaskTestLayout } from '../pages/instructor/pages/materials/createTaskTest/TaskTestLayout'
+import CreateTask from '../pages/instructor/pages/materials/crud/create-task/CreateTask'
 
 export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
@@ -177,7 +177,7 @@ export const AppRoutes = ({ roles = 'admin' }) => {
                />
                <Route
                   path="materials/createtask/:lessonid"
-                  element={<CreateTaskPage />}
+                  element={<CreateTask />}
                />
             </Route>
             <Route

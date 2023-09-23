@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Editor, EditorState, RichUtils, SelectionState } from 'draft-js'
+import { Editor, EditorState, RichUtils } from 'draft-js'
 import { AiOutlineUnorderedList, AiOutlineOrderedList } from 'react-icons/ai'
 import {
    PiTextItalic,
@@ -8,66 +8,37 @@ import {
    PiTextAaBold,
 } from 'react-icons/pi'
 import { RiText } from 'react-icons/ri'
-import { styled } from '@mui/material'
+import styled from '@emotion/styled'
 import { IconButtons } from '../button/IconButtons'
 
 const TextEditor = ({ onEditorChange, variant }) => {
    const [hoveredIcon, setHoveredIcon] = useState(null)
    const [editorState, setEditorState] = useState(EditorState.createEmpty())
+   // const [editorText, setEditorText] = useState('') // Состояние для текста
+   const [editorStyles, setEditorStyles] = useState({}) // Состояние для стилей
 
    const handleEditorStateChange = (newState) => {
       setEditorState(newState)
-      onEditorChange(newState.getCurrentContent().getPlainText())
+      const plainText = newState.getCurrentContent().getPlainText()
+      onEditorChange(plainText, editorStyles) // Передача и стилей, и текста
    }
 
    const handleInlineStyleClick = (style) => {
-      const selectionState = editorState.getSelection()
-      if (selectionState.isCollapsed()) {
-         const contentState = editorState.getCurrentContent()
-         const currentBlock = contentState.getBlockForKey(
-            selectionState.getStartKey()
-         )
-         const startOffset = 0
-         const endOffset = currentBlock.getLength()
-         const newSelection = SelectionState.createEmpty(
-            selectionState.getStartKey()
-         ).merge({
-            anchorOffset: startOffset,
-            focusOffset: endOffset,
-         })
-         const newEditorState = EditorState.forceSelection(
-            editorState,
-            newSelection
-         )
-         setEditorState(RichUtils.toggleInlineStyle(newEditorState, style))
-      } else {
-         setEditorState(RichUtils.toggleInlineStyle(editorState, style))
-      }
+      const newEditorState = RichUtils.toggleInlineStyle(editorState, style)
+      setEditorState(newEditorState)
+      const newStyles = newEditorState.getCurrentInlineStyle()
+      setEditorStyles(newStyles.toJS()) // Обновление стилей
    }
 
    const handleListStyleClick = (style) => {
-      const selectionState = editorState.getSelection()
-      if (selectionState.isCollapsed()) {
-         const contentState = editorState.getCurrentContent()
-         const currentBlock = contentState.getBlockForKey(
-            selectionState.getStartKey()
-         )
-         const startOffset = 0
-         const endOffset = currentBlock.getLength()
-         const newSelection = SelectionState.createEmpty(
-            selectionState.getStartKey()
-         ).merge({
-            anchorOffset: startOffset,
-            focusOffset: endOffset,
-         })
-         const newEditorState = EditorState.forceSelection(
-            editorState,
-            newSelection
-         )
-         setEditorState(RichUtils.toggleBlockType(newEditorState, style))
-      } else {
-         setEditorState(RichUtils.toggleBlockType(editorState, style))
-      }
+      const newEditorState = RichUtils.toggleBlockType(editorState, style)
+      setEditorState(newEditorState)
+      // Необходимо проверить тип текущего блока и соответствующим образом обновить стили
+      const contentState = newEditorState.getCurrentContent()
+      const blockType = contentState
+         .getBlockForKey(newEditorState.getSelection().getStartKey())
+         .getType()
+      setEditorStyles({ ...editorStyles, [blockType]: true })
    }
 
    const capitalizeFirstLetter = (editorState) => {
@@ -105,8 +76,12 @@ const TextEditor = ({ onEditorChange, variant }) => {
       return EditorState.push(editorState, newContentState, 'apply-entity')
    }
    const handleCapitalizeClick = () => {
-      setEditorState(capitalizeFirstLetter(editorState))
+      const newEditorState = capitalizeFirstLetter(editorState)
+      setEditorState(newEditorState)
+      const plainText = newEditorState.getCurrentContent().getPlainText()
+      onEditorChange(plainText, editorStyles) // Передача и стилей, и текста
    }
+
    return (
       <Container>
          <IconBlock>
@@ -179,9 +154,9 @@ const TextEditor = ({ onEditorChange, variant }) => {
          </IconBlock>
          <InputBlock>
             {variant === 'teacher' && (
-               <IconButtons>
+               <IconButtonContainer>
                   <IconT />
-               </IconButtons>
+               </IconButtonContainer>
             )}
             <ListContainer variant={variant}>
                <Editor
@@ -211,14 +186,19 @@ const IconTooltip = styled('div')`
 const IconContainer = styled('div')`
    position: relative;
 `
+const IconButtonContainer = styled(IconButtons)`
+   padding: 8px 8px 8px 0px;
+`
 const Container = styled('div')`
    width: 100%;
+   padding: 20px 0px 20px 0px;
 `
 
 const IconBlock = styled('div')`
    width: 300px;
    display: flex;
    gap: 15px;
+   margin-left: 20px;
 `
 
 const IconWrapper = styled('span')`
@@ -228,6 +208,7 @@ const IconWrapper = styled('span')`
 const ListContainer = styled('div')`
    width: 100%;
    border: 1px solid #ccc;
+   border-radius: 10px;
    padding: 10px;
    border-radius: 10px;
    height: ${(props) => (props.variant === 'student' ? '230px' : '')};
