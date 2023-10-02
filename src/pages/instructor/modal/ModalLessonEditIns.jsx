@@ -42,11 +42,11 @@ export const ModalEditLesson = ({
    )
 }
 const InputTitleStyled = styled(Input)(() => ({
-   width: '17.5vw',
+   width: '25vw',
 }))
 const ContainerInputTitleDateStyled = styled('div')`
    display: flex;
-   width: 17vw;
+   width: 25vw;
 `
 
 const ContainerButtonsStyled = styled('div')`

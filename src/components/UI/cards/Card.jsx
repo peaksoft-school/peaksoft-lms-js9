@@ -30,7 +30,12 @@ export const Card = ({
             </ContainerImg>
             <ContainerContent>
                <ContainerHeader>
-                  <p>{title}</p> <span>{date}</span>
+                  <p>
+                     {title?.length > 17
+                        ? `${title.substring(0, 17)}...`
+                        : title}
+                  </p>{' '}
+                  <span>{date}</span>
                </ContainerHeader>
                <ContainerDescriptionStyled>
                   {description}
@@ -73,7 +78,7 @@ const ContainerImg = styled('div')`
    overflow: hidden;
    img {
       height: 171px;
-      width: 100%;
+      /* width: 100%; */
    }
 `
 
@@ -102,9 +107,6 @@ const ContainerHeader = styled(Typography)(() => ({
       fontStyle: 'normal',
       fontWeight: 600,
       lineHeight: 'normal',
-      width: '10rem',
-      height: '1.5rem',
-      overflow: 'hidden',
    },
    span: {
       color: '#1D293F',

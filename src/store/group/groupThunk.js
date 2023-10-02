@@ -39,23 +39,11 @@ export const postCard = createAsyncThunk(
          payload.modal('')
          payload.setValue('groupName', '')
          payload.setValue('description', '')
-         payload.showSnackbar('Группа успешно создано!', 'success')
+         payload.showSnackbar('Группа успешно создан!', 'success')
          return dispatch(getCard())
       } catch (error) {
-         switch (error.response?.status) {
-            case 409:
-               payload.showSnackbar('Все поля должны быть заполнены!', 'error')
-               break
-            case 400:
-               payload.showSnackbar(
-                  'С таким названием группа уже существует!',
-                  'error'
-               )
-               break
-            default:
-               payload.showSnackbar(error, 'error')
-         }
-         return rejectWithValue(error.data.message)
+         payload.showSnackbar(error.response.data.message, 'error')
+         return rejectWithValue(error)
       }
    }
 )
@@ -75,21 +63,15 @@ export const updateCard = createAsyncThunk(
    'cards/putCards',
    async (payload, { rejectWithValue, dispatch }) => {
       try {
-         if (payload.status) {
-            const getFile = await dispatch(
-               postFile(payload.data.image)
-            ).unwrap()
-            await axiosInstance.put(`/api/groups/${payload.data.id}`, {
-               ...payload.data,
-               image: getFile,
-            })
-         } else {
-            await axiosInstance.put(
-               `/api/groups/${payload.data.id}`,
-               payload.data
-            )
-         }
-         payload.showSnackbar('Группа успешно редактировано!', 'success')
+         const getFile = await dispatch(postFile(payload.data.image))
+         await axiosInstance.put(`/api/groups/${payload.data.id}`, {
+            ...payload.data,
+            image:
+               getFile.payload === 'Request failed with status code 403'
+                  ? payload.data.image
+                  : getFile.payload,
+         })
+         payload.showSnackbar('Группа успешно редактирован!', 'success')
          payload.setActiveModal2('')
          return dispatch(getCard())
       } catch (error) {
@@ -104,7 +86,7 @@ export const deleteGroup = createAsyncThunk(
    async (payload, { rejectWithValue, dispatch }) => {
       try {
          await axiosInstance.delete(`/api/groups/${payload.getCardId}`)
-         payload.showSnackbar('Группа успешно удалено!', 'success')
+         payload.showSnackbar('Группа успешно удален!', 'success')
          return dispatch(getCard())
       } catch (error) {
          payload.showSnackbar(error.message, 'error')

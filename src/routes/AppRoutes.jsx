@@ -31,15 +31,17 @@ import { LessonLayout } from '../pages/student/home-page/LessonLayout'
 import { TaskSend } from '../pages/student/lessonsPage/task/TaskLayout'
 import { TestLayout } from '../pages/student/lessonsPage/test/TestLayout'
 import { Page404 } from '../components/UI/not-found/Page404'
-import { CreateTestPage } from '../pages/instructor/pages/materials/createTaskTest/CreateTestPage'
-import { Video } from '../pages/instructor/pages/materials/pages/Video'
-import { LinkPageIns } from '../pages/instructor/pages/materials/pages/Link'
-import { PresentationIns } from '../pages/instructor/pages/materials/pages/Presentation'
-import { TaskIns } from '../pages/instructor/pages/materials/pages/Task'
+import { Video } from '../pages/instructor/pages/materials/pages/vidPresLink/Video'
+import { LinkPageIns } from '../pages/instructor/pages/materials/pages/vidPresLink/Link'
+import { PresentationIns } from '../pages/instructor/pages/materials/pages/vidPresLink/Presentation'
+import { TaskIns } from '../pages/instructor/pages/materials/pages/task/Task'
+import { TaskInside } from '../pages/instructor/pages/materials/pages/task/TaskInside'
 import { LessonLayoutInstrutor } from '../pages/instructor/pages/materials/pages/LessonLayoutInstrutor'
-import { TaskInside } from '../pages/instructor/pages/materials/pages/TaskInside'
-import { TaskTestLayout } from '../pages/instructor/pages/materials/createTaskTest/TaskTestLayout'
-import CreateTask from '../pages/instructor/pages/materials/crud/create-task/CreateTask'
+import { TaskTestLayout } from '../pages/instructor/pages/materials/createTest/TaskTestLayout'
+import { TestInsideInstrutors } from '../pages/instructor/pages/materials/pages/test/TestInside'
+import { TestAnswers } from '../pages/instructor/pages/materials/pages/test/TestAnswers'
+import { TestEdit } from '../pages/instructor/pages/materials/pages/test/TestCreateEdit'
+import CreateTask from '../pages/instructor/pages/materials/create-task/CreateTask'
 
 export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
@@ -173,11 +175,11 @@ export const AppRoutes = ({ roles = 'admin' }) => {
             >
                <Route
                   path="materials/createtest/:lessonid"
-                  element={<CreateTestPage />}
+                  element={<TestEdit variant={false} />}
                />
                <Route
                   path="materials/createtask/:lessonid"
-                  element={<CreateTask />}
+                  element={<CreateTask variant={false} />}
                />
             </Route>
             <Route
@@ -201,12 +203,24 @@ export const AppRoutes = ({ roles = 'admin' }) => {
                   element={<TaskInside />}
                />
                <Route
+                  path="/instructor/mycoursesins/:id/materials/3/:lessonid/edit/:taskid"
+                  element={<CreateTask variant />}
+               />
+               <Route
                   path="/instructor/mycoursesins/:id/materials/4/:lessonid"
                   element={<LinkPageIns />}
                />
                <Route
                   path="/instructor/mycoursesins/:id/materials/5/:lessonid"
-                  element={<h1>test inside</h1>}
+                  element={<TestInsideInstrutors />}
+               />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/5/:lessonid/:testid"
+                  element={<TestAnswers />}
+               />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/5/:lessonid/edit/:testid"
+                  element={<TestEdit variant />}
                />
             </Route>
             <Route path="students" element={<MyCoursesStudents />} />

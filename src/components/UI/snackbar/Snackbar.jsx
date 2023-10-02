@@ -17,16 +17,14 @@ const ErrorIcon = styled(BiSolidErrorCircle)`
 `
 
 const CustomSnackbar = styled('div')`
-   border-radius: 8px;
    background: ${({ status }) =>
       status === 'success' ? '#36AC0C' : '#C91E1E'};
    color: white;
    display: flex;
    padding-left: 10px;
    flex-direction: row-reverse;
-   justify-content: end;
    align-items: center;
-   height: 60px;
+   padding: 15px 20px;
    gap: 1rem;
    cursor: pointer;
 `
@@ -44,11 +42,10 @@ export const showSnackbar = (message, status) => {
       {
          style: {
             marginTop: '0.7rem',
-            borderRadius: '8px',
             background: status === 'success' ? '#36AC0C' : '#C91E1E',
-            color: 'white',
-            padding: 0,
-            height: '60px',
+            padding: '0px',
+            maxWidth: '500px',
+            cursor: 'pointer',
          },
          position: 'top-right',
          duration: 2000,

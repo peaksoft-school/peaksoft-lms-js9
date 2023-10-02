@@ -195,7 +195,7 @@ export const putPresentationLessonThunk = createAsyncThunk(
             ...data,
             linkPptFile: getFile,
          })
-         showSnackbar('Презентация успешно редактирован!', 'success')
+         showSnackbar('Презентация успешно редактировано!', 'success')
          setActive(false)
          return dispatch(getPresentationLessonThunk(lessonId))
       } catch (error) {

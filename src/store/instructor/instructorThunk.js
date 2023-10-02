@@ -75,14 +75,14 @@ export const deleteAllTeacherCourse = createAsyncThunk(
 export const postNewTask = createAsyncThunk(
    'instructors/postTask',
    async (
-      { newTask, lessonId, showSnackbar },
+      { newTask, lessonId, showSnackbar, navigate },
       { rejectWithValue, dispatch }
    ) => {
       try {
          let getFile = null
          let getDoc = null
 
-         if (newTask.image !== '') {
+         if (newTask.image !== null) {
             getFile = await dispatch(postFile(newTask.image)).unwrap()
          }
 
@@ -96,7 +96,37 @@ export const postNewTask = createAsyncThunk(
             fileLink: getDoc,
          })
          showSnackbar('Задание успешно создано !', 'success')
-         return 'hello'
+         return navigate(-1)
+      } catch (error) {
+         showSnackbar(error.response.data.message, 'error')
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const putNewTask = createAsyncThunk(
+   'instructors/putTask',
+   async (
+      { newTask, taskId, showSnackbar, navigate },
+      { rejectWithValue, dispatch }
+   ) => {
+      try {
+         console.log(newTask)
+         const getFile = await dispatch(postFile(newTask.image))
+         const getDoc = await dispatch(postFile(newTask.fileLink))
+         await axiosInstance.put(`/api/tasks/${taskId}`, {
+            ...newTask,
+            image:
+               getFile.payload === 'Request failed with status code 403'
+                  ? newTask.image
+                  : getFile.payload,
+            fileLink:
+               getDoc.payload === 'Request failed with status code 403'
+                  ? newTask.fileLink.fileLink
+                  : getDoc.payload,
+         })
+         showSnackbar('Задание успешно редактировано !', 'success')
+         return navigate(-1)
       } catch (error) {
          showSnackbar(error.message, 'error')
          return rejectWithValue(error.message)

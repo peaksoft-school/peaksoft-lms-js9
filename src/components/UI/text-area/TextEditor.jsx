@@ -14,6 +14,7 @@ import { IconButtons } from '../button/IconButtons'
 const TextEditor = ({ onEditorChange, variant }) => {
    const [hoveredIcon, setHoveredIcon] = useState(null)
    const [editorState, setEditorState] = useState(EditorState.createEmpty())
+   // console.log('editorState: ', editorState)
    // const [editorText, setEditorText] = useState('') // Состояние для текста
    const [editorStyles, setEditorStyles] = useState({}) // Состояние для стилей
 
@@ -191,7 +192,6 @@ const IconButtonContainer = styled(IconButtons)`
 `
 const Container = styled('div')`
    width: 100%;
-   padding: 20px 0px 20px 0px;
 `
 
 const IconBlock = styled('div')`

@@ -14,7 +14,11 @@ export const ModalDelete = ({
          <Modal width="315px" open={open} handleClose={handleClose}>
             <ModalStyled>
                <ParaghQuestionStyled>
-                  Вы уверены, что хотите удалить {paragraph} ?
+                  Вы уверены, что хотите удалить <br />
+                  {paragraph?.length > 20
+                     ? `${paragraph.substring(0, 20)}...`
+                     : paragraph}
+                  ?
                </ParaghQuestionStyled>
                <div>
                   <ButtonCloseStyled variant="outlined" onClick={handleClose}>

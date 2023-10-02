@@ -27,8 +27,6 @@ export const ModalLogout = ({ open, handleClose, logoutHandler }) => {
 }
 const ModalStyled = styled('div')`
    display: flex;
-   /* justify-content: center; */
-   /* align-items: center; */
    flex-direction: column;
    gap: 0.7rem;
    div {

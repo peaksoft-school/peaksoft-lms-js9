@@ -32,8 +32,6 @@ export const Groups = () => {
    const [imageValue, setImageValue] = useState('')
    const [imageEditValue, setImageEditValue] = useState('')
 
-   const [status, setStatus] = useState(false)
-
    const { isActive, setActive } = useToggle('addedgroupmodal')
    const { setActive: setActiveModal1, isActive: isActiveModal1 } =
       useToggle('modalDelete')
@@ -70,7 +68,6 @@ export const Groups = () => {
 
    const onImageUpload = (img) => {
       setImageValue(img)
-      setStatus(true)
    }
    const dateChangeHandler = (date) => setDateAdded(date)
    const closeModalAddedNewGroupHandler = () => {
@@ -123,8 +120,7 @@ export const Groups = () => {
             editFormatDate === '' ? getValueDate : editFormatDate,
          image: imageValue,
       }
-      dispatch(updateCard({ data, setActiveModal2, status, showSnackbar }))
-      setStatus(false)
+      dispatch(updateCard({ data, setActiveModal2, showSnackbar }))
    }
 
    const openModalDeleteAndEditHandler = ({ menuId, data }) => {

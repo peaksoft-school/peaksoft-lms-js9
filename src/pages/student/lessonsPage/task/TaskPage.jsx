@@ -97,7 +97,15 @@ export const TaskPage = () => {
                   </h4>
                </div>
             </ContainerTaskNameAndDeadline>
+            <a href={el?.fileLink} target="_blank" rel="noopener noreferrer">
+               {el?.fileName}
+            </a>
+            <a href={el?.link} target="_blank" rel="noopener noreferrer">
+               {el?.linkName}
+            </a>
+            <img src={el.image} alt="" />
             <p>{el.text}</p>
+            <p>{el.code}</p>
          </ContainerTask>
          <ContainerTaskSend>
             {taskResult.send ? (
@@ -240,10 +248,12 @@ const ContainerTask = styled('div')`
    flex-direction: column;
    gap: 0.8rem;
    width: 100%;
-   p {
-      height: 26vh;
-      overflow-y: scroll;
-      line-height: 2rem;
+   img {
+      width: 50%;
+   }
+   a {
+      color: #3772ff;
+      text-decoration: underline;
    }
 `
 const ContainerTextEditor = styled('div')`

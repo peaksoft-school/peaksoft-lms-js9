@@ -256,7 +256,15 @@ export const MyCoursesMaterial = () => {
             setActive={setDeletee}
             closeHandlerModal={closeHandlerModal}
             deleteHandler={deleteHandler}
-            paragraph={`удалить ${titleCrud}`}
+            paragraph={`удалить ${
+               titleCrud === 'Видеоурок'
+                  ? 'видеоурок'
+                  : titleCrud === 'Ссылка'
+                  ? 'ссылку'
+                  : titleCrud === 'Презентация'
+                  ? 'презентацию'
+                  : ''
+            }`}
          />
       </>
    )

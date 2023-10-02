@@ -69,7 +69,7 @@ export const postExcelFile = createAsyncThunk(
    'students/postExcelFile',
    async (
       { formData, id, showSnackbar, setExcelFile },
-      { rejectWithValue }
+      { rejectWithValue, dispatch }
    ) => {
       try {
          await fileAxiosInstanse.post(`/api/students/import`, formData, {
@@ -79,8 +79,9 @@ export const postExcelFile = createAsyncThunk(
          })
          setExcelFile('')
          showSnackbar('Файл успешно отправлен!', 'success')
+         dispatch(getAllStudents({ currentPage: 1, pageSize: 10 }))
       } catch (error) {
-         showSnackbar(error.message, 'error')
+         showSnackbar(error.response.data.message, 'error')
          return rejectWithValue('error')
       }
    }

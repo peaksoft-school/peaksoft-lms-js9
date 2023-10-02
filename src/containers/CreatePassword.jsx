@@ -194,7 +194,7 @@ const InputContainer = styled('div')(() => ({
 const LoginInput = styled(Input)(() => ({
    '& .MuiInputBase-root': {
       width: '28.8vw',
-      height: '42px',
+      height: '5vh',
       borderRadius: '10px',
       marginTop: '0.629rem',
    },
@@ -218,7 +218,7 @@ const ContainerInput = styled('div')(() => ({
    '.block': {
       justifyContent: 'space-between',
       width: '100%',
-      height: '23vh',
+      height: '21vh',
       display: 'flex',
       flexDirection: 'column',
       marginBottom: '2.13rem',

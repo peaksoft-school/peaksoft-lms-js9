@@ -56,7 +56,7 @@ export const deleteStudent = createAsyncThunk(
          await axiosInstance.delete(`/api/students/${id}`)
          dispatch(getStudents({ id: courseId, page }))
          dispatch(getCoursesById(courseId))
-         return showSnackbar('Студент успешно удален', 'success')
+         return showSnackbar('Студент успешно удален!', 'success')
       } catch (error) {
          showSnackbar(error, 'error')
          return rejectWithValue(error.message)
