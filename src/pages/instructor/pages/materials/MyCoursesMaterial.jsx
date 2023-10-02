@@ -85,6 +85,8 @@ export const MyCoursesMaterial = () => {
             setLessonId(lesson.lessonId)
             setSelectPresentation(!selectPresentation)
             break
+         case 3:
+            break
          case 4:
             setLessonId(lesson.lessonId)
             setSelectLink(!selectLink)
@@ -254,7 +256,15 @@ export const MyCoursesMaterial = () => {
             setActive={setDeletee}
             closeHandlerModal={closeHandlerModal}
             deleteHandler={deleteHandler}
-            paragraph={`удалить ${titleCrud}`}
+            paragraph={`удалить ${
+               titleCrud === 'Видеоурок'
+                  ? 'видеоурок'
+                  : titleCrud === 'Ссылка'
+                  ? 'ссылку'
+                  : titleCrud === 'Презентация'
+                  ? 'презентацию'
+                  : ''
+            }`}
          />
       </>
    )

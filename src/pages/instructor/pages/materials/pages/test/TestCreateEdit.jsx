@@ -1,72 +1,96 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { Input } from '../../../../../components/UI/input/Input'
-import { Button } from '../../../../../components/UI/button/Button'
-import { IconButtons } from '../../../../../components/UI/button/IconButtons'
+import { Input } from '../../../../../../components/UI/input/Input'
+import {
+   getTestResultPass,
+   postTestThunk,
+   updateTestThunk,
+} from '../../../../../../store/test/testThunk'
+import { showSnackbar } from '../../../../../../components/UI/snackbar/Snackbar'
+import { Radio } from '../../../../../../components/UI/checkbox-radio/Radio'
+import { CheckBox } from '../../../../../../components/UI/checkbox-radio/CheckBox'
+import { IconButtons } from '../../../../../../components/UI/button/IconButtons'
 import {
    CancelIcon,
    DeleteIcon,
    LargePlusIcon,
-} from '../../../../../assets/icons'
-import { Radio } from '../../../../../components/UI/checkbox-radio/Radio'
-import { CheckBox } from '../../../../../components/UI/checkbox-radio/CheckBox'
-import { postTestThunk } from '../../../../../store/test/testThunk'
-import { showSnackbar } from '../../../../../components/UI/snackbar/Snackbar'
+} from '../../../../../../assets/icons'
+import { Button } from '../../../../../../components/UI/button/Button'
 
-const questionsArray = [
+const questionResponses = [
    {
       id: 1,
-      value: '',
-      type: 'SINGLE',
-      variants: [
+      question: '',
+      questionType: 'SINGLE',
+      optionResponses: [
          {
-            id: 1,
-            value: '',
-            isStatus: false,
+            optionId: 1,
+            option: '',
+            true: false,
          },
       ],
    },
 ]
 
-export const CreateTestPage = () => {
+export const TestEdit = ({ variant }) => {
    const params = useParams()
    const dispatch = useDispatch()
    const navigate = useNavigate()
+   const { passTest: data } = useSelector((state) => state.test)
    const [title, setTitle] = useState('')
-   const [questions, setQuestions] = useState(questionsArray)
+   const [questions, setQuestions] = useState([])
+
+   useEffect(() => {
+      if (variant) {
+         dispatch(getTestResultPass(params.testid))
+      }
+   }, [])
+
+   useEffect(() => {
+      setTitle(variant ? data.testName : '')
+      setQuestions(variant ? data.questionResponses : questionResponses)
+   }, [data])
 
    const cancelHandler = () => {
-      navigate(`/instructor/mycoursesins/${params.id}/materials`)
+      navigate(
+         `/instructor/mycoursesins/${params.id}/materials${
+            variant ? `/5/${params.lessonid}` : ''
+         }`
+      )
    }
 
    const handleRadioChange = (e, id) => {
-      const updatedQuestions = questions.map((el) => {
+      const updatedQuestions = questions?.map((el) => {
          if (el.id === id) {
-            return { ...el, type: e.target.value }
+            return { ...el, questionType: e.target.value }
          }
          return el
       })
       setQuestions(updatedQuestions)
    }
 
-   const changeHandler = (e, index) => {
-      const newValue = e.target.value
-      const updatedQuestions = [...questions]
-      updatedQuestions[index].value = newValue
-      setQuestions(updatedQuestions)
-   }
-   const variantChangeHandler = (e, questionId, variantId) => {
-      const updatedQuestions = questions.map((el) => {
+   const changeQuestionHnadler = (e, questionId) => {
+      const updateQuestions = questions?.map((el) => {
          if (el.id === questionId) {
-            const updatedVariant = el.variants.map((item) => {
-               if (item.id === variantId) {
-                  return { ...item, value: e.target.value }
+            return { ...el, question: e.target.value }
+         }
+         return el
+      })
+      setQuestions(updateQuestions)
+   }
+
+   const variantChangeHandler = (e, questionId, variantId) => {
+      const updatedQuestions = questions?.map((el) => {
+         if (el.id === questionId) {
+            const updatedVariant = el.optionResponses.map((item) => {
+               if (item.optionId === variantId) {
+                  return { ...item, option: e.target.value }
                }
                return item
             })
-            return { ...el, variants: updatedVariant }
+            return { ...el, optionResponses: updatedVariant }
          }
          return el
       })
@@ -76,13 +100,13 @@ export const CreateTestPage = () => {
    const addedQuestion = () => {
       const newQuestion = {
          id: Math.random(),
-         value: '',
-         type: 'SINGLE',
-         variants: [
+         question: '',
+         questionType: 'SINGLE',
+         optionResponses: [
             {
-               id: 2,
-               value: '',
-               isStatus: false,
+               optionId: 2,
+               option: '',
+               true: false,
             },
          ],
       }
@@ -92,13 +116,14 @@ export const CreateTestPage = () => {
    const deleteHandler = (id) => {
       setQuestions(questions.filter((el) => el.id !== id))
    }
+
    const deleteOptionHandler = (variantId, questionId) => {
-      const updateQuestion = questions.map((el) => {
+      const updateQuestion = questions?.map((el) => {
          if (el.id === questionId) {
-            const deleteVariant = el.variants.filter(
-               (del) => del.id !== variantId
+            const deleteVariant = el.optionResponses.filter(
+               (del) => del.optionId !== variantId
             )
-            return { ...el, variants: deleteVariant }
+            return { ...el, optionResponses: deleteVariant }
          }
          return el
       })
@@ -107,13 +132,16 @@ export const CreateTestPage = () => {
 
    const addedOption = (id) => {
       const newVariant = {
-         id: Math.random(),
-         value: '',
-         isStatus: false,
+         optionId: Math.random(),
+         option: '',
+         true: false,
       }
-      const updatedQuestions = questions.map((el) => {
+      const updatedQuestions = questions?.map((el) => {
          if (el.id === id) {
-            return { ...el, variants: [...el.variants, newVariant] }
+            return {
+               ...el,
+               optionResponses: [...el.optionResponses, newVariant],
+            }
          }
          return el
       })
@@ -123,37 +151,44 @@ export const CreateTestPage = () => {
    const saveTestHandler = () => {
       const data = {
          testName: title,
-         questionRequests: questions.map((question) => ({
+         questionRequests: questions?.map((question) => ({
             questionId: question.id,
-            question: question.value,
-            questionType: question.type,
-            optionRequests: question.variants.map((variant) => ({
-               optionId: variant.id,
-               option: variant.value,
-               isStatus: variant.isStatus,
+            question: question.question,
+            questionType: question.questionType,
+            optionRequests: question.optionResponses?.map((variant) => ({
+               optionId: variant.optionId,
+               option: variant.option,
+               isStatus: variant.true,
             })),
          })),
       }
       dispatch(
-         postTestThunk({
-            data,
-            id: params.lessonid,
-            showSnackbar,
-            cancelHandler,
-         })
+         variant
+            ? updateTestThunk({
+                 data,
+                 showSnackbar,
+                 testid: params.testid,
+                 cancelHandler,
+              })
+            : postTestThunk({
+                 data,
+                 id: params.lessonid,
+                 showSnackbar,
+                 cancelHandler,
+              })
       )
    }
 
    const toggleCheckbox = (variantId, questionId) => {
       const updatedVariants = questions?.map((el) => {
          if (el.id === questionId) {
-            const updateChecked = el.variants?.map((item) => {
-               if (item.id === variantId) {
-                  return { ...item, isStatus: !item.isStatus }
+            const updateChecked = el.optionResponses?.map((item) => {
+               if (item.optionId === variantId) {
+                  return { ...item, true: !item.true }
                }
                return item
             })
-            return { ...el, variants: updateChecked }
+            return { ...el, optionResponses: updateChecked }
          }
          return el
       })
@@ -163,19 +198,19 @@ export const CreateTestPage = () => {
    const toggleRadioBox = (variantId, questionId) => {
       const updateQuestions = questions?.map((el) => {
          if (el.id === questionId) {
-            const updateVariants = el.variants?.map((item) => {
-               if (item.id === variantId) {
+            const updateVariants = el.optionResponses?.map((item) => {
+               if (item.optionId === variantId) {
                   return {
                      ...item,
-                     isStatus: true,
+                     true: true,
                   }
                }
                return {
                   ...item,
-                  isStatus: false,
+                  true: false,
                }
             })
-            return { ...el, variants: updateVariants }
+            return { ...el, optionResponses: updateVariants }
          }
          return el
       })
@@ -192,67 +227,68 @@ export const CreateTestPage = () => {
                onChange={(e) => setTitle(e.target.value)}
             />
          </ContainerHeader>
-         {questions.map((question, qIndex) => (
+         {questions?.map((question, qIndex) => (
             <ContainerMain key={question.id}>
                <ContainerTitle>
                   <h3>{qIndex + 1}</h3>
                   <Input
-                     value={question.value}
+                     value={question.question}
                      placeholder="Вопрос"
-                     onChange={(e) => changeHandler(e, qIndex)}
+                     onChange={(e) => changeQuestionHnadler(e, question.id)}
                   />
                   <main>
                      <Radio
                         label=" Один из списка"
                         value="SINGLE"
-                        checked={question.type === 'SINGLE'}
+                        checked={question.questionType === 'SINGLE'}
                         onChange={(e) => handleRadioChange(e, question.id)}
                      />
                      <Radio
                         label=" Несколько из списка"
                         value="MULTIPLE"
-                        checked={question.type === 'MULTIPLE'}
+                        checked={question.questionType === 'MULTIPLE'}
                         onChange={(e) => handleRadioChange(e, question.id)}
                      />
                   </main>
                </ContainerTitle>
-               {question.variants?.map((variant, vIndex) => {
+               {question.optionResponses?.map((variant, vIndex) => {
                   return (
-                     <ContainerVariant key={variant.id}>
-                        {question.type === 'SINGLE' ? (
+                     <ContainerVariant key={variant.optionId}>
+                        {question.questionType === 'SINGLE' ? (
                            <Radio
-                              key={variant.id}
-                              value={variant.id}
-                              checked={variant.isStatus}
+                              key={variant.optionId}
+                              value={variant.optionId}
+                              checked={variant.true}
                               onChange={() =>
-                                 toggleRadioBox(variant.id, question.id)
+                                 toggleRadioBox(variant.optionId, question.id)
                               }
                            />
                         ) : (
                            <CheckBox
-                              checked={variant.isStatus}
+                              value={variant.true}
+                              checked={variant.true}
                               onClick={() =>
-                                 toggleCheckbox(variant.id, question.id)
+                                 toggleCheckbox(variant.optionId, question.id)
                               }
                               el={variant}
                            />
                         )}
                         <header>
                            <Input
-                              value={variant.value}
+                              value={variant.option}
                               placeholder={`Вариант ${vIndex + 1}`}
                               onChange={(e) =>
                                  variantChangeHandler(
                                     e,
                                     question.id,
-                                    variant.id
+                                    variant.optionId
                                  )
                               }
                            />
                         </header>
                         <IconButtons
                            onClick={() =>
-                              deleteOptionHandler(variant.id, question.id)
+                              deleteOptionHandler(variant.optionId, question.id)
                            }
                         >
                            <CancelIcon />
@@ -262,12 +298,16 @@ export const CreateTestPage = () => {
                })}
                <ContainerAddOptionDelete>
                   <div>
-                     <button
-                        type="button"
-                        onClick={() => addedOption(question.id)}
-                     >
-                        Добавить вариант
-                     </button>
+                     {!variant ? (
+                        <button
+                           type="button"
+                           onClick={() => addedOption(question.id)}
+                        >
+                           Добавить вариант
+                        </button>
+                     ) : (
+                        ''
+                     )}
                   </div>
                   <IconButtons onClick={() => deleteHandler(question.id)}>
                      <DeleteIcon />
@@ -282,14 +322,19 @@ export const CreateTestPage = () => {
                </Button>
                <Button onClick={saveTestHandler}>Сохранить</Button>
             </div>
-            <IconButtons onClick={addedQuestion} variant="round">
-               <LargePlusIcon />
-            </IconButtons>
+            {!variant ? (
+               <main>
+                  <IconButtons onClick={addedQuestion} variant="round">
+                     <LargePlusIcon />
+                  </IconButtons>
+               </main>
+            ) : (
+               ''
+            )}
          </ContainerFooter>
       </div>
    )
 }
-
 const ContainerHeader = styled('header')`
    background-color: #fff;
    padding: 20px;
@@ -333,9 +378,11 @@ const ContainerFooter = styled('footer')`
       display: flex;
       justify-content: end;
       align-items: center;
-      margin-bottom: 150px;
-      margin-top: 15px;
+      margin: 15px 0;
       gap: 20px;
+   }
+   main {
+      margin: 150px 0;
    }
 `
 const ContainerVariant = styled('div')`

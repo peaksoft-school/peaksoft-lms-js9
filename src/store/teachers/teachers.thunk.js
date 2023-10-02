@@ -59,9 +59,7 @@ export const putTeacher = createAsyncThunk(
          showSnackbar('Данные учителя успешно обновлены!', 'success')
          return data
       } catch (error) {
-         if (error.message === 'Request failed with status code 400') {
-            showSnackbar(error.response.data.message, error.response.status)
-         }
+         showSnackbar(error.response.data.message, 'error')
          return rejectWithValue(error.message)
       }
    }

@@ -44,7 +44,7 @@ export const TestAnswers = () => {
          setActive(!isActive)
       } else {
          const data = {
-            text: 'avaz',
+            text: '',
             accept: false,
          }
          dispatch(

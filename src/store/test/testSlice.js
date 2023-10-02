@@ -26,9 +26,6 @@ export const testSlice = createSlice({
       builder.addCase(getTestResultForInstructor.rejected, (state) => {
          state.isLoading = false
       })
-      builder.addCase(postIsAcceptedThunk.pending, (state) => {
-         state.isLoading = true
-      })
       builder.addCase(getTestResultPass.fulfilled, (state, action) => {
          state.passTest = action.payload
          state.isLoading = false
@@ -37,6 +34,15 @@ export const testSlice = createSlice({
          state.isLoading = true
       })
       builder.addCase(getTestResultPass.rejected, (state) => {
+         state.isLoading = false
+      })
+      builder.addCase(postIsAcceptedThunk.fulfilled, (state) => {
+         state.isLoading = false
+      })
+      builder.addCase(postIsAcceptedThunk.pending, (state) => {
+         state.isLoading = true
+      })
+      builder.addCase(postIsAcceptedThunk.rejected, (state) => {
          state.isLoading = false
       })
    },

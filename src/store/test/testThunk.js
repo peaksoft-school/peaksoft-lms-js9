@@ -50,7 +50,7 @@ export const postIsAcceptedThunk = createAsyncThunk(
 
          return dispatch(getTestResultForInstructor(id))
       } catch (error) {
-         showSnackbar(error.message, 'error')
+         showSnackbar('В этом курсе нет группы!', 'error')
          return rejectWithValue(error.message)
       }
    }

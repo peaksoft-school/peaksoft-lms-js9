@@ -63,20 +63,14 @@ export const updateCard = createAsyncThunk(
    'cards/putCards',
    async (payload, { rejectWithValue, dispatch }) => {
       try {
-         if (payload.status) {
-            const getFile = await dispatch(
-               postFile(payload.data.image)
-            ).unwrap()
-            await axiosInstance.put(`/api/groups/${payload.data.id}`, {
-               ...payload.data,
-               image: getFile,
-            })
-         } else {
-            await axiosInstance.put(
-               `/api/groups/${payload.data.id}`,
-               payload.data
-            )
-         }
+         const getFile = await dispatch(postFile(payload.data.image))
+         await axiosInstance.put(`/api/groups/${payload.data.id}`, {
+            ...payload.data,
+            image:
+               getFile.payload === 'Request failed with status code 403'
+                  ? payload.data.image
+                  : getFile.payload,
+         })
          payload.showSnackbar('Группа успешно редактирован!', 'success')
          payload.setActiveModal2('')
          return dispatch(getCard())

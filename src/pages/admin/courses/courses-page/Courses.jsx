@@ -27,7 +27,6 @@ import { NotFound } from '../../../../components/UI/not-found/NotFound'
 
 export const Courses = () => {
    const dispatch = useDispatch()
-   const [status, setStatus] = useState(false)
    const { cards, isLoading } = useSelector((state) => state.courses)
    const { getAllIns, instructors } = useSelector((state) => state.instructors)
    const [getCardId, setCardId] = useState('')
@@ -77,7 +76,6 @@ export const Courses = () => {
    const openModalAddedNewGroupHandler = () => setActive(!isActive)
    const onImageUpload = (img) => {
       setImageValue(img)
-      setStatus(true)
    }
    const dateChangeHandler = (date) => setDateValue(date)
    const closeModalAddedNewGroupHandler = () => {
@@ -130,8 +128,7 @@ export const Courses = () => {
             editFormatDate === '' ? getValueDate : editFormatDate,
          image: imageValue,
       }
-      dispatch(updateCard({ data, status, showSnackbar, setActiveModal2 }))
-      setStatus(false)
+      dispatch(updateCard({ data, showSnackbar, setActiveModal2 }))
    }
    const appointHandler = () => {
       dispatch(

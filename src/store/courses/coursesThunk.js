@@ -77,20 +77,14 @@ export const updateCard = createAsyncThunk(
    'courses/putCards',
    async (payload, { rejectWithValue, dispatch }) => {
       try {
-         if (payload.status) {
-            const getFile = await dispatch(
-               postFile(payload.data.image)
-            ).unwrap()
-            await axiosInstance.put(`/api/courses/${payload.data.id}`, {
-               ...payload.data,
-               image: getFile,
-            })
-         } else {
-            await axiosInstance.put(
-               `/api/courses/${payload.data.id}`,
-               payload.data
-            )
-         }
+         const getFile = await dispatch(postFile(payload.data.image))
+         await axiosInstance.put(`/api/courses/${payload.data.id}`, {
+            ...payload.data,
+            image:
+               getFile.payload === 'Request failed with status code 403'
+                  ? payload.data.image
+                  : getFile.payload,
+         })
          payload.showSnackbar('Курс успешно редактирован!', 'success')
          payload.setActiveModal2('')
          await dispatch(getCardsCourses())

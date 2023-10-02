@@ -60,9 +60,11 @@ export const TaskIns = () => {
                               №{i + 1} {el.taskName}
                            </h4>
                            <div>
-                              <IconButtons>
-                                 <EditGreenIcon />
-                              </IconButtons>
+                              <Link to={`edit/${el.taskId}`}>
+                                 <IconButtons>
+                                    <EditGreenIcon />
+                                 </IconButtons>
+                              </Link>
                               <IconButtons
                                  onClick={(e) => {
                                     e.preventDefault()

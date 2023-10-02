@@ -31,17 +31,17 @@ import { LessonLayout } from '../pages/student/home-page/LessonLayout'
 import { TaskSend } from '../pages/student/lessonsPage/task/TaskLayout'
 import { TestLayout } from '../pages/student/lessonsPage/test/TestLayout'
 import { Page404 } from '../components/UI/not-found/Page404'
-import { CreateTaskPage } from '../pages/instructor/pages/materials/createTaskTest/CreateTaskPage'
 import { Video } from '../pages/instructor/pages/materials/pages/vidPresLink/Video'
 import { LinkPageIns } from '../pages/instructor/pages/materials/pages/vidPresLink/Link'
 import { PresentationIns } from '../pages/instructor/pages/materials/pages/vidPresLink/Presentation'
 import { TaskIns } from '../pages/instructor/pages/materials/pages/task/Task'
 import { TaskInside } from '../pages/instructor/pages/materials/pages/task/TaskInside'
 import { LessonLayoutInstrutor } from '../pages/instructor/pages/materials/pages/LessonLayoutInstrutor'
-import { TaskTestLayout } from '../pages/instructor/pages/materials/createTaskTest/TaskTestLayout'
+import { TaskTestLayout } from '../pages/instructor/pages/materials/createTest/TaskTestLayout'
 import { TestInsideInstrutors } from '../pages/instructor/pages/materials/pages/test/TestInside'
 import { TestAnswers } from '../pages/instructor/pages/materials/pages/test/TestAnswers'
-import { TestEdit } from '../pages/instructor/pages/materials/pages/test/TestEdit'
+import { TestEdit } from '../pages/instructor/pages/materials/pages/test/TestCreateEdit'
+import CreateTask from '../pages/instructor/pages/materials/create-task/CreateTask'
 
 export const AppRoutes = ({ roles = 'admin' }) => {
    const routes = reusableRoutesRoles.find((route) => route[roles])
@@ -179,7 +179,7 @@ export const AppRoutes = ({ roles = 'admin' }) => {
                />
                <Route
                   path="materials/createtask/:lessonid"
-                  element={<CreateTaskPage />}
+                  element={<CreateTask variant={false} />}
                />
             </Route>
             <Route
@@ -201,6 +201,10 @@ export const AppRoutes = ({ roles = 'admin' }) => {
                <Route
                   path="/instructor/mycoursesins/:id/materials/3/:lessonid/:taskid"
                   element={<TaskInside />}
+               />
+               <Route
+                  path="/instructor/mycoursesins/:id/materials/3/:lessonid/edit/:taskid"
+                  element={<CreateTask variant />}
                />
                <Route
                   path="/instructor/mycoursesins/:id/materials/4/:lessonid"
