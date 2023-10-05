@@ -111,7 +111,6 @@ export const putNewTask = createAsyncThunk(
       { rejectWithValue, dispatch }
    ) => {
       try {
-         console.log(newTask)
          const getFile = await dispatch(postFile(newTask.image))
          const getDoc = await dispatch(postFile(newTask.fileLink))
          await axiosInstance.put(`/api/tasks/${taskId}`, {

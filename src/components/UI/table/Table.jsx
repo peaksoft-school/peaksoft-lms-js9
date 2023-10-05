@@ -39,6 +39,7 @@ const Table = ({ data, columns }) => {
                               {row[column.id]?.length > 15
                                  ? `${row[column.id].substring(0, 15)}...`
                                  : row[column.id]}
+                              {column?.label === 'Баллы' ? `%` : ``}
                            </StyledTableCellForData>
                         )
                      })}

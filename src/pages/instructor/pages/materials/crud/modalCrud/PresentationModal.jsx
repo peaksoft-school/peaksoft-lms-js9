@@ -141,7 +141,7 @@ export const PresentationModal = ({
                         {formik.values.linkFilePpt ? (
                            formik.values.linkFilePpt
                         ) : (
-                           <p>Выберите файл в формате ppt</p>
+                           <p>Выберите файл в формате pdf</p>
                         )}
                      </InputSpan>
                      <ButtonStyledFirst

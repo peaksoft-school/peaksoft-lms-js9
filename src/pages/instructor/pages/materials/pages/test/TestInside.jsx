@@ -56,8 +56,6 @@ export const TestInsideInstrutors = () => {
       setActive('')
    }
 
-   // const openEditPage = () => {}
-
    return (
       <>
          {isLoading && <Isloading />}
@@ -90,11 +88,13 @@ export const TestInsideInstrutors = () => {
                               №{i + 1} {el.testName}
                            </h4>
                            <div>
-                              <Link to={`edit/${el.testId}`}>
-                                 <IconButtons>
-                                    <EditGreenIcon />
-                                 </IconButtons>
-                              </Link>
+                              {!el.update && (
+                                 <Link to={`edit/${el.testId}`}>
+                                    <IconButtons>
+                                       <EditGreenIcon />
+                                    </IconButtons>
+                                 </Link>
+                              )}
                               <IconButtons
                                  onClick={(e) => {
                                     e.preventDefault()
