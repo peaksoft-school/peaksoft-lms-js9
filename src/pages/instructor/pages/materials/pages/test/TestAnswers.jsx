@@ -71,7 +71,7 @@ export const TestAnswers = () => {
       { id: 'fullName', label: 'Имя Фамилия' },
       { id: 'correctAnswers', label: 'Правильных ответов' },
       { id: 'inCorrectAnswers', label: 'Неправильных ответов' },
-      { id: 'point', label: 'Баллы' },
+      // { id: 'point', label: 'Баллы' },
    ]
    return (
       <>

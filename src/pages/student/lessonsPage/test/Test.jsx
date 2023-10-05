@@ -30,7 +30,11 @@ export const Test = () => {
             <>
                <ContainerMap>
                   {displayedLinks.map((el, i) => (
-                     <ContentContainer key={el.testId} to={`${el.testId}`}>
+                     <ContentContainer
+                        key={el.testId}
+                        to={`${!el.accepted ? el.testId : ''}`}
+                     >
+                        {el.accepted && <p>Тест не активен!</p>}
                         <h4>
                            №{i + 1} {el.testName}
                         </h4>
@@ -70,6 +74,23 @@ const ContentContainer = styled(Link)`
    padding: 20px;
    cursor: pointer;
    border: 1px solid #d4d4d4;
+   transition: 1s;
+   position: relative;
+   p {
+      display: none;
+      background-color: #d4d4d4;
+      padding: 5px;
+      border-radius: 8px;
+      position: absolute;
+      width: 150px;
+      top: -20%;
+      right: 0%;
+   }
+   &:hover {
+      p {
+         display: flex;
+      }
+   }
    a {
       display: flex;
       flex-direction: column;
