@@ -8,7 +8,8 @@ import {
 
 export const LOGIN_USER_KEY = 'PEAKSOFT_LMS_USER_KEY'
 
-export const BASE_URL = 'http://peaksoftlms.peaksoftprojects.com'
+export const BASE_URL =
+   'http://ec2-3-127-211-174.eu-central-1.compute.amazonaws.com/'
 
 export const USER_ROLE = {
    STUDENT: 'STUDENT',

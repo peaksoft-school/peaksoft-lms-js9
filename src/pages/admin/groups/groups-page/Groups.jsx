@@ -109,6 +109,7 @@ export const Groups = () => {
          image: imageValue,
          dateOfGraduation: formatDate,
       }
+      console.log(data)
       dispatch(postCard({ data, showSnackbar, modal: setActive, setValue }))
    }
    const saveHandler = (el) => {
